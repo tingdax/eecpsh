@@ -2714,7 +2714,7 @@
     <div class="cta-step"><div class="snum">第四步</div><div class="slab">协助科室完成<br>设备论证与采购</div></div>
   </div>
 
-  <a href="javascript:void(0)" onclick="showQRModal()" class="btn">获取完整学术支持包 →</a>
+  <a href="#" onclick="event.preventDefault(); showQRModal();" class="btn">获取完整学术支持包 →</a>
   <p style="font-size:0.82rem;color:rgba(245,240,232,0.35);margin-top:16px;">含：14部指南原文索引 · 9项核心研究引用格式 · 政策文件汇编 · 设备论证模板 · 奥迈OM-A-I产品彩页</p>
 </section>
 
@@ -2758,7 +2758,7 @@
 </div>
 
 <!-- ===== MOBILE HAMBURGER ===== -->
-<button class="hamburger" id="hamburgerBtn" onclick="toggleNav()" aria-label="目录">
+<button class="hamburger" id="hamburgerBtn" onclick="toggleNav()" ontouchstart="toggleNav()" aria-label="目录">
   <span></span><span></span><span></span>
 </button>
 <div class="nav-overlay" id="navOverlay">
@@ -2946,9 +2946,11 @@ function backToMenu() {
 function toggleNav() {
   var btn = document.getElementById('hamburgerBtn');
   var ov = document.getElementById('navOverlay');
-  btn.classList.toggle('active');
-  ov.classList.toggle('active');
-  document.body.style.overflow = ov.classList.contains('active') ? 'hidden' : '';
+  if (btn && ov) {
+    btn.classList.toggle('active');
+    ov.classList.toggle('active');
+    document.body.style.overflow = ov.classList.contains('active') ? 'hidden' : '';
+  }
 }
 function closeNav() {
   var btn = document.getElementById('hamburgerBtn');
