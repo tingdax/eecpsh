@@ -3245,17 +3245,26 @@ initMobileMode();
     }, { passive: true });
   }
 
-  // 2. 数字滚动动画
+  // 2. 数字滚动动画（保留原始前缀后缀，不再吃掉 %↓↑＜亿万元mV 等符号）
   function animateNumber(el, target, duration = 1500) {
+    // 保存原始文本格式模板：前缀 + [数字占位] + 后缀
+    const orig = el.textContent.trim();
+    const prefixMatch = orig.match(/^([^\d]*)/);
+    const prefix = prefixMatch ? prefixMatch[1] : '';
+    const suffixMatch = orig.match(/([^\d]*)$/);
+    const suffix = suffixMatch ? suffixMatch[1] : '';
+
     let start = 0;
     const increment = target / (duration / 16);
+    const isInteger = Number.isInteger(target);
     const timer = setInterval(() => {
       start += increment;
       if (start >= target) {
-        el.textContent = target.toLocaleString();
+        // 最终显示完整精度（如有小数则保留）
+        el.textContent = prefix + (isInteger ? target.toLocaleString() : target.toFixed(1).replace(/\.0$/, '')) + suffix;
         clearInterval(timer);
       } else {
-        el.textContent = Math.floor(start).toLocaleString();
+        el.textContent = prefix + Math.floor(start).toLocaleString() + suffix;
       }
     }, 16);
   }
@@ -3263,12 +3272,26 @@ initMobileMode();
   const numberObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-        entry.target.classList.add('counted', 'rolling');
         const text = entry.target.textContent.trim();
-        const match = text.match(/(\d+)/);
+        // 跳过"范围"类数据（如 30-40%、50-70%），不滚动动画
+        if (text.includes('-') || text.includes('–')) {
+          entry.target.classList.add('counted');
+          numberObserver.unobserve(entry.target);
+          return;
+        }
+        // 匹配完整数字（含逗号、小数点），如 1,442 或 5.1
+        const match = text.match(/([0-9,.]+)/);
         if (match) {
-          const target = parseInt(match[1]);
-          animateNumber(entry.target, target);
+          const numStr = match[1].replace(/,/g, '');
+          const target = parseFloat(numStr);
+          if (!isNaN(target) && target > 0) {
+            entry.target.classList.add('counted', 'rolling');
+            animateNumber(entry.target, target);
+          } else {
+            entry.target.classList.add('counted');
+          }
+        } else {
+          entry.target.classList.add('counted');
         }
         numberObserver.unobserve(entry.target);
       }
