@@ -1402,7 +1402,18 @@
     .tp-item { padding:6px 10px; font-size:0.74rem; }
     .ts-item { padding:3px 8px; font-size:0.68rem; }
   }
-</style>
+
+/* 强制所有 sections 可见 - 正常滚动页面模式 */
+body > section { display: block !important; }
+body > section.cover { display: flex !important; }
+body > section.footer { display: block !important; }
+/* 覆盖 mobile-page 模式 */
+body.mobile-page > section { display: block !important; }
+body.mobile-page > section.mp-active { display: block !important; }
+body.mobile-page > section.cover { display: flex !important; }
+body.mobile-page .mobile-page-bar { display: none !important; }
+
+  </style>
 </head>
 <body>
   <!-- 滚动进度条 -->
@@ -2128,6 +2139,17 @@
       .cycle-nodes svg{ display:none; }
       .return-arc path{ d: path('M 580 8 C 580 50, 75 50, 75 8'); }
     }
+  
+/* 强制所有 sections 可见 - 正常滚动页面模式 */
+body > section { display: block !important; }
+body > section.cover { display: flex !important; }
+body > section.footer { display: block !important; }
+/* 覆盖 mobile-page 模式 */
+body.mobile-page > section { display: block !important; }
+body.mobile-page > section.mp-active { display: block !important; }
+body.mobile-page > section.cover { display: flex !important; }
+body.mobile-page .mobile-page-bar { display: none !important; }
+
   </style>
   
   <div class="hl-box gold-l">
