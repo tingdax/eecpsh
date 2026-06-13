@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>气囊式体外反搏系统 — 渠道培训手册 · v2.2</title>
+<title>气囊式体外反搏系统 — 渠道培训手册 · v2.3</title>
 <style>
   :root {
     --paper: #FFF8F5;
@@ -829,13 +829,24 @@
     body { margin-left: 0; }
     .hamburger { display: flex; }
     .nav-collapse-btn { display: none !important; }
-    /* Mobile page mode: hide all sections except active one */
-    body.mobile-page > section:not(.footer):not(.mp-active) { display: none !important; }
-    body.mobile-page > section.mp-active.cover { display: flex !important; }
-    /* Show page bar on mobile */
-    body.mobile-page .mobile-page-bar { display: flex; }
+    /* 正常滚动页面：所有 sections 始终可见 */
+    body > section { display: block !important; }
+    body > section.cover { display: flex !important; }
+    body > section.footer { display: block !important; }
   }
 
+
+  /* ===== 宽屏优化（> 1440px） ===== */
+  @media (min-width: 1440px) {
+    .section, .section-dark, .section-red, .section-gold { padding: 80px 8%; max-width: 1300px; margin: 0 auto; }
+    .section .inner, .section-dark .inner, .section-red .inner, .section-gold .inner { max-width: 1300px; }
+    .cover .cover-inner { max-width: 900px; }
+    .cover h1 { font-size: 3rem; }
+    .cover-sub { font-size: 1.2rem; }
+    h2 { font-size: 2.2rem; }
+    h3 { font-size: 1.5rem; }
+    body { font-size: 17px; }
+  }
   @media (max-width: 768px) {
     .cover { padding: 60px 5% 60px; }
     .cover h1 { font-size: 1.8rem; }
@@ -1005,9 +1016,33 @@
   .frontier-card .f-icon { font-size: 2rem; margin-bottom: 10px; }
   .frontier-card h4 { font-size: 0.95rem; margin-bottom: 6px; color: var(--ink); }
   .frontier-card p { font-size: 0.82rem; color: var(--ink3); line-height: 1.6; }
+
+  /* ===== 宽屏优化（> 1440px） ===== */
+  @media (min-width: 1440px) {
+    .section, .section-dark, .section-red, .section-gold { padding: 80px 8%; max-width: 1300px; margin: 0 auto; }
+    .section .inner, .section-dark .inner, .section-red .inner, .section-gold .inner { max-width: 1300px; }
+    .cover .cover-inner { max-width: 900px; }
+    .cover h1 { font-size: 3rem; }
+    .cover-sub { font-size: 1.2rem; }
+    h2 { font-size: 2.2rem; }
+    h3 { font-size: 1.5rem; }
+    body { font-size: 17px; }
+  }
   @media (max-width: 768px) { .frontier-grid { grid-template-columns: 1fr; } }
 
   .toc li a:hover { color: var(--red); }
+
+  /* ===== 宽屏优化（> 1440px） ===== */
+  @media (min-width: 1440px) {
+    .section, .section-dark, .section-red, .section-gold { padding: 80px 8%; max-width: 1300px; margin: 0 auto; }
+    .section .inner, .section-dark .inner, .section-red .inner, .section-gold .inner { max-width: 1300px; }
+    .cover .cover-inner { max-width: 900px; }
+    .cover h1 { font-size: 3rem; }
+    .cover-sub { font-size: 1.2rem; }
+    h2 { font-size: 2.2rem; }
+    h3 { font-size: 1.5rem; }
+    body { font-size: 17px; }
+  }
   @media (max-width: 768px) { .toc ol { columns: 1; } }
 
   /* ===== 动效系统 ===== */
@@ -1402,18 +1437,7 @@
     .tp-item { padding:6px 10px; font-size:0.74rem; }
     .ts-item { padding:3px 8px; font-size:0.68rem; }
   }
-
-/* 强制所有 sections 可见 - 正常滚动页面模式 */
-body > section { display: block !important; }
-body > section.cover { display: flex !important; }
-body > section.footer { display: block !important; }
-/* 覆盖 mobile-page 模式 */
-body.mobile-page > section { display: block !important; }
-body.mobile-page > section.mp-active { display: block !important; }
-body.mobile-page > section.cover { display: flex !important; }
-body.mobile-page .mobile-page-bar { display: none !important; }
-
-  </style>
+</style>
 </head>
 <body>
   <!-- 滚动进度条 -->
@@ -2139,17 +2163,6 @@ body.mobile-page .mobile-page-bar { display: none !important; }
       .cycle-nodes svg{ display:none; }
       .return-arc path{ d: path('M 580 8 C 580 50, 75 50, 75 8'); }
     }
-  
-/* 强制所有 sections 可见 - 正常滚动页面模式 */
-body > section { display: block !important; }
-body > section.cover { display: flex !important; }
-body > section.footer { display: block !important; }
-/* 覆盖 mobile-page 模式 */
-body.mobile-page > section { display: block !important; }
-body.mobile-page > section.mp-active { display: block !important; }
-body.mobile-page > section.cover { display: flex !important; }
-body.mobile-page .mobile-page-bar { display: none !important; }
-
   </style>
   
   <div class="hl-box gold-l">
