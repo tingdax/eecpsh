@@ -34,7 +34,7 @@
     line-height: 1.85;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
-    margin-left: 220px;
+    margin: 0;
   }
   ::selection { background: var(--red); color: white; }
 
@@ -1428,118 +1428,7 @@
 
 
 <!-- ===== SIDE NAV — 分级折叠 + 毛玻璃自适应 ===== -->
-<nav class="sidenav" id="sidenav">
-  <div class="nav-filter" id="navFilter">
-    <div class="filter-tab active-tab" onclick="setNavFilter('all')" id="ftAll">全部</div>
-    <div class="filter-tab" onclick="setNavFilter('director')" id="ftDirector">🏛️ 院长汇报</div>
-    <div class="filter-tab" onclick="setNavFilter('channel')" id="ftChannel">💼 渠道培训</div>
-  </div>
-
-  <div class="brand">OMAY 奥迈医疗 · 渠道培训手册 <span style="font-size:0.65em;opacity:0.65;font-weight:400;">上海市场 张高雷</span></div>
-
-  <!-- 一级菜单：WHY 为什么 -->
-  <div class="sidenav-group open" data-sgroup="why">
-    <div class="sidenav-group-header cat-why" onclick="toggleSidenavGroup(this)">
-      <span>WHY · 为什么</span><span class="sidenav-arrow">▸</span></div>
-    <div class="sidenav-group-body">
-      <a href="#cover" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>封面概览</span><span class="nav-num">00</span></a>
-      <a href="#concept" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>心脏康复概念</span><span class="nav-num">01</span></a>
-      <a href="#market" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>市场分析</span><span class="nav-num">02</span></a>
-      <a href="#future" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>未来潜力</span><span class="nav-num">03</span></a>
-    </div>
-  </div>
-
-  <!-- 一级菜单：WHAT 是什么 -->
-  <div class="sidenav-group open" data-sgroup="what">
-    <div class="sidenav-group-header cat-what" onclick="toggleSidenavGroup(this)">
-      <span>WHAT · 是什么</span><span class="sidenav-arrow">▸</span></div>
-    <div class="sidenav-group-body">
-      <a href="#policy" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>政策东风</span><span class="nav-num">04</span></a>
-      <a href="#center-policy" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>中心建设政策</span><span class="nav-num">05</span></a>
-      <a href="#center-equip" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>设备配置标准</span><span class="nav-num">06</span></a>
-      <a href="#tech-history" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>技术发展历程</span><span class="nav-num">07</span></a>
-    </div>
-  </div>
-
-  <!-- 一级菜单：EVIDENCE 循证 -->
-  <div class="sidenav-group open" data-sgroup="evidence">
-    <div class="sidenav-group-header cat-evidence" onclick="toggleSidenavGroup(this)">
-      <span>EVIDENCE · 循证</span><span class="sidenav-arrow">▸</span></div>
-    <div class="sidenav-group-body">
-      <a href="#principle" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>工作原理</span><span class="nav-num">08</span></a>
-      <a href="#five-rx" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>5+1处方体系</span><span class="nav-num">09</span></a>
-      <a href="#nanshui" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>南水北调效应</span><span class="nav-num">08A</span></a>
-      <a href="#cycle" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>防保治康循环</span><span class="nav-num">08B</span></a>
-      <a href="#five-eecp" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>处方×EECP协同</span><span class="nav-num">10</span></a>
-      <a href="#academic" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>学术制高点</span><span class="nav-num">11</span></a>
-      <a href="#efficacy" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>疗效数据</span><span class="nav-num">12</span></a>
-      <a href="#five-values" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>五大核心价值</span><span class="nav-num">13</span></a>
-    </div>
-  </div>
-
-  <!-- 一级菜单：APPLICATION 应用 -->
-  <div class="sidenav-group open" data-sgroup="application">
-    <div class="sidenav-group-header cat-application" onclick="toggleSidenavGroup(this)">
-      <span>APPLICATION · 应用</span><span class="sidenav-arrow">▸</span></div>
-    <div class="sidenav-group-body">
-      <a href="#indications" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>适应症/禁忌</span><span class="nav-num">14</span></a>
-      <a href="#treatment" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>治疗规范</span><span class="nav-num">15</span></a>
-    </div>
-  </div>
-
-  <!-- 一级菜单：DEPARTMENTS 科室 -->
-  <div class="sidenav-group open" data-sgroup="departments">
-    <div class="sidenav-group-header cat-departments" onclick="toggleSidenavGroup(this)">
-      <span>DEPARTMENTS · 科室</span><span class="sidenav-arrow">▸</span></div>
-    <div class="sidenav-group-body">
-      <a href="#dept-cardiology" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>心内科</span><span class="nav-num">16</span></a>
-      <a href="#dept-rehab" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>心康中心</span><span class="nav-num">17</span></a>
-      <a href="#dept-geriatrics" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>老年科</span><span class="nav-num">18</span></a>
-      <a href="#dept-neurology" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>神内科</span><span class="nav-num">19</span></a>
-      <a href="#dept-endocrine" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>内分泌科</span><span class="nav-num">20</span></a>
-      <a href="#dept-andrology" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>男科</span><span class="nav-num">21</span></a>
-      <a href="#dept-ophthalmology" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>眼科</span><span class="nav-num">22</span></a>
-      <a href="#dept-sports" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>体育/运动医学</span><span class="nav-num">23</span></a>
-      <a href="#dept-military" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>部队/公安系统</span><span class="nav-num">24</span></a>
-      <a href="#dept-community" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>社区中心</span><span class="nav-num">25</span></a>
-      <a href="#dept-private" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>民营医疗</span><span class="nav-num">26</span></a>
-    </div>
-  </div>
-
-  <!-- 一级菜单：BUSINESS 商业 -->
-  <div class="sidenav-group open" data-sgroup="business">
-    <div class="sidenav-group-header cat-business" onclick="toggleSidenavGroup(this)">
-      <span>BUSINESS · 商业</span><span class="sidenav-arrow">▸</span></div>
-    <div class="sidenav-group-body">
-      <a href="#more-opportunities" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>更多可能性</span><span class="nav-num">27</span></a>
-      <a href="#pricing-roi" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>收费标准与ROI</span><span class="nav-num">28</span></a>
-    </div>
-  </div>
-
-  <!-- 一级菜单：OMAY 奥迈 -->
-  <div class="sidenav-group open" data-sgroup="omay">
-    <div class="sidenav-group-header cat-omai" onclick="toggleSidenavGroup(this)">
-      <span>OMAY · 奥迈</span><span class="sidenav-arrow">▸</span></div>
-    <div class="sidenav-group-body">
-      <a href="#company-cert" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>公司背景与认证</span><span class="nav-num">29A</span></a>
-      <a href="#product-models" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>产品型号展示</span><span class="nav-num">29B</span></a>
-      <a href="#oem" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>奥迈优势</span><span class="nav-num">29</span></a>
-      <a href="#faq" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>临床FAQ</span><span class="nav-num">30</span></a>
-      <a href="#clients" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>客户画像</span><span class="nav-num">31</span></a>
-      <a href="#sh-users" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>上海用户名单</span><span class="nav-num">32</span></a>
-    </div>
-  </div>
-
-  <!-- 一级菜单：SELL 销售 -->
-  <div class="sidenav-group open" data-sgroup="sell">
-    <div class="sidenav-group-header cat-sell" onclick="toggleSidenavGroup(this)">
-      <span>SELL · 销售</span><span class="sidenav-arrow">▸</span></div>
-    <div class="sidenav-group-body">
-      <a href="#toolkit" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>话术工具箱</span><span class="nav-num">33</span></a>
-      <a href="#cta" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>行动号召</span><span class="nav-num">34</span></a>
-    </div>
-  </div>
-</nav>
+  
 
 <!-- ===== COVER ===== -->
 <section class="cover" id="cover">
@@ -3991,7 +3880,7 @@ window.addEventListener('resize', function() {
 });
 
 // ===== QR Modal =====
-function showQRModal() {
+function openQRModal() {
   document.getElementById('qrModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -4180,7 +4069,7 @@ initMobileMode();
       const rect = el.getBoundingClientRect();
       const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
       const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
-      el.style.transform = ;
+      el.style.transform = `translate(${x}px, ${y}px)`;
     });
     el.addEventListener('mouseleave', () => {
       el.style.transform = 'translate(0, 0)';
@@ -4233,16 +4122,25 @@ initMobileMode();
 
 // ===== 脚本结束 =====
 
-// ===== 导航折叠 =====
+// ===== 移动端导航 =====
 function toggleNav() {
-  var nav = document.getElementById('sidenav');
-  var body = document.body;
-  if (nav.classList.contains('collapsed')) {
-    nav.classList.remove('collapsed');
-    body.classList.remove('nav-collapsed');
-  } else {
-    nav.classList.add('collapsed');
-    body.classList.add('nav-collapsed');
+  var overlay = document.getElementById('navOverlay');
+  if (!overlay) return;
+  overlay.classList.toggle('active');
+  document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+}
+
+function toggleNavGroup(header) {
+  var body = header.nextElementSibling;
+  if (!body) return;
+  var isOpen = body.style.display === 'block';
+  // 关闭其他分组
+  document.querySelectorAll('.nav-group-body').forEach(function(b) { b.style.display = 'none'; });
+  document.querySelectorAll('.nav-group-header').forEach(function(h) { h.classList.remove('active'); });
+  // 切换当前分组
+  if (!isOpen) {
+    body.style.display = 'block';
+    header.classList.add('active');
   }
 }
 
