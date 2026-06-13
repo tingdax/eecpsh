@@ -1341,7 +1341,7 @@
   .topbar {
     display:none; /* default hidden; shown via media query on desktop */
   }
-  @media (min-width: 1025px) {
+  @media (min-width: 901px) {
     .topbar {
       display:block;
       position:fixed; top:0; left:0; right:0; z-index:1001;
@@ -1396,7 +1396,7 @@
     html { scroll-padding-top: 80px; } /* anchor offset for fixed topbar */
     .sidenav { z-index: 1000; } /* ensure sidebar below topbar */
   }
-  @media (min-width: 1025px) and (max-width: 1200px) {
+  @media (min-width: 901px) and (max-width: 1200px) {
     .tp-item { padding:6px 10px; font-size:0.74rem; }
     .ts-item { padding:3px 8px; font-size:0.68rem; }
   }
@@ -3734,15 +3734,31 @@ window.addEventListener('scroll', updateActiveNav);
 var isMobile = window.innerWidth <= 900;
 var currentPage = 'cover';
 
-// ===== 初始化移动端页面模式 =====
+// 窗口大小改变时动态更新移动端/桌面端模式
+window.addEventListener('resize', function() {
+  var wasMobile = isMobile;
+  isMobile = window.innerWidth <= 900;
+  if (wasMobile !== isMobile) {
+    if (isMobile) {
+      document.body.classList.add('mobile-page');
+      showPage(currentPage || 'cover', true);
+    } else {
+      document.body.classList.remove('mobile-page');
+      // 桌面端显示所有 sections
+      document.querySelectorAll('section').forEach(function(s) { s.classList.remove('mp-active'); });
+    }
+  }
+});
+
+// ===== 初始化移动端汉堡菜单 =====
 function initMobileMode() {
-  if (isMobile) {
-    document.body.classList.add('mobile-page');
-    showPage('cover', true);
-    // 初始化移动端一级导航
-    mpSwitchGroup('why');
+  if (window.innerWidth <= 900) {
+    // 移动端：确保汉堡菜单可见
+    var hamburger = document.getElementById('hamburgerBtn');
+    if (hamburger) hamburger.style.display = 'flex';
   }
 }
+
 
 // ===== 显示指定页面 =====
 function showPage(id, silent) {
@@ -3800,11 +3816,11 @@ function mpSwitchGroup(group) {
 
 // ===== 移动端二级导航点击 =====
 function mpGoTo(id) {
-  showPage(id);
-  // 更新二级导航高亮
-  document.querySelectorAll('#mpSecondary .mp-s-item').forEach(function(item) {
-    item.classList.toggle('active', item.dataset.href === '#' + id);
-  });
+  var target = document.getElementById(id);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+    closeNav();
+  }
 }
 
 // ===== 全局导航数据（桌面端 + 移动端共用） =====
@@ -3911,7 +3927,7 @@ function closeNav() {
   document.body.style.overflow = '';
 }
 
-// ===== 导航覆盖层点击 → 显示目标页面 =====
+// ===== 导航覆盖层点击 → 滚动到目标页面 =====
 (function(){
   var navOverlay = document.getElementById('navOverlay');
   if (!navOverlay) return;
@@ -3920,7 +3936,12 @@ function closeNav() {
     if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
       e.preventDefault();
       var targetId = link.getAttribute('href').substring(1);
-      showPage(targetId);
+      var target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        // 移动端关闭导航覆盖层
+        if (window.innerWidth <= 900) closeNav();
+      }
     }
   });
 })();
@@ -4178,6 +4199,27 @@ initMobileMode();
     });
   });
 
+  // 8. 导航可见性：根据窗口大小显示/隐藏汉堡菜单和顶部栏（JS回退，确保移动端导航正常工作）
+  function updateNavVisibility() {
+    var isMobile = window.innerWidth <= 900;
+    var hamburger = document.getElementById('hamburgerBtn');
+    var topbar = document.getElementById('topbar');
+    if (hamburger) {
+      hamburger.style.display = isMobile ? 'flex' : 'none';
+    }
+    if (topbar) {
+      topbar.style.display = isMobile ? 'none' : 'block';
+    }
+  }
+  window.addEventListener('resize', updateNavVisibility);
+  window.addEventListener('load', updateNavVisibility);
+  // 立即执行一次
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateNavVisibility);
+  } else {
+    updateNavVisibility();
+  }
+
   console.log('✨ EECP培训手册增强交互系统已加载');
 })();
 
@@ -4234,6 +4276,18 @@ function toggleNavGroup(header) {
 
   // Init with first group active
   renderSec('why');
+
+  // 桌面端二级导航点击：滚动到对应 section
+  tbSecondary.addEventListener('click', function(e) {
+    var link = e.target.closest('.ts-item');
+    if (!link) return;
+    e.preventDefault();
+    var targetId = link.getAttribute('href').substring(1);
+    var target = document.getElementById(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
 
   // Scroll spy: highlight primary + secondary based on scroll position
   let ticking = false;
