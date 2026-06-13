@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EECP 南水北调效应 — 嵌入版</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Microsoft YaHei','PingFang SC',sans-serif;
+    background:#F5F0E8; color:#1a1a1a; min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; padding:12px 16px;
+  }
+  h1 { font-size:18px; color:#1A5C6E; margin-bottom:2px; letter-spacing:1px; }
+  .sub { font-size:11px; color:#8a8a8a; margin-bottom:10px; }
+
+  /* 单栏画布容器 */
+  .cw {
+    width:100%; max-width:1100px;
+    background:#fff; border-radius:14px; border:1px solid rgba(26,92,110,0.10);
+    padding:10px; position:relative;
+    box-shadow:0 1px 6px rgba(0,0,0,0.05);
+  }
+
+  /* 图例 — 右上角 */
+  .lgd {
+    position:absolute; top:10px; right:14px;
+    background:rgba(255,255,255,0.96); border:1px solid rgba(26,92,110,0.12); border-radius:8px;
+    padding:9px 12px; font-size:11px; line-height:2; z-index:10;
+    box-shadow:0 1px 4px rgba(0,0,0,0.06);
+  }
+  .lr { display:flex; align-items:center; gap:6px; }
+  .ls { width:18px;height:9px;border-radius:3px;display:inline-block;flex-shrink:0; }
+
+  svg { width:100%; display:block; }
+
+  /* 控制区域 */
+  .ctrl-bar {
+    width:100%; max-width:1100px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; margin-top:10px; padding:10px 14px;
+    background:#fff; border-radius:12px; border:1px solid rgba(26,92,110,0.10);
+    box-shadow:0 1px 4px rgba(0,0,0,0.04);
+  }
+  .ctrl-left { display:flex; align-items:center; gap:8px; }
+  .ctrl-right { font-size:13px; color:#555; display:flex; gap:16px; }
+  .btn {
+    padding:7px 16px; border-radius:8px; border:1px solid rgba(26,92,110,0.15);
+    background:#fff; color:#1A5C6E; cursor:pointer; font-size:13px; font-weight:600;
+    transition:.2s; white-space:nowrap;
+  }
+  .btn:hover{background:#1A5C6E;color:#fff;border-color:#1A5C6E}
+  .bn{background:#1A5C6E;border-color:#1A5C6E;color:#fff}
+  .bn:hover{background:#154a58}
+
+  /* 步骤指示器 */
+  .si{display:flex;gap:6px;}
+  .sd{
+    width:30px;height:30px;border-radius:50%;
+    background:#f5f5f5;border:1.5px solid #ddd;color:#999;font-size:13px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.25s;
+  }
+  .sd.a{background:#1A5C6E;border-color:#1A5C6E;color:#fff}
+  .sd.d{background:#eaf4e8;border-color:#8aba6e;color:#5a9a4a}
+
+  /* 说明面板（在控制区下方） */
+  .info-bar {
+    width:100%; max-width:1100px; margin-top:8px; padding:12px 16px;
+    background:rgba(26,92,110,0.04); border-radius:10px;
+    border:1px solid rgba(26,92,110,0.08);
+  }
+  .info-bar h3{font-size:14px;color:#1A5C6E;margin-bottom:4px;}
+  .info-bar p{font-size:13px;color:#444;line-height:1.7;}
+  .info-bar .hl{color:#D4A843;font-weight:600}
+  .info-bar .sl{display:inline-block;background:#1A5C6E;color:#fff;border-radius:4px;padding:0 6px;font-size:11px;margin-right:3px;}
+
+  /* 数据行 */
+  .data-row {
+    width:100%; max-width:1100px; margin-top:8px;
+    display:flex; gap:10px;
+  }
+  .dc{
+    flex:1; background:#fff; border-radius:8px; padding:8px 12px;
+    border:1px solid rgba(26,92,110,0.08); text-align:center; font-size:12.5px;
+  }
+  .dc .lbl{color:#888;font-size:11px}
+  .dc .val{color:#1A5C6E;font-weight:700;font-size:15px}
+
+  /* ===== SVG 样式 ===== */
+  .hb{fill:#8B0000;stroke:#C41E3A;stroke-width:2}
+  .lb{fill:#1e3550;stroke:#3a6090;stroke-width:1.5;opacity:0.82}
+
+  /* 血管 */
+  .art{stroke:#C41E3A;stroke-width:6;fill:none;opacity:0.88}
+  .vei{stroke:#4169E1;stroke-width:6;fill:none;opacity:0.88}
+
+  /* 气囊 */
+  .cb{fill:#f8f6f0;stroke:#c0b898;stroke-width:1.8;rx:11}
+  .cl{fill:#333;font-size:15px;font-weight:600;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+  .cs{fill:#777;font-size:12.5px;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+
+  /* 充气脉冲 — 居中 r 放大 */
+  @keyframes cpulse{0%{r:0;opacity:.6}50%{r:50;opacity:.25}100%{r:72;opacity:0}}
+  .cp{fill:none;stroke:#D4A843;stroke-width:3;opacity:0}
+  .cp.a{animation:cpulse 1s ease-out forwards}
+
+  /* 粒子流动 */
+  @keyframes pflow{0%{offset-distance:0%;opacity:0}10%{opacity:1}90%{opacity:1}100%{offset-distance:100%;opacity:0}}
+  .pd{r:5.5;opacity:0}.pd.a{animation:pflow 1.4s linear forwards}
+
+  /* 方向箭头 */
+  .da{fill:none;stroke-width:3;opacity:0;transition:opacity .35s}
+  .da.v{opacity:1}
+
+  /* 标注文字 — 加大！*/
+  .la{fill:#C41E3A;font-size:14px;font-weight:600}
+  .lv{fill:#4169E1;font-size:14px;font-weight:600}
+  .lo{fill:#555;font-size:14px}
+  .lt{fill:#1A5C6E;font-size:17px;font-weight:700}
+
+  .div{stroke:#ccc;stroke-width:1;stroke-dasharray:7 4}
+
+  /* 高亮框 */
+  .hbX{fill:none;stroke:#D4A843;stroke-width:2.5;stroke-dasharray:6 3;opacity:0;transition:opacity .25s}
+  .hbX.v{opacity:1}
+</style>
+</head>
+<body>
+
+<h1>🌊 南水北调 × 顺水推舟 — EECP 血流重分布机制</h1>
+<p class="sub">体循环·肺循环完整示意 · 气囊序贯加压 · 舒张期增压泵回 · 收缩期排气减负</p>
+
+<!-- ========== 画布 ========== -->
+<div class="cw">
+
+  <!-- 图例 -->
+  <div class="lgd">
+    <div class="lr"><span class="ls" style="background:#C41E3A"></span> 动脉血（含氧）</div>
+    <div class="lr"><span class="ls" style="background:#4169E1"></span> 静脉血（缺氧）</div>
+    <div class="lr"><span class="ls" style="background:#D4A843"></span> 气囊充气压送</div>
+    <div class="lr"><span class="ls" style="background:#FF4444;opacity:.6"></span> ● 血流粒子</div>
+  </div>
+
+  <svg viewBox="0 0 960 800" xmlns="http://www.w3.org/2000/svg" style="height:auto;min-height:760px;">
+    <defs>
+      <marker id="mR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#C41E3A"/></marker>
+      <marker id="mB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4169E1"/></marker>
+      <!-- 粒子路径 -->
+      <path id="pathSysArtery" d="M400,310 Q400,160 480,130 Q560,105 650,120 Q720,140 780,180 L780,420 L750,455" fill="none"/>
+      <path id="pathPulmVein"   d="M220,230 Q270,210 320,200" fill="none"/>
+      <path id="pathPulmA"      d="M360,250 Q290,225 230,240" fill="none"/>
+      <path id="pathSVC"        d="M788,55 L788,145 Q748,175 674,188 Q580,205 460,212" fill="none"/>
+      <path id="pathIVC"        d="M682,430 Q618,378 548,328 Q496,280 460,215" fill="none"/>
+      <filter id="glowP"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+
+    <!-- ==================== 上半身：心肺 ==================== -->
+    <text x="480" y="32" class="lt" text-anchor="middle">上半身 — 心肺循环</text>
+
+    <!-- 心脏四腔 -->
+    <ellipse cx="340" cy="195" rx="38" ry="28" class="hb" opacity=".65"/>
+    <text x="340" y="200" class="lo" text-anchor="middle">右心房</text>
+
+    <ellipse cx="376" cy="262" rx="44" ry="36" class="hb" opacity=".8"/>
+    <text x="376" y="267" class="lo" text-anchor="middle">右心室</text>
+
+    <ellipse cx="464" cy="195" rx="38" ry="28" class="hb" opacity=".65"/>
+    <text x="464" y="200" class="lo" text-anchor="middle">左心房</text>
+
+    <ellipse cx="428" cy="262" rx="48" ry="38" class="hb"/>
+    <text x="428" y="267" class="lo" text-anchor="middle">左心室</text>
+
+    <text x="392" y="162" fill="#C41E3A" font-size="16" font-weight="700" text-anchor="middle">❤ 心脏</text>
+
+    <!-- 肺 -->
+    <ellipse cx="218" cy="230" rx="58" ry="75" class="lb"/>
+    <text x="218" y="236" fill="#5a90b8" font-size="14" text-anchor="middle">左肺</text>
+
+    <ellipse cx="572" cy="230" rx="58" ry="75" class="lb"/>
+    <text x="572" y="236" fill="#5a90b8" font-size="14" text-anchor="middle">右肺</text>
+
+    <!-- 肺/体循环标注 -->
+    <text x="802" y="108" fill="#5a90b8" font-size="14" font-weight="600">肺循环</text>
+    <text x="802" y="126" fill="#4169E1" font-size="13">肺动脉(蓝)→ 肺泡氧合</text>
+    <text x="802" y="144" fill="#C41E3A" font-size="13">→ 肺静脉(红) 回左心</text>
+    <text x="802" y="162" fill="#888" font-size="12">(CO₂↔O₂ 气体交换)</text>
+
+    <text x="168" y="408" fill="#C41E3A" font-size="14" font-weight="600">体循环</text>
+    <text x="168" y="426" fill="#C41E3A" font-size="13">左心室 → 主动脉(红)</text>
+    <text x="168" y="444" fill="#4169E1" font-size="13">→ 组织细胞 → 静脉(蓝)</text>
+    <text x="168" y="462" fill="#888" font-size="12">(O₂+养料 ↔ CO₂+废物)</text>
+
+
+    <!-- ==================== 血管路径 ==================== -->
+
+    <!-- 体循环 - 动脉（红）-->
+    <path id="sysArtery" d="M428,284 Q428,150 502,125 Q576,102 658,122 Q730,142 788,185 L788,418"
+          class="art" stroke-width="6"/>
+
+    <!-- 上腔静脉（蓝）-->
+    <path id="svcPath" d="M788,52 L788,146 Q748,178 674,190 Q580,208 460,216"
+          stroke="#4169E1" stroke-width="5" fill="none" opacity=".86"/>
+
+    <!-- 下腔静脉（蓝虚线）-->
+    <path id="ivcPath" d="M682,432 Q618,378 548,328 Q496,280 460,218"
+          stroke="#4169E1" stroke-width="5" fill="none" opacity=".75" stroke-dasharray="7 4"/>
+
+    <!-- 主动脉下行 -->
+    <path id="aoDown" d="M788,418 L788,432 L748,468"
+          class="art" stroke-width="5.5"/>
+    <path id="artLegs" d="M748,468 L698,505 L698,548"
+          stroke="#C41E3A" stroke-width="5.5" fill="none"/>
+
+    <!-- 静脉回流（蓝）-->
+    <path id="veinLegs" d="M698,720 L698,670 L698,548 L698,505 L718,468 L682,432 Q662,410 642,388"
+          stroke="#4169E1" stroke-width="5.5" fill="none" stroke-dasharray="5 3" opacity=".8"/>
+
+    <!-- 肺动脉（蓝！缺氧血去肺）-->
+    <path id="pulmArtery" d="M376,246 Q308,222 238,237"
+          stroke="#4169E1" stroke-width="5" fill="none" opacity=".86"/>
+
+    <!-- 肺静脉（红！富氧血回心脏）-->
+    <path id="pulmVein"  d="M238,237 Q308,220 332,206"
+          stroke="#C41E3A" stroke-width="5" fill="none" opacity=".86"/>
+
+    <!-- 血管名称标注 -->
+    <text x="702" y="320" class="la" font-size="13">↗ 主动脉（动脉血·红）</text>
+    <text x="702" y="370" class="lv" font-size="13">↗ 上腔静脉（头臂回流·蓝）</text>
+    <text x="702" y="400" class="lv" font-size="13">↗ 下腔静脉（下肢回流·蓝）</text>
+    <text x="766" y="480" class="la" font-size="13">↓ 动脉灌注下肢</text>
+    <text x="766" y="522" class="lv" font-size="13">↑ 静脉回流（EECP增压）</text>
+    <text x="296" y="228" class="lv" font-size="13">← 肺动脉（缺氧血·蓝→肺）</text>
+    <text x="296" y="198" class="la" font-size="13">→ 肺静脉（富氧血·红←肺）</text>
+
+
+    <!-- ==================== 粒子 ==================== -->
+    <circle class="pd" fill="#FF4444" filter="url(#glowP)" style="offset-path:url(#pathSysArtery);"/>
+    <circle class="pd" fill="#FF6666" filter="url(#glowP)" style="offset-path:url(#pathSysArtery);" data-dly="0.4"/>
+    <circle class="pd" fill="#FF4444" filter="url(#glowP)" style="offset-path:url(#pathSysArtery);" data-dly="0.8"/>
+
+    <circle class="pd" fill="#4488FF" filter="url(#glowP)" style="offset-path:url(#pathIVC);"/>
+    <circle class="pd" fill="#6699FF" filter="url(#glowP)" style="offset-path:url(#pathIVC);" data-dly="0.5"/>
+    <circle class="pd" fill="#4488FF" filter="url(#glowP)" style="offset-path:url(#pathIVC);" data-dly="1.0"/>
+
+    <circle class="pd" fill="#4488FF" filter="url(#glowP)" style="offset-path:url(#pathPulmA);"/>
+    <circle class="pd" fill="#6699FF" filter="url(#glowP)" style="offset-path:url(#pathPulmA);" data-dly="0.5"/>
+
+    <circle class="pd" fill="#FF4444" filter="url(#glowP)" style="offset-path:url(#pathPulmVein);"/>
+    <circle class="pd" fill="#FF6666" filter="url(#glowP)" style="offset-path:url(#pathPulmVein);" data-dly="0.5"/>
+
+
+    <!-- ==================== 方向箭头 ==================== -->
+    <path id="ad" d="M665,720 L665,630 L665,548 L665,505"
+          class="da" stroke="#4169E1" marker-end="url(#mB)" stroke-dasharray="8 4"/>
+    <text x="674" y="610" fill="#4169E1" font-size="14" font-weight="700" opacity="0">↑ 静脉回流增强（舒张期）</text>
+
+    <path id="as" d="M842,200 L842,315 L842,415"
+          class="da" stroke="#C41E3A" marker-end="url(#mR)" stroke-dasharray="8 4"/>
+    <text x="848" y="335" fill="#C41E3A" font-size="14" font-weight="700" opacity="0">↓ 动脉灌注增强（收缩期）</text>
+
+
+    <!-- ==================== 分隔线 ==================== -->
+    <line x1="70" y1="458" x2="890" y2="458" class="div"/>
+    <text x="480" y="476" class="lt" text-anchor="middle" font-size="15" opacity=".6">⬇ EECP 气囊序贯加压区域 ⬇</text>
+
+
+    <!-- ==================== 下半身：气囊 ==================== -->
+    <!-- 臀部 ① -->
+    <rect id="cHip"   x="564" y="488" width="176" height="68" class="cb"/>
+    <text x="652" y="518" class="cl">臀部气囊 ①</text>
+    <text x="652" y="536" class="cs">舒张晚期充气 · 最终增压</text>
+
+    <!-- 大腿 ② -->
+    <rect id="cThigh" x="564" y="578" width="176" height="76" class="cb"/>
+    <text x="652" y="610" class="cl">大腿气囊 ②</text>
+    <text x="652" y="628" class="cs">舒张中期充气 · 推进血液</text>
+
+    <!-- 小腿 ③ -->
+    <rect id="cCalf"  x="564" y="680" width="176" height="76" class="cb"/>
+    <text x="652" y="712" class="cl">小腿气囊 ③</text>
+    <text x="652" y="730" class="cs">舒张早期充气 · 启动泵送</text>
+
+    <!-- 充气泡（居中放大） -->
+    <circle cx="652" cy="522" r="0" class="cp" id="pH1"/>
+    <circle cx="652" cy="522" r="0" class="cp" id="pH2"/>
+    <circle cx="652" cy="616" r="0" class="cp" id="pT1"/>
+    <circle cx="652" cy="616" r="0" class="cp" id="pT2"/>
+    <circle cx="652" cy="718" r="0" class="cp" id="pC1"/>
+    <circle cx="652" cy="718" r="0" class="cp" id="pC2"/>
+
+    <!-- 序贯标注（左侧隐藏） -->
+    <text id="sqH" x="438" y="522" fill="#D4A843" font-size="14" text-anchor="end" opacity="0">① 臀部（最后充）</text>
+    <text id="sqT" x="438" y="616" fill="#D4A843" font-size="14" text-anchor="end" opacity="0">② 大腿（中间充）</text>
+    <text id="sqC" x="438" y="718" fill="#D4A843" font-size="14" text-anchor="end" opacity="0">③ 小腿（最先充）</text>
+
+    <!-- 高亮框 -->
+    <rect id="hH"  x="558" y="482" width="188" height="78" class="hbX" rx="11"/>
+    <rect id="hT"  x="558" y="572" width="188" height="88" class="hbX" rx="11"/>
+    <rect id="hC"  x="558" y="674" width="188" height="88" class="hbX" rx="11"/>
+    <rect id="hHt" x="300" y="156" width="240"  y="154" width="240" height="155" class="hbX" rx="8"/>
+
+    <!-- 底部说明 -->
+    <text x="480" y="782" fill="#888" font-size="12" text-anchor="middle">体循环：左心室→主动脉→全身组织→静脉(蓝)→腔静脉→右心房 | 肺循环：右心室→肺动脉(蓝)→肺→肺静脉(红)→左心房→左心室</text>
+  </svg>
+</div><!-- /.cw -->
+
+<!-- ========== 控制条 ========== -->
+<div class="ctrl-bar">
+  <div class="ctrl-left">
+    <div class="si">
+      <div class="sd" data-s="0">待</div>
+      <div class="sd" data-s="1">1</div>
+      <div class="sd" data-s="2">2</div>
+      <div class="sd" data-s="3">3</div>
+      <div class="sd" data-s="4">4</div>
+      <div class="sd" data-s="5">5</div>
+    </div>
+    <button class="btn bn" id="bStart">▶ 开始演示</button>
+    <button class="btn" id="bStep">⏭ 单步演示</button>
+  </div>
+  <div class="ctrl-right">
+    <span>循环: <strong id="dc">0</strong></span>
+    <span>阶段: <strong id="dp">—</strong></span>
+    <span>DPA: <strong id="ddpa">—</strong></span>
+    <span>冠脉增益: <strong id="dgf">—</strong></span>
+  </div>
+</div>
+
+<!-- ========== 说明面板 ========== -->
+<div class="info-bar" id="pcd">
+  <h3>⏸ 等待开始</h3>
+  <p>点击 <span class="hl">「开始演示」</span> 自动播放，或 <span class="hl">「单步」</span> 逐步查看。</p>
+</div>
+
+<script>
+// ===== 步骤数据 =====
+const ST=[
+  {t:'等待开始',ph:'—',
+   d:'点击「开始演示」自动播放，「单步」逐步查看。',
+   pr:'—',dp:'—',gf:'—',c:'',ar:''},
+  {t:'步骤 1 — 小腿充气',ph:'舒张早期',
+   d:'<span class="sl">最远端先行</span> 小腿气囊首先充气，挤压下肢静脉启动第一级泵送。血液向近心端流动。',
+   pr:'200',dp:'+40',gf:'+15%',c:'calf',ar:'dia'},
+  {t:'步骤 2 — 大腿充气',ph:'舒张早-中期',
+   d:'<span class="sl">序贯推进</span> 大腿气囊接着充气，承接小腿泵血，进一步向近心端推进，形成波浪式静脉回流。',
+   pr:'220',dp:'+60',gf:'+25%',c:'thigh',ar:'dia'},
+  {t:'步骤 3 — 臀部充气',ph:'舒张晚期',
+   d:'<span class="sl">最终增压</span> 臀部最后充气，将大量血液泵入主动脉根部，直接增加冠脉灌注压——南水北调高潮。',
+   pr:'250',dp:'+80',gf:'+35%',c:'hip',ar:'dia'},
+  {t:'步骤 4 — 舒张期效果',ph:'舒张期末',
+   d:'<span class="sl">增压完成</span> 三气囊全保持充气，血液大量回流。DPA +80mmHg，冠脉血流增加 35%。',
+   pr:'250',dp:'+80',gf:'+35%',c:'all',ar:'dia'},
+  {t:'步骤 5 — 收缩期排气',ph:'收缩期',
+   d:'<span class="sl">顺水推舟</span> 收缩期前三气囊同时排气，后负荷↓，心肌耗氧降低。',
+   pr:'0',dp:'维持+40',gf:'+20%',c:'none',ar:'sys'}
+];
+
+// ===== 状态 =====
+const S={step:0,auto:false,timer:null,cyc:0,spd:1000};
+const $=id=>document.getElementById(id);
+const pcd=$('pcd');
+const sds=document.querySelectorAll('.sd');
+
+function setSI(s){
+  sds.forEach(d=>{
+    d.classList.remove('a','d'); const v=+d.dataset.s;
+    if(v===0)return;if(v<s)d.classList.add('d');else if(v===s)d.classList.add('a');
+  });
+}
+function updDP(d){
+  $('dp').textContent=d.ph;
+  $('ddpa').textContent=d.dp;
+  $('dgf').textContent=d.gf;
+}
+function showHL(id){$(id).classList.add('v')}
+function hideHL(id){$(id).classList.remove('v')}
+
+function clrAll(){
+  ['hH','hT','hC','hHt'].forEach(id=>hideHL(id));
+  document.querySelectorAll('.cp').forEach(e=>e.classList.remove('a'));
+  ['ad','as'].forEach(id=>{
+    $(id).classList.remove('v');
+    let n=$(id).nextElementSibling;
+    if(n&&n.tagName==='text')n.setAttribute('opacity','0');
+  });
+  ['sqH','sqT','sqC'].forEach(id=>{ const el=$(id); if(el)el.setAttribute('opacity','0'); });
+  document.querySelectorAll('.pd').forEach(p=>p.classList.remove('a'));
+}
+
+function trigCP(part,delay){
+  ['1','2'].forEach((n,i)=>{
+    const el=$('p'+part+n);
+    if(!el)return;
+    el.classList.remove('a');void el.offsetWidth;
+    if(i===0)el.classList.add('a');
+    else setTimeout(()=>el.classList.add('a'),delay||300);
+  });
+}
+
+function showSeq(){
+  ['sqH','sqT','sqC'].forEach(id=>{ const el=$(id); if(el)el.setAttribute('opacity','1'); });
+}
+function clearSeq(){
+  ['sqH','sqT','sqC'].forEach(id=>{ const el=$(id); if(el)el.setAttribute('opacity','0'); });
+}
+
+function startParticles(color){
+  document.querySelectorAll('.pd').forEach((p,i)=>{
+    p.classList.remove('a');void p.offsetWidth;
+    const dly=parseFloat(p.dataset.dly||0)*1000;
+    setTimeout(()=>{p.classList.add('a');},dly);
+  });
+}
+
+// ===== 执行步骤 =====
+function runStep(s){
+  if(s<1||s>5)return;
+  const d=ST[s]; S.step=s;
+  pcd.innerHTML=`<h3>💓 ${d.t}</h3><p>${d.d}</p>`;
+  updDP(d); clrAll();
+
+  if(d.c==='calf'){showHL('hC');trigCP('Calf',300);clearSeq();$('sqC').setAttribute('opacity','1');startParticles('blue');}
+  else if(d.c==='thigh'){showHL('hT');trigCP('Thigh',300);clearSeq();$('sqT').setAttribute('opacity','1');startParticles('blue');}
+  else if(d.c==='hip'){showHL('hH');trigCP('Hip',300);clearSeq();$('sqH').setAttribute('opacity','1');startParticles('blue');}
+  else if(d.c==='all'){
+    ['H','T','C'].forEach(p=>{showHL('h'+p);trigCP(p,200);});showSeq();showHL('hHt');startParticles('blue');
+    setTimeout(()=>showHL('hHt'),350);
+  }else if(d.c==='none'){
+    clrAll();showHL('hHt');startParticles('red');
+  }
+
+  if(d.ar==='dia'){
+    $('ad').classList.add('v');
+    const tx=$('ad').nextElementSibling;
+    if(tx)tx.setAttribute('opacity','1');
+  }
+  if(d.ar==='sys'){
+    $('as').classList.add('v');
+    const tx=$('as').nextElementSibling;
+    if(tx)tx.setAttribute('opacity','1');
+  }
+  setSI(s);
+}
+
+// ===== 自动播放 =====
+function doAuto(){
+  if(!S.auto)return;
+  if(S.step>=5){S.step=0;S.timer=setTimeout(doAuto,700);return;}
+  S.step++;runStep(S.step);
+  S.timer=setTimeout(doAuto,S.spd+350);
+}
+function startAuto(){
+  if(S.auto)return;S.auto=true;S.step=0;S.cyc++;
+  $('dc').textContent=S.cyc;$('bStart').textContent='⏸ 暂停';$('bStart').onclick=pauseAuto;doAuto();
+}
+function pauseAuto(){
+  S.auto=false;clearTimeout(S.timer);
+  $('bStart').textContent='▶ 继续';$('bStart').onclick=startAuto;
+}
+
+// ===== 单步 =====
+function stepDemo(){
+  if(S.auto)pauseAuto();
+  if(S.step>=5){
+    S.step=0;clrAll();
+    pcd.innerHTML=`<h3>⏸ 等待开始</h3><p>点击「单步演示」查看。</p>`;
+    updDP(ST[0]);setSI(0);
+    return;
+  }
+  S.step++;runStep(S.step);
+}
+
+// ===== 绑定 =====
+$('bStart').onclick=startAuto;
+$('bStep').onclick=stepDemo;
+sds.forEach(d=>{
+  d.addEventListener('click',()=>{
+    const s=+d.dataset.s;if(!s)return;
+    if(S.auto)pauseAuto();S.step=s-1;runStep(s);
+  });
+});
+
+window.addEventListener('DOMContentLoaded',()=>setTimeout(startAuto,1200));
+</script>
+</body>
+</html>
