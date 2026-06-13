@@ -1344,7 +1344,7 @@
   @media (min-width: 1025px) {
     .topbar {
       display:block;
-      position:fixed; top:0; left:240px; right:0; z-index:1001;
+      position:fixed; top:0; left:0; right:0; z-index:1001;
       background:rgba(255,248,245,0.97); backdrop-filter:blur(16px) saturate(160%);
       -webkit-backdrop-filter: blur(16px) saturate(160%);
       border-bottom:1px solid rgba(26,92,110,0.10);
@@ -3494,7 +3494,7 @@
     <div class="cta-step"><div class="snum">第四步</div><div class="slab">协助科室完成<br>设备论证与采购</div></div>
   </div>
 
-  <a href="javascript:;" onclick="showQRModal(); return false;" class="btn">获取完整学术支持包 →</a>
+  <a href="javascript:;" onclick="openQRModal(); return false;" class="btn">获取完整学术支持包 →</a>
 </section>
 
 
@@ -3807,6 +3807,65 @@ function mpGoTo(id) {
   });
 }
 
+// ===== 全局导航数据（桌面端 + 移动端共用） =====
+var secData = {
+  why: [
+    {href:'#cover', num:'00', label:'封面概览'},
+    {href:'#concept', num:'01', label:'心脏康复概念'},
+    {href:'#market', num:'02', label:'市场分析'},
+    {href:'#future', num:'03', label:'未来潜力'}
+  ],
+  what: [
+    {href:'#policy', num:'04', label:'政策东风'},
+    {href:'#center-policy', num:'05', label:'中心建设政策'},
+    {href:'#center-equip', num:'06', label:'设备配置标准'},
+    {href:'#tech-history', num:'07', label:'技术发展历程'}
+  ],
+  evidence: [
+    {href:'#principle', num:'08', label:'工作原理'},
+    {href:'#five-rx', num:'09', label:'5+1处方体系'},
+    {href:'#nanshui', num:'08A', label:'南水北调效应'},
+    {href:'#cycle', num:'08B', label:'防保治康循环'},
+    {href:'#five-eecp', num:'10', label:'处方×EECP协同'},
+    {href:'#academic', num:'11', label:'学术制高点'},
+    {href:'#efficacy', num:'12', label:'疗效数据'},
+    {href:'#five-values', num:'13', label:'五大核心价值'}
+  ],
+  application: [
+    {href:'#indications', num:'14', label:'适应症/禁忌'},
+    {href:'#treatment', num:'15', label:'治疗规范'}
+  ],
+  departments: [
+    {href:'#dept-cardiology', num:'16', label:'心内科'},
+    {href:'#dept-rehab', num:'17', label:'心康中心'},
+    {href:'#dept-geriatrics', num:'18', label:'老年科'},
+    {href:'#dept-neurology', num:'19', label:'神内科'},
+    {href:'#dept-endocrine', num:'20', label:'内分泌科'},
+    {href:'#dept-andrology', num:'21', label:'男科'},
+    {href:'#dept-ophthalmology', num:'22', label:'眼科'},
+    {href:'#dept-sports', num:'23', label:'体育/运动医学'},
+    {href:'#dept-military', num:'24', label:'部队/公安系统'},
+    {href:'#dept-community', num:'25', label:'社区中心'},
+    {href:'#dept-private', num:'26', label:'民营医疗'}
+  ],
+  business: [
+    {href:'#more-opportunities', num:'27', label:'更多可能性'},
+    {href:'#pricing-roi', num:'28', label:'收费标准与ROI'}
+  ],
+  omay: [
+    {href:'#company-cert', num:'29A', label:'公司背景与认证'},
+    {href:'#product-models', num:'29B', label:'产品型号展示'},
+    {href:'#oem', num:'29', label:'奥迈优势'},
+    {href:'#faq', num:'30', label:'临床FAQ'},
+    {href:'#clients', num:'31', label:'客户画像'},
+    {href:'#sh-users', num:'32', label:'上海用户名单'}
+  ],
+  sell: [
+    {href:'#toolkit', num:'33', label:'话术工具箱'},
+    {href:'#cta', num:'34', label:'行动号召'}
+  ]
+};
+
 // ===== 桌面端导航分组折叠 =====
 function toggleSidenavGroup(header) {
   header.parentElement.classList.toggle('open');
@@ -3853,14 +3912,18 @@ function closeNav() {
 }
 
 // ===== 导航覆盖层点击 → 显示目标页面 =====
-document.getElementById('navOverlay').addEventListener('click', function(e) {
-  var link = e.target.closest('a');
-  if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
-    e.preventDefault();
-    var targetId = link.getAttribute('href').substring(1);
-    showPage(targetId);
-  }
-});
+(function(){
+  var navOverlay = document.getElementById('navOverlay');
+  if (!navOverlay) return;
+  navOverlay.addEventListener('click', function(e) {
+    var link = e.target.closest('a');
+    if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href').substring(1);
+      showPage(targetId);
+    }
+  });
+})();
 
 // ===== 窗口大小变化时重新检测 =====
 window.addEventListener('resize', function() {
@@ -4118,10 +4181,6 @@ initMobileMode();
   console.log('✨ EECP培训手册增强交互系统已加载');
 })();
 
-})();
-
-// ===== 脚本结束 =====
-
 // ===== 移动端导航 =====
 function toggleNav() {
   var overlay = document.getElementById('navOverlay');
@@ -4149,64 +4208,7 @@ function toggleNavGroup(header) {
   const tbSecondary = document.getElementById('tbSecondary');
   if (!tbSecondary) return;
 
-  // 二级导航数据：与侧边栏一一对应
-  const secData = {
-    why: [
-      {href:'#cover', num:'00', label:'封面概览'},
-      {href:'#concept', num:'01', label:'心脏康复概念'},
-      {href:'#market', num:'02', label:'市场分析'},
-      {href:'#future', num:'03', label:'未来潜力'}
-    ],
-    what: [
-      {href:'#policy', num:'04', label:'政策东风'},
-      {href:'#center-policy', num:'05', label:'中心建设政策'},
-      {href:'#center-equip', num:'06', label:'设备配置标准'},
-      {href:'#tech-history', num:'07', label:'技术发展历程'}
-    ],
-    evidence: [
-      {href:'#principle', num:'08', label:'工作原理'},
-      {href:'#five-rx', num:'09', label:'5+1处方体系'},
-      {href:'#nanshui', num:'08A', label:'南水北调效应'},
-      {href:'#cycle', num:'08B', label:'防保治康循环'},
-      {href:'#five-eecp', num:'10', label:'处方×EECP协同'},
-      {href:'#academic', num:'11', label:'学术制高点'},
-      {href:'#efficacy', num:'12', label:'疗效数据'},
-      {href:'#five-values', num:'13', label:'五大核心价值'}
-    ],
-    application: [
-      {href:'#indications', num:'14', label:'适应症/禁忌'},
-      {href:'#treatment', num:'15', label:'治疗规范'}
-    ],
-    departments: [
-      {href:'#dept-cardiology', num:'16', label:'心内科'},
-      {href:'#dept-rehab', num:'17', label:'心康中心'},
-      {href:'#dept-geriatrics', num:'18', label:'老年科'},
-      {href:'#dept-neurology', num:'19', label:'神内科'},
-      {href:'#dept-endocrine', num:'20', label:'内分泌科'},
-      {href:'#dept-andrology', num:'21', label:'男科'},
-      {href:'#dept-ophthalmology', num:'22', label:'眼科'},
-      {href:'#dept-sports', num:'23', label:'体育/运动医学'},
-      {href:'#dept-military', num:'24', label:'部队/公安系统'},
-      {href:'#dept-community', num:'25', label:'社区中心'},
-      {href:'#dept-private', num:'26', label:'民营医疗'}
-    ],
-    business: [
-      {href:'#more-opportunities', num:'27', label:'更多可能性'},
-      {href:'#pricing-roi', num:'28', label:'收费标准与ROI'}
-    ],
-    omay: [
-      {href:'#company-cert', num:'29A', label:'公司背景与认证'},
-      {href:'#product-models', num:'29B', label:'产品型号展示'},
-      {href:'#oem', num:'29', label:'奥迈优势'},
-      {href:'#faq', num:'30', label:'临床FAQ'},
-      {href:'#clients', num:'31', label:'客户画像'},
-      {href:'#sh-users', num:'32', label:'上海用户名单'}
-    ],
-    sell: [
-      {href:'#toolkit', num:'33', label:'话术工具箱'},
-      {href:'#cta', num:'34', label:'行动号召'}
-    ]
-  };
+  // 使用全局 secData（已在文件上方定义）
 
   function renderSec(group) {
     const items = secData[group] || [];
