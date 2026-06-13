@@ -667,6 +667,67 @@
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     padding-right: 12px;
   }
+  .mobile-page-bar .mp-nav {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .mobile-page-bar .mp-primary {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 4px;
+    padding: 2px 0;
+  }
+  .mobile-page-bar .mp-primary::-webkit-scrollbar { display: none; }
+  .mobile-page-bar .mp-p-item {
+    font-size: 0.68rem;
+    color: rgba(245,240,232,0.5);
+    white-space: nowrap;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  .mobile-page-bar .mp-p-item.active {
+    color: var(--gold-bright);
+    background: rgba(232,197,71,0.15);
+  }
+  .mobile-page-bar .mp-p-item:hover {
+    color: rgba(245,240,232,0.8);
+  }
+  .mobile-page-bar .mp-secondary {
+    display: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    padding: 2px 0;
+    font-size: 0.64rem;
+  }
+  .mobile-page-bar .mp-secondary::-webkit-scrollbar { display: none; }
+  .mobile-page-bar .mp-secondary.show { display: flex; }
+  .mobile-page-bar .mp-s-item {
+    color: rgba(245,240,232,0.6);
+    white-space: nowrap;
+    padding: 1px 6px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  .mobile-page-bar .mp-s-item:hover {
+    color: var(--gold-bright);
+    background: rgba(232,197,71,0.1);
+  }
+  .mobile-page-bar .mp-s-item.active {
+    color: var(--gold-bright);
+    background: rgba(232,197,71,0.2);
+  }
 
   /* ===== FOOTER ===== */
   .footer {
@@ -1289,6 +1350,7 @@
       border-bottom:1px solid rgba(26,92,110,0.10);
       font-family:"PingFang SC","Microsoft YaHei",sans-serif;
       box-shadow:0 2px 12px rgba(0,0,0,0.06);
+      pointer-events: auto;
     }
     .tb-row1 {
       display:flex; align-items:center; padding:0 24px;
@@ -3582,6 +3644,21 @@
 <!-- ===== MOBILE PAGE BAR ===== -->
 <div class="mobile-page-bar" id="mobilePageBar">
   <span class="mp-back" onclick="backToMenu()">← 目录</span>
+  <div class="mp-nav" id="mpNav">
+    <div class="mp-primary" id="mpPrimary">
+      <span class="mp-p-item active" data-group="why" onclick="mpSwitchGroup('why')">WHY</span>
+      <span class="mp-p-item" data-group="what" onclick="mpSwitchGroup('what')">WHAT</span>
+      <span class="mp-p-item" data-group="evidence" onclick="mpSwitchGroup('evidence')">循证</span>
+      <span class="mp-p-item" data-group="application" onclick="mpSwitchGroup('application')">应用</span>
+      <span class="mp-p-item" data-group="departments" onclick="mpSwitchGroup('departments')">科室</span>
+      <span class="mp-p-item" data-group="business" onclick="mpSwitchGroup('business')">商业</span>
+      <span class="mp-p-item" data-group="omay" onclick="mpSwitchGroup('omay')">奥迈</span>
+      <span class="mp-p-item" data-group="sell" onclick="mpSwitchGroup('sell')">销售</span>
+    </div>
+    <div class="mp-secondary" id="mpSecondary">
+      <!-- 二级导航由JS动态填充 -->
+    </div>
+  </div>
   <span class="mp-label" id="mpLabel">封面</span>
 </div>
 
@@ -3773,6 +3850,8 @@ function initMobileMode() {
   if (isMobile) {
     document.body.classList.add('mobile-page');
     showPage('cover', true);
+    // 初始化移动端一级导航
+    mpSwitchGroup('why');
   }
 }
 
@@ -3805,6 +3884,40 @@ function backToMenu() {
 function toggleNavGroup(header) {
   header.parentElement.classList.toggle('open');
 }
+// ===== 移动端一级导航切换 =====
+function mpSwitchGroup(group) {
+  // 更新一级导航高亮
+  document.querySelectorAll('#mpPrimary .mp-p-item').forEach(function(item) {
+    item.classList.toggle('active', item.dataset.group === group);
+  });
+  
+  // 获取二级导航数据
+  var items = secData[group] || [];
+  var secondary = document.getElementById('mpSecondary');
+  
+  if (items.length === 0) {
+    secondary.classList.remove('show');
+    secondary.innerHTML = '';
+    return;
+  }
+  
+  // 填充二级导航
+  secondary.innerHTML = items.map(function(it) {
+    return '<span class="mp-s-item" data-href="' + it.href + '" onclick="mpGoTo(\'' + it.href.substring(1) + '\')">' + it.num + ' ' + it.label + '</span>';
+  }).join('');
+  
+  secondary.classList.add('show');
+}
+
+// ===== 移动端二级导航点击 =====
+function mpGoTo(id) {
+  showPage(id);
+  // 更新二级导航高亮
+  document.querySelectorAll('#mpSecondary .mp-s-item').forEach(function(item) {
+    item.classList.toggle('active', item.dataset.href === '#' + id);
+  });
+}
+
 // ===== 桌面端导航分组折叠 =====
 function toggleSidenavGroup(header) {
   header.parentElement.classList.toggle('open');
