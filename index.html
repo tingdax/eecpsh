@@ -222,7 +222,7 @@
   .section-num.orange { color: var(--orange); }
   .section-dark .section-num { color: var(--gold-bright); }
   .section-red .section-num { color: var(--gold-bright); }
-  .section-gold .section-num { color: var(--red); }
+  .section-gold .section-num { color: var(--gold-bright); }
 
   h2 {
     font-size: 2.1rem; font-weight: 800; margin-bottom: 12px;
@@ -446,6 +446,17 @@
     font-size: 0.83rem; color: var(--red); line-height: 1.6; list-style: none; padding: 2px 0;
   }
   .adv-card .benefits li::before { content: '✓ '; color: var(--green); font-weight: 700; }
+  /* Dark section overrides — red text invisible on dark bg */
+  .section-dark .adv-card .benefits li, .section-red .adv-card .benefits li,
+  .section-gold .adv-card .benefits li, .dept-section-dark .adv-card .benefits li,
+  .dept-section-purple .adv-card .benefits li {
+    color: rgba(245,240,232,0.85);
+  }
+  .section-dark .adv-card .desc, .section-red .adv-card .desc,
+  .section-gold .adv-card .desc, .dept-section-dark .adv-card .desc,
+  .dept-section-purple .adv-card .desc {
+    color: rgba(245,240,232,0.85) !important;
+  }
 
   /* ===== OEM ADVANTAGE ===== */
   .oem-feature {
@@ -1219,6 +1230,18 @@
       transform: none !important;
     }
   }
+
+  /* ===== 产品图片悬停+灯箱放大 ===== */
+  .product-card:hover { transform: translateY(-6px) !important; box-shadow: 0 12px 36px rgba(0,0,0,0.15) !important; }
+  .product-card:hover img { transform: scale(1.08); }
+  .product-card img { transition: transform 0.35s cubic-bezier(.22,1,.36,1); }
+  /* Lightbox Modal */
+  .lb-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; cursor:pointer; align-items:center; justify-content:center; flex-direction:column; }
+  .lb-overlay.active { display:flex; }
+  .lb-overlay img { max-width:85vw; max-height:80vh; object-fit:contain; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+  .lb-close { position:absolute; top:20px; right:28px; color:white; font-size:42px; font-weight:300; cursor:pointer; z-index:10000; line-height:1; transition:color .2s; }
+  .lb-close:hover { color: var(--red); }
+  .lb-caption { color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-top: 16px; text-align: center; }
 </style>
 </head>
 <body>
@@ -2881,8 +2904,8 @@
   <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:32px;">
     <!-- OM-A -->
     <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:1px solid rgba(26,92,110,0.12); text-align:center; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
-      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:200px;">
-        <img src="OM-A.png" alt="OM-A" style="max-width:100%; max-height:180px; object-fit:contain; transition:transform 0.35s ease;">
+      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:300px;">
+        <img src="OM-A.png" alt="OM-A" onclick="event.stopPropagation();openLB('OM-A.png','OM-A 标准型 — 基层医疗首选')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
       </div>
       <div style="padding:16px 12px;">
         <h4 style="color:var(--blue); margin:0; font-size:1.05rem;">OM-A</h4>
@@ -2892,8 +2915,8 @@
 
     <!-- OM-A-I -->
     <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:1px solid rgba(26,92,110,0.12); text-align:center; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
-      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:200px;">
-        <img src="OM-A-I.png" alt="OM-A-I" style="max-width:100%; max-height:180px; object-fit:contain; transition:transform 0.35s ease;">
+      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:300px;">
+        <img src="OM-A-I.png" alt="OM-A-I" onclick="event.stopPropagation();openLB('OM-A-I.png','OM-A-I 增强型 — 房颤模式标配')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
       </div>
       <div style="padding:16px 12px;">
         <h4 style="color:var(--blue); margin:0; font-size:1.05rem;">OM-A-I</h4>
@@ -2903,8 +2926,8 @@
 
     <!-- OM-A-II -->
     <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:1px solid rgba(26,92,110,0.12); text-align:center; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
-      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:200px;">
-        <img src="OM-A-II.png" alt="OM-A-II" style="max-width:100%; max-height:180px; object-fit:contain; transition:transform 0.35s ease;">
+      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:300px;">
+        <img src="OM-A-II.png" alt="OM-A-II" onclick="event.stopPropagation();openLB('OM-A-II.png','OM-A-II 高端型 — 三甲定制配置')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
       </div>
       <div style="padding:16px 12px;">
         <h4 style="color:var(--blue); margin:0; font-size:1.05rem;">OM-A-II</h4>
@@ -2923,8 +2946,8 @@
     <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:2px solid var(--purple); text-align:center; position:relative; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
       <!-- 旗舰标识 -->
       <div style="position:absolute; top:10px; right:10px; background:linear-gradient(135deg,var(--purple),#6a2070); color:white; font-size:.68rem; padding:4px 10px; border-radius:10px; font-weight:700; z-index:2;">👑 旗舰款</div>
-      <div style="background:var(--paper); padding:22px 20px; display:flex; align-items:center; justify-content:center; min-height:220px;">
-        <img src="OM-A-ECP1.png" alt="OM-A-ECP1" style="max-width:100%; max-height:190px; object-fit:contain; transition:transform 0.35s ease;">
+      <div style="background:var(--paper); padding:22px 20px; display:flex; align-items:center; justify-content:center; min-height:300px;">
+        <img src="OM-A-ECP1.png" alt="OM-A-ECP1" onclick="event.stopPropagation();openLB('OM-A-ECP1.png','OM-A-ECP1 旗舰型 — 顶级三甲配置')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
       </div>
       <div style="padding:16px 12px;">
         <h4 style="color:var(--purple); margin:0; font-size:1.05rem;">OM-A-ECP1</h4>
@@ -2935,8 +2958,8 @@
     <!-- OM-A-ECP2 -->
     <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:2px solid var(--purple); text-align:center; position:relative; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
       <div style="position:absolute; top:10px; right:10px; background:linear-gradient(135deg,var(--purple),#6a2070); color:white; font-size:.68rem; padding:4px 10px; border-radius:10px; font-weight:700; z-index:2;">👑 旗舰款</div>
-      <div style="background:var(--paper); padding:22px 20px; display:flex; align-items:center; justify-content:center; min-height:220px;">
-        <img src="OM-A-ECP2.png" alt="OM-A-ECP2" style="max-width:100%; max-height:190px; object-fit:contain; transition:transform 0.35s ease;">
+      <div style="background:var(--paper); padding:22px 20px; display:flex; align-items:center; justify-content:center; min-height:300px;">
+        <img src="OM-A-ECP2.png" alt="OM-A-ECP2" onclick="event.stopPropagation();openLB('OM-A-ECP2.png','OM-A-ECP2 旗舰型 — 科研级配置')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
       </div>
       <div style="padding:16px 12px;">
         <h4 style="color:var(--purple); margin:0; font-size:1.05rem;">OM-A-ECP2</h4>
@@ -3122,7 +3145,8 @@
     <!-- 头部三甲梯队 -->
     <div style="margin-bottom:20px;">
       <div style="display:inline-block;background:rgba(196,30,58,0.15);color:#FFB8B8;font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:4px;letter-spacing:1px;margin-bottom:12px;">🏥 头部三甲 · 国家队</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+        <!-- 头部三甲·国家队 -->
 
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px 20px;transition:.2s;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
@@ -3166,7 +3190,7 @@
     <!-- 市属综合 & 中西医结合 -->
     <div style="margin-bottom:20px;">
       <div style="display:inline-block;background:rgba(26,92,110,0.25);color:#8EC5D5;font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:4px;letter-spacing:1px;margin-bottom:12px;">🏥 市属综合 & 中西医结合</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
 
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px 20px;transition:.2s;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
@@ -3210,9 +3234,9 @@
     <!-- 高端国际 -->
     <div style="margin-bottom:16px;">
       <div style="display:inline-block;background:rgba(212,168,67,0.15);color:var(--gold-bright);font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:4px;letter-spacing:1px;margin-bottom:12px;">🌍 高端国际医疗</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
 
-        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(212,168,67,0.2);border-radius:10px;padding:18px 20px;transition:.2s;">
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(212,168,67,0.2);border-radius:10px;padding:18px 20px;transition:.2s;grid-column:1/-1;max-width:600px;justify-self:center;width:100%;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
             <strong style="font-size:1rem;color:#fff;">上海嘉会国际医院</strong>
             <span style="background:var(--gold);color:#333;font-size:0.65rem;padding:2px 8px;border-radius:3px;font-weight:700;">国际JCI</span>
@@ -3913,6 +3937,26 @@ initMobileMode();
 
 // ===== 脚本结束 =====
 
+</script>
+
+<!-- 产品图片灯箱弹窗 -->
+<div class="lb-overlay" id="lbOverlay" onclick="closeLB()">
+  <span class="lb-close">&times;</span>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-caption" id="lbCaption"></div>
+</div>
+<script>
+function openLB(imgSrc, caption) {
+  document.getElementById('lbImg').src = imgSrc;
+  document.getElementById('lbCaption').textContent = caption || '';
+  document.getElementById('lbOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLB() {
+  document.getElementById('lbOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLB(); });
 </script>
 </body>
 </html>
