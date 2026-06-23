@@ -6,25 +6,136 @@
 <title>气囊式体外反搏系统 — 渠道培训手册 · v2.5</title>
 <style>
   :root {
-    --paper: #FFF8F5;
-    --gold: #D4A843;
-    --gold-bright: #E8C547;
-    --yellow: #E8C547;
-    --red: #C41E3A;
-    --red-dark: #9B1B30;
-    --blue: #1A5C6E;
-    --blue-light: #2A7A8C;
-    --blue-dark: #0F3D4A;
-    --green: #2E8B57;
-    --green-light: #3DA76A;
-    --purple: #7B3FA3;
-    --orange: #FF6B35;
-    --ink: #1a1a1a;
-    --ink2: #3a3a3a;
-    --ink3: #5a5a5a;
-    --ink4: #8a8a8a;
-    --white: #ffffff;
+    /* ===== 循环系统语义色：动脉红 · 静脉蓝 · 神经绿 · 淋巴黄 ===== */
+    /* 动脉红 — 主品牌 / 核心 CTA / 警示 */
+    --c-artery:        #C41E3A;
+    --c-artery-soft:   #E85A6E;
+    --c-artery-dark:   #9B1B30;
+    --c-artery-bg:     rgba(196,30,58,0.08);
+    /* 静脉蓝 — 信息 / 次级操作 / 链接 */
+    --c-vein:          #1A5C6E;
+    --c-vein-soft:     #2A7A8C;
+    --c-vein-dark:     #0F3D4A;
+    --c-vein-bg:       rgba(26,92,110,0.08);
+    /* 神经绿 — 成功 / 增长 / 验证通过 */
+    --c-nerve:         #2E8B57;
+    --c-nerve-soft:    #3DA76A;
+    --c-nerve-dark:    #1F6B3D;
+    --c-nerve-bg:      rgba(46,139,87,0.10);
+    /* 淋巴黄 — 强调 / 高亮 / 数据徽章 */
+    --c-lymph:         #D4A843;
+    --c-lymph-bright:  #E8C547;
+    --c-lymph-soft:    #F0D78A;
+    --c-lymph-bg:      rgba(212,168,67,0.12);
+
+    /* ===== 表面 / 文字 / 边框 ===== */
+    --paper:           #FFF8F5;
+    --paper-elevated:  #FFFFFF;
+    --paper-sunken:    #F5EBE0;
+    --ink:             #1A1A1A;
+    --ink2:            #3A3A3A;
+    --ink3:            #5A5A5A;
+    --ink4:            #8A8A8A;
+    --border:          rgba(26,92,110,0.15);
+    --border-strong:   rgba(26,92,110,0.25);
+    --white:           #FFFFFF;
+
+    /* ===== 兼容旧名（保留别名，新代码请用 --c-*） ===== */
+    --red:             var(--c-artery);
+    --red-dark:        var(--c-artery-dark);
+    --blue:            var(--c-vein);
+    --blue-light:      var(--c-vein-soft);
+    --blue-dark:       var(--c-vein-dark);
+    --green:           var(--c-nerve);
+    --green-light:     var(--c-nerve-soft);
+    --gold:            var(--c-lymph);
+    --gold-bright:     var(--c-lymph-bright);
+    --yellow:          var(--c-lymph-bright);
   }
+
+  /* ===== 深色模式：四色提亮 + 表面深化 ===== */
+  body.dark-mode {
+    --c-artery:        #FF4D6D;
+    --c-artery-soft:   #FF7A8E;
+    --c-artery-dark:   #C9304D;
+    --c-artery-bg:     rgba(255,77,109,0.14);
+    --c-vein:          #4FB3C8;
+    --c-vein-soft:     #7CC9D9;
+    --c-vein-dark:     #2A7A8C;
+    --c-vein-bg:       rgba(79,179,200,0.14);
+    --c-nerve:         #5DDB96;
+    --c-nerve-soft:    #85E6B0;
+    --c-nerve-dark:    #3DA76A;
+    --c-nerve-bg:      rgba(93,219,150,0.14);
+    --c-lymph:         #FFD45E;
+    --c-lymph-bright:  #FFE083;
+    --c-lymph-soft:    #FFE9A8;
+    --c-lymph-bg:      rgba(255,212,94,0.16);
+
+    --paper:           #0F141A;
+    --paper-elevated:  #1A2026;
+    --paper-sunken:    #0A0E12;
+    --ink:             #F5F0E8;
+    --ink2:            rgba(245,240,232,0.85);
+    --ink3:            rgba(245,240,232,0.65);
+    --ink4:            rgba(245,240,232,0.40);
+    --border:          rgba(232,197,71,0.16);
+    --border-strong:   rgba(232,197,71,0.28);
+  }
+  body.dark-mode { background: var(--paper); color: var(--ink); }
+
+  /* ===== 深色模式：板块 / 卡片 / 表格 / CTA ===== */
+  body.dark-mode .section { background: var(--paper); color: var(--ink); }
+  body.dark-mode .section-white { background: var(--paper-elevated); }
+  body.dark-mode .section-dark,
+  body.dark-mode .section-red,
+  body.dark-mode .section-gold,
+  body.dark-mode .section-gradient { background: var(--paper-sunken); }
+  body.dark-mode .dept-section-dark,
+  body.dark-mode .dept-section-purple { background: var(--paper-sunken); }
+  body.dark-mode .toc { background: var(--paper-elevated); color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  body.dark-mode .card { background: var(--paper-elevated); color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,0.3); border-color: var(--border); }
+  body.dark-mode .card.blue-t { border-top: 3px solid var(--c-vein); }
+  body.dark-mode .card.gold-t { border-top: 3px solid var(--c-lymph); }
+  body.dark-mode .card.green-t { border-top: 3px solid var(--c-nerve); }
+  body.dark-mode .card.red-t { border-top: 3px solid var(--c-artery); }
+  body.dark-mode .data-table,
+  body.dark-mode table { background: var(--paper-elevated); color: var(--ink); }
+  body.dark-mode .data-table th { background: var(--paper-sunken); color: var(--c-lymph-bright); border-bottom-color: var(--border); }
+  body.dark-mode .data-table td { border-bottom-color: var(--border); }
+  body.dark-mode .footer { background: var(--paper-sunken); color: var(--ink3); }
+  body.dark-mode .cta-section { background: var(--paper-sunken); }
+  body.dark-mode .cover { background: var(--paper-sunken); color: var(--ink); }
+  body.dark-mode .cover-stat .num { color: var(--c-lymph-bright); }
+  body.dark-mode .cover-stat .num.red { color: var(--c-artery-soft); }
+  body.dark-mode .cover-stat .num.gold { color: var(--c-lymph-bright); }
+  body.dark-mode .cover-stat .num.white { color: var(--ink); }
+  body.dark-mode .cover-topline span { color: var(--ink3); }
+  body.dark-mode .cover-author { color: var(--ink3); }
+  body.dark-mode .cover-divider { background: var(--border); }
+  body.dark-mode .sh-section,
+  body.dark-mode .sh-users-card { background: var(--paper-elevated); color: var(--ink); }
+  body.dark-mode .sh-bar { background: var(--paper-elevated); }
+  body.dark-mode .sh-user-card { background: var(--paper-sunken); border-color: var(--border); }
+  body.dark-mode .sh-user-card .dept-name { color: var(--c-lymph-bright); }
+  body.dark-mode .sh-user-card .user-note { color: var(--ink3); }
+  body.dark-mode .sh-note { color: var(--ink3); background: rgba(245,240,232,0.04); }
+  body.dark-mode .qr-modal-box { background: var(--paper-elevated); color: var(--ink); }
+  body.dark-mode .lb-overlay { background: rgba(0,0,0,0.92); }
+  body.dark-mode .mobile-page-bar { background: rgba(10,10,10,0.96); color: var(--ink); border-bottom-color: var(--border); }
+  body.dark-mode .mobile-page-bar .mp-back { color: var(--c-artery-soft); }
+  body.dark-mode .mobile-page-bar .mp-label { color: var(--ink); }
+  /* 章节标题与文字色 */
+  body.dark-mode h2, body.dark-mode h3, body.dark-mode h4 { color: var(--ink); }
+  body.dark-mode .section-lead { color: var(--ink3); }
+  body.dark-mode .section-num { color: var(--c-lymph-bright); }
+  body.dark-mode .dept-name { color: var(--c-lymph-bright); }
+  body.dark-mode .stage-num { color: var(--c-artery-soft); }
+  body.dark-mode .stage-num.gold { color: var(--c-lymph-bright); }
+  body.dark-mode .highlight-num { color: var(--c-lymph-bright); }
+  body.dark-mode .data-source { color: var(--ink4); }
+  body.dark-mode a { color: var(--c-vein); }
+  body.dark-mode a:hover { color: var(--c-vein-soft); }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -197,6 +308,30 @@
   .hamburger.active span:nth-child(2) { opacity: 0; }
   .hamburger.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .hamburger.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* ===== 主题切换按钮（日 / 月） ===== */
+  .theme-toggle {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1.5px solid var(--c-vein); background: transparent;
+    color: var(--c-vein); cursor: pointer; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    overflow: hidden;
+  }
+  .theme-toggle:hover { transform: scale(1.06); }
+  .theme-toggle .tt-sun,
+  .theme-toggle .tt-moon {
+    position: absolute; font-size: 1.05rem; line-height: 1;
+    transition: opacity 0.25s, transform 0.35s;
+  }
+  /* 浅色模式：显示月亮（暗示切换到深色） */
+  :root:not(.dark-mode) .theme-toggle .tt-moon { opacity: 1; transform: rotate(0); }
+  :root:not(.dark-mode) .theme-toggle .tt-sun  { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  /* 深色模式：显示太阳（暗示切换到浅色） */
+  body.dark-mode .theme-toggle { border-color: var(--c-lymph-bright); color: var(--c-lymph-bright); }
+  body.dark-mode .theme-toggle .tt-sun  { opacity: 1; transform: rotate(0); }
+  body.dark-mode .theme-toggle .tt-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
   /* Reading progress bar */
   .reading-progress {
     position: fixed; top: 64px; left: 0; right: 0; height: 3px;
@@ -1416,6 +1551,10 @@
     </div>
     <button class="hamburger" id="hamburger" aria-label="目录菜单" aria-expanded="false" aria-controls="navDrawer">
       <span></span><span></span><span></span>
+    </button>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深色模式" aria-pressed="false" title="切换深色 / 浅色">
+      <span class="tt-sun" aria-hidden="true">☀</span>
+      <span class="tt-moon" aria-hidden="true">☾</span>
     </button>
   </div>
 </header>
@@ -3895,31 +4034,68 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'Escape') closeQRModal();
 });
 
-// ===== NAV Adaptive: system dark mode + sunrise/sunset =====
+// ===== NAV Adaptive: system dark mode + sunrise/sunset + manual toggle =====
 (function() {
-  var nav = document.getElementById('sidenav');
-  var overlay = document.getElementById('navOverlay');
-  function updateNavMode() {
-    var now = new Date();
-    var hour = now.getHours();
-    var isDark = (hour < 6 || hour >= 19);
-    var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var darkMode = isDark || sysDark;
-    if (nav) {
-      if (darkMode) { nav.classList.add('nav-dark'); nav.classList.remove('nav-light'); }
-      else { nav.classList.add('nav-light'); nav.classList.remove('nav-dark'); }
+  var topnav = document.getElementById('topnav');
+  var drawer = document.getElementById('navDrawer');
+  var themeBtn = document.getElementById('themeToggle');
+
+  // 1) 读取手动偏好（localStorage 优先于系统 / 时间）
+  var storedPref = null;
+  try { storedPref = localStorage.getItem('omay-theme'); } catch(e) {}
+
+  function isTimeDark() {
+    var hour = new Date().getHours();
+    return (hour < 6 || hour >= 19);
+  }
+
+  function applyTheme(mode) {
+    // mode: 'dark' | 'light' | 'auto'
+    var resolved;
+    if (mode === 'auto') {
+      var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      resolved = isTimeDark() || sysDark ? 'dark' : 'light';
+    } else {
+      resolved = mode;
     }
-    if (overlay) {
-      if (darkMode) overlay.classList.add('nav-dark-overlay');
-      else overlay.classList.remove('nav-dark-overlay');
+    var isDark = (resolved === 'dark');
+    document.body.classList.toggle('dark-mode', isDark);
+    if (topnav) topnav.classList.toggle('nav-dark', isDark);
+    if (drawer) drawer.classList.toggle('nav-dark-drawer', isDark);
+    if (themeBtn) {
+      themeBtn.setAttribute('aria-pressed', String(isDark));
+      themeBtn.title = isDark ? '切换到浅色' : '切换到深色';
     }
   }
-  updateNavMode();
+
+  // 2) 初始化
+  applyTheme(storedPref || 'auto');
+
+  // 3) 手动切换按钮：light ⇄ dark（取消 auto）
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function() {
+      var nowDark = document.body.classList.contains('dark-mode');
+      var next = nowDark ? 'light' : 'dark';
+      try { localStorage.setItem('omay-theme', next); } catch(e) {}
+      applyTheme(next);
+    });
+  }
+
+  // 4) 跟随系统 dark mode 变化（仅在 auto 时响应）
   if (window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateNavMode);
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+      var cur = null;
+      try { cur = localStorage.getItem('omay-theme'); } catch(e) {}
+      if (!cur) applyTheme('auto');
+    });
   }
-  // Re-check every 15 min for sunrise/sunset transition
-  setInterval(updateNavMode, 15 * 60 * 1000);
+
+  // 5) 时间切换（仅在 auto 时响应，每 15 分钟）
+  setInterval(function() {
+    var cur = null;
+    try { cur = localStorage.getItem('omay-theme'); } catch(e) {}
+    if (!cur) applyTheme('auto');
+  }, 15 * 60 * 1000);
 })();
 
 // ===== 动效系统 =====
