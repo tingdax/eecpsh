@@ -34,101 +34,261 @@
     line-height: 1.85;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
-    margin-left: 220px;
   }
   ::selection { background: var(--red); color: white; }
 
-  /* ===== SIDENAV — 毛玻璃 + 红蓝分类 + 自适应 ===== */
-  .sidenav {
-    position: fixed; top: 0; left: 0; bottom: 0; z-index: 1000;
-    width: 240px;
-    background: rgba(255,248,245,0.92); backdrop-filter: blur(20px) saturate(180%);
+  /* ===== TOP NAV — 顶部主菜单 + 子菜单 ===== */
+  .topnav {
+    position: sticky; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(255,248,245,0.92);
+    backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-right: 1px solid rgba(26,92,110,0.15);
-    display: flex; flex-direction: column;
-    padding: 20px 0;
-    overflow-y: auto;
-    transition: background 0.4s, border-color 0.4s;
+    border-bottom: 1px solid rgba(26,92,110,0.12);
+    display: flex; align-items: center;
+    padding: 0 4%;
+    height: 64px;
+    box-shadow: 0 1px 12px rgba(0,0,0,0.04);
   }
-  .sidenav .brand {
-    color: var(--red); font-weight: 800; font-size: 0.95rem;
-    padding: 0 22px 14px; margin-bottom: 6px;
-    border-bottom: 2px solid rgba(196,30,58,0.15);
-    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+  .topnav.nav-dark {
+    background: rgba(15,20,26,0.94);
+    border-bottom-color: rgba(232,197,71,0.12);
+  }
+  .topnav .brand {
+    display: flex; align-items: baseline; gap: 10px;
+    color: var(--red); font-weight: 800; font-size: 1rem;
     letter-spacing: 1px;
+    text-decoration: none;
+    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+    flex-shrink: 0; margin-right: 32px;
   }
-  .cat-label {
-    font-size: 0.66rem; letter-spacing: 3px; text-transform: uppercase;
-    font-weight: 700; padding: 10px 22px 4px;
+  .topnav .brand .brand-sub {
+    font-size: 0.7rem; opacity: 0.55; font-weight: 400;
+  }
+  .topnav.nav-dark .brand { color: var(--gold-bright); }
+  .main-menu {
+    display: flex; align-items: center; gap: 0; flex: 1; height: 100%;
+    list-style: none; margin: 0; padding: 0;
+  }
+  .main-menu > li {
+    position: relative; height: 100%;
+  }
+  .main-menu > li > .menu-trigger {
+    display: flex; align-items: center; gap: 6px;
+    height: 100%; padding: 0 18px;
+    color: rgba(26,26,26,0.7); font-size: 0.9rem;
+    font-weight: 600; letter-spacing: 0.5px;
+    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+    cursor: pointer; background: none; border: none;
+    transition: color 0.2s;
+    text-decoration: none; white-space: nowrap;
+  }
+  .topnav.nav-dark .main-menu > li > .menu-trigger { color: rgba(245,240,232,0.75); }
+  .main-menu > li > .menu-trigger .chev {
+    width: 8px; height: 8px; border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translate(-2px,-2px);
+    transition: transform 0.25s; opacity: 0.55;
+  }
+  .main-menu > li:hover > .menu-trigger,
+  .main-menu > li:focus-within > .menu-trigger,
+  .main-menu > li.open > .menu-trigger { color: var(--red); }
+  .topnav.nav-dark .main-menu > li:hover > .menu-trigger,
+  .topnav.nav-dark .main-menu > li:focus-within > .menu-trigger,
+  .topnav.nav-dark .main-menu > li.open > .menu-trigger { color: var(--gold-bright); }
+  .main-menu > li:hover > .menu-trigger .chev,
+  .main-menu > li:focus-within > .menu-trigger .chev,
+  .main-menu > li.open > .menu-trigger .chev {
+    transform: rotate(225deg) translate(-2px,-2px);
+    opacity: 1;
+  }
+  /* Submenu panel */
+  .submenu-panel {
+    position: absolute; top: 100%; left: 0; min-width: 240px;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(26,92,110,0.1);
+    border-top: 2px solid var(--red);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+    padding: 8px 0;
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 1001;
+  }
+  .topnav.nav-dark .submenu-panel {
+    background: rgba(15,20,26,0.97);
+    border-color: rgba(232,197,71,0.18);
+    border-top-color: var(--gold-bright);
+  }
+  .main-menu > li:hover > .submenu-panel,
+  .main-menu > li:focus-within > .submenu-panel,
+  .main-menu > li.open > .submenu-panel {
+    opacity: 1; visibility: visible; transform: translateY(0);
+  }
+  .submenu-panel a {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+    padding: 9px 18px; color: rgba(26,26,26,0.7); text-decoration: none;
+    font-size: 0.86rem;
+    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+    transition: background 0.15s, color 0.15s, padding-left 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .topnav.nav-dark .submenu-panel a { color: rgba(245,240,232,0.7); }
+  .submenu-panel a .sub-label { flex: 1; }
+  .submenu-panel a .sub-num {
+    font-size: 0.7rem; opacity: 0.4; font-family: "Georgia",serif;
+  }
+  .submenu-panel a:hover,
+  .submenu-panel a:focus {
+    background: rgba(196,30,58,0.06);
+    color: var(--red);
+    padding-left: 22px;
+    border-left-color: var(--red);
+    outline: none;
+  }
+  .topnav.nav-dark .submenu-panel a:hover,
+  .topnav.nav-dark .submenu-panel a:focus {
+    background: rgba(232,197,71,0.08);
+    color: var(--gold-bright);
+    border-left-color: var(--gold-bright);
+  }
+  /* Top nav right side: filter + hamburger */
+  .topnav-right {
+    margin-left: auto; display: flex; align-items: center; gap: 12px;
+    height: 100%;
+  }
+  .topnav-filter {
+    display: inline-flex; align-items: center;
+    background: rgba(26,92,110,0.06);
+    border: 1px solid rgba(26,92,110,0.15);
+    border-radius: 999px; padding: 3px;
     font-family: "PingFang SC","Microsoft YaHei",sans-serif;
   }
-  .cat-why  { color: var(--red); }
-  .cat-what { color: var(--blue); }
-  .cat-evidence { color: var(--red); }
-  .cat-application { color: var(--blue); }
-  .cat-departments { color: var(--red); }
-  .cat-business { color: var(--blue); }
-  .cat-omai { color: var(--red); }
-  .cat-sell { color: var(--blue); }
-  .sidenav .nav-item {
-    color: rgba(26,26,26,0.55); text-decoration: none;
-    font-size: 0.8rem; padding: 7px 24px 7px 22px;
-    letter-spacing: 0.2px;
-    transition: all 0.22s; font-family: "PingFang SC","Microsoft YaHei",sans-serif;
-    border-left: 3px solid transparent; display: flex; align-items: center; gap: 8px;
-    position: relative;
+  .topnav-filter .filter-tab {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px;
+    padding: 5px 14px; border-radius: 999px;
+    cursor: pointer; transition: all 0.2s;
+    color: rgba(26,26,26,0.6);
+    background: transparent; border: none;
   }
-  .nav-dot {
-    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-    transition: all 0.22s;
+  .topnav-filter .filter-tab.active-tab { background: var(--red); color: #fff; }
+  .topnav-filter .filter-tab:last-child.active-tab { background: var(--blue); color: #fff; }
+  .topnav-filter .filter-tab:hover:not(.active-tab) { background: rgba(196,30,58,0.08); }
+  .topnav-filter .filter-tab:last-child:hover:not(.active-tab) { background: rgba(26,92,110,0.08); }
+  .topnav.nav-dark .topnav-filter { background: rgba(245,240,232,0.06); border-color: rgba(245,240,232,0.15); }
+  .topnav.nav-dark .topnav-filter .filter-tab { color: rgba(245,240,232,0.6); }
+  .topnav.nav-dark .topnav-filter .filter-tab:hover:not(.active-tab) { background: rgba(232,197,71,0.1); color: var(--gold-bright); }
+  .hamburger {
+    display: none;
+    background: transparent; border: 1.5px solid var(--red); border-radius: 50%;
+    width: 40px; height: 40px;
+    align-items: center; justify-content: center; flex-direction: column; gap: 4px;
+    cursor: pointer; padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--ink);
   }
-  .dot-red  { background: rgba(196,30,58,0.3); }
-  .dot-blue { background: rgba(26,92,110,0.3); }
-  .nav-num {
-    font-size: 0.65rem; color: rgba(26,26,26,0.25);
-    margin-left: auto; font-family: "Georgia",serif;
-    transition: color 0.22s;
+  .topnav.nav-dark .hamburger { border-color: var(--gold-bright); color: var(--gold-bright); }
+  .hamburger span {
+    display: block; width: 18px; height: 2px; background: currentColor;
+    transition: all 0.3s; border-radius: 1px;
   }
-  /* Hover: red items */
-  .sidenav .nav-hover-red:hover {
-    color: var(--red); background: rgba(196,30,58,0.06);
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .hamburger.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  /* Reading progress bar */
+  .reading-progress {
+    position: fixed; top: 64px; left: 0; right: 0; height: 3px;
+    background: transparent; z-index: 999;
+  }
+  .reading-progress .bar {
+    height: 100%; width: 0;
+    background: linear-gradient(90deg, var(--red), var(--gold-bright));
+    transition: width 0.1s linear;
+  }
+  /* Floating "back to top" button */
+  .back-to-top {
+    position: fixed; right: 20px; bottom: 20px; z-index: 998;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--red); color: #fff; border: none;
+    font-size: 1.2rem; font-weight: 800;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(196,30,58,0.3);
+    opacity: 0; visibility: hidden; transform: translateY(10px);
+    transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  }
+  .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+  .back-to-top:hover { background: var(--red-dark); }
+  /* Mobile drawer */
+  .nav-drawer {
+    position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+    background: rgba(255,248,245,0.98);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    z-index: 1999; overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    padding: 12px 0 80px;
+  }
+  .nav-drawer.nav-dark-drawer { background: rgba(15,20,26,0.98); }
+  .nav-drawer.active { transform: translateX(0); }
+  .nav-drawer .drawer-group {
+    border-bottom: 1px solid rgba(26,92,110,0.08);
+  }
+  .nav-drawer.nav-dark-drawer .drawer-group { border-bottom-color: rgba(232,197,71,0.1); }
+  .nav-drawer .drawer-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px; cursor: pointer; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-drawer .drawer-header .dh-title {
+    font-size: 0.92rem; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--ink); font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  .nav-drawer.nav-dark-drawer .drawer-header .dh-title { color: var(--gold-bright); }
+  .nav-drawer .drawer-header .dh-arrow {
+    font-size: 0.7rem; opacity: 0.5; transition: transform 0.22s;
+  }
+  .nav-drawer .drawer-group.open .drawer-header .dh-arrow { transform: rotate(90deg); }
+  .nav-drawer .drawer-body {
+    overflow: hidden; max-height: 0; transition: max-height 0.3s ease;
+  }
+  .nav-drawer .drawer-group.open .drawer-body { max-height: 1000px; }
+  .nav-drawer .drawer-body a {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 36px; color: rgba(26,26,26,0.7); text-decoration: none;
+    font-size: 0.92rem; font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+    border-left: 2px solid transparent;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .nav-drawer.nav-dark-drawer .drawer-body a { color: rgba(245,240,232,0.7); }
+  .nav-drawer .drawer-body a:active,
+  .nav-drawer .drawer-body a:hover {
+    background: rgba(196,30,58,0.06); color: var(--red);
     border-left-color: var(--red);
   }
-  .sidenav .nav-hover-red:hover .dot-red { background: var(--red); box-shadow: 0 0 6px rgba(196,30,58,0.4); }
-  .sidenav .nav-hover-red:hover .dot-blue { background: var(--red); box-shadow: 0 0 6px rgba(196,30,58,0.4); }
-  .sidenav .nav-hover-red:hover .nav-num { color: var(--red); }
-  /* Hover: blue items */
-  .sidenav .nav-hover-blue:hover {
-    color: var(--blue); background: rgba(26,92,110,0.06);
-    border-left-color: var(--blue);
+  .nav-drawer.nav-dark-drawer .drawer-body a:active,
+  .nav-drawer.nav-dark-drawer .drawer-body a:hover {
+    background: rgba(232,197,71,0.08); color: var(--gold-bright);
+    border-left-color: var(--gold-bright);
   }
-  .sidenav .nav-hover-blue:hover .dot-red { background: var(--blue); box-shadow: 0 0 6px rgba(26,92,110,0.4); }
-  .sidenav .nav-hover-blue:hover .dot-blue { background: var(--blue); box-shadow: 0 0 6px rgba(26,92,110,0.4); }
-  .sidenav .nav-hover-blue:hover .nav-num { color: var(--blue); }
-  /* Active */
-  .sidenav .nav-item.active {
-    color: var(--red); background: linear-gradient(90deg, rgba(196,30,58,0.18), rgba(26,92,110,0.08));
-    border-left-color: var(--red); font-weight: 600;
+  .nav-drawer .drawer-body a .sub-num {
+    font-size: 0.72rem; opacity: 0.4; font-family: "Georgia",serif;
   }
-  .sidenav .nav-item.active .dot-red,
-  .sidenav .nav-item.active .dot-blue { background: var(--red); box-shadow: 0 0 8px rgba(196,30,58,0.5); }
-  .sidenav .nav-item.active .nav-num { color: var(--red); font-weight: 700; }
-  /* Dark mode active */
-  .sidenav.nav-dark .nav-item.active { color: var(--gold-bright); background: linear-gradient(90deg, rgba(196,30,58,0.28), rgba(26,92,110,0.12)); }
-  .sidenav.nav-dark .nav-item.active .nav-num { color: var(--gold-bright); }
-  /* Dark mode / adaptive: auto via prefers-color-scheme + JS time-based */
-  .sidenav.nav-dark {
-    background: rgba(15,20,26,0.94); backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-right-color: rgba(26,92,110,0.25);
+  @media (max-width: 900px) {
+    .main-menu { display: none; }
+    .topnav .brand .brand-sub { display: none; }
+    .topnav-filter { display: none; }
+    .hamburger { display: flex; }
+    .reading-progress { top: 64px; }
   }
-  .sidenav.nav-dark .brand { color: var(--gold-bright); border-bottom-color: rgba(232,197,71,0.15); }
-  .sidenav.nav-dark .nav-item { color: rgba(245,240,232,0.55); }
-  .sidenav.nav-dark .nav-num { color: rgba(245,240,232,0.22); }
-  .sidenav.nav-dark .nav-hover-red:hover { color: var(--gold-bright); background: rgba(196,30,58,0.12); }
-  .sidenav.nav-dark .nav-hover-blue:hover { color: var(--gold-bright); background: rgba(26,92,110,0.12); }
-  .sidenav.nav-dark .nav-item.active { color: var(--gold-bright); background: linear-gradient(90deg, rgba(196,30,58,0.18), rgba(26,92,110,0.08)); }
-  .sidenav.nav-dark .nav-item.active .nav-num { color: var(--gold-bright); }
+  @media (max-width: 480px) {
+    .topnav { padding: 0 4%; }
+    .topnav .brand { font-size: 0.85rem; margin-right: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .submenu-panel, .nav-drawer, .back-to-top { transition: none !important; }
+  }
 
   /* ===== COVER ===== */
   .cover {
@@ -586,62 +746,6 @@
   .hamburger.active span:nth-child(2) { opacity: 0; }
   .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .nav-overlay {
-    display: none; position: fixed; inset: 0; z-index: 1999;
-    background: rgba(255,248,245,0.97); backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    flex-direction: column; padding: 80px 24px 48px;
-    overflow-y: auto; -webkit-overflow-scrolling: touch;
-  }
-  .nav-overlay.nav-dark-overlay {
-    background: rgba(15,20,26,0.97); backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-  .nav-overlay.active { display: flex; }
-  .nav-overlay .brand {
-    color: var(--red); font-weight: 800; font-size: 1.05rem;
-    margin-bottom: 18px; padding-bottom: 14px;
-    border-bottom: 2px solid rgba(196,30,58,0.15);
-    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
-  }
-  .nav-overlay.nav-dark-overlay .brand {
-    color: var(--gold-bright); border-bottom-color: rgba(232,197,71,0.15);
-  }
-  .nav-overlay .cat-label {
-    font-size: 0.7rem; letter-spacing: 3px; font-weight: 700;
-    padding: 10px 0 4px; margin: 0;
-  }
-  .nav-overlay a {
-    color: rgba(26,26,26,0.6); text-decoration: none;
-    font-size: 0.95rem; padding: 10px 2px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    font-family: "PingFang SC","Microsoft YaHei",sans-serif;
-    transition: color 0.2s; display: flex; align-items: center; gap: 8px;
-  }
-  .nav-overlay.nav-dark-overlay a {
-    color: rgba(245,240,232,0.65); border-bottom-color: rgba(255,255,255,0.06);
-  }
-  .nav-overlay a:active { color: var(--red); background: rgba(196,30,58,0.06); }
-  .nav-overlay.nav-dark-overlay a:active { color: var(--gold-bright); background: rgba(232,197,71,0.06); }
-  .nav-overlay .nav-dot { flex-shrink: 0; }
-  /* ===== 二级导航分组 ===== */
-  .nav-group { margin-bottom: 1px; }
-  .nav-group-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 9px 8px 8px; cursor: pointer; border-radius: 6px;
-    font-size: 0.68rem; letter-spacing: 2.5px; font-weight: 700;
-    transition: background 0.15s; -webkit-tap-highlight-color: transparent;
-    user-select: none; -webkit-user-select: none; touch-action: manipulation;
-  }
-  .nav-group-header:hover, .nav-group-header:active { background: rgba(196,30,58,0.09); }
-  .nav-group-arrow { font-size: 0.6rem; opacity: 0.4; transition: transform 0.22s; flex-shrink: 0; }
-  .nav-group.open .nav-group-arrow { transform: rotate(90deg); }
-  .nav-group-body { overflow: hidden; max-height: 0; transition: max-height 0.32s ease; padding-left: 10px; }
-  .nav-group.open .nav-group-body { max-height: 700px; }
-  .nav-group-body a { padding: 8px 4px !important; font-size: 0.9rem !important; border-bottom: 1px solid rgba(0,0,0,0.04) !important; }
-  .nav-overlay.nav-dark-overlay .nav-group-header:hover { background: rgba(232,197,71,0.09); }
-  .nav-overlay.nav-dark-overlay .nav-group-body a { border-bottom-color: rgba(255,255,255,0.05) !important; }
-  .nav-overlay .nav-num { font-size: 0.7rem; opacity: 0.35; margin-left: auto; }
 
   /* ===== MOBILE PAGE BAR ===== */
   .mobile-page-bar {
@@ -745,25 +849,17 @@
   }
 
   /* ===== RESPONSIVE ===== */
-  /* Auto dark mode for nav */
+  /* Dark mode for top nav (auto via prefers-color-scheme + JS time-based) */
   @media (prefers-color-scheme: dark) {
-    .sidenav:not(.nav-light) {
-      background: rgba(15,20,26,0.94); backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-right-color: rgba(26,92,110,0.25);
-    }
-    .sidenav:not(.nav-light) .brand { color: var(--gold-bright); border-bottom-color: rgba(232,197,71,0.15); }
-    .sidenav:not(.nav-light) .nav-item { color: rgba(245,240,232,0.55); }
-    .sidenav:not(.nav-light) .nav-num { color: rgba(245,240,232,0.22); }
-    .sidenav:not(.nav-light) .nav-hover-red:hover { color: var(--gold-bright); background: rgba(196,30,58,0.12); }
-    .sidenav:not(.nav-light) .nav-hover-blue:hover { color: var(--gold-bright); background: rgba(26,92,110,0.12); }
-    .sidenav:not(.nav-light) .nav-item.active { color: var(--gold-bright); background: linear-gradient(90deg, rgba(196,30,58,0.18), rgba(26,92,110,0.08)); }
-    .sidenav:not(.nav-light) .nav-item.active .nav-num { color: var(--gold-bright); }
+    .topnav:not(.nav-light) { background: rgba(15,20,26,0.94); }
+    .topnav:not(.nav-light) .brand { color: var(--gold-bright); }
+    .topnav:not(.nav-light) .main-menu > li > .menu-trigger { color: rgba(245,240,232,0.75); }
   }
 
   @media (max-width: 900px) {
-    .sidenav { display: none; }
-    body { margin-left: 0; }
+    /* Mobile: show topbar, hide main menu, show hamburger, show drawer */
+    .main-menu { display: none; }
+    .topnav-filter { display: none; }
     .hamburger { display: flex; }
     /* Mobile page mode: hide all sections except active one */
     body.mobile-page > section:not(.footer):not(.mp-active) { display: none !important; }
@@ -800,8 +896,6 @@
     .toc ol { columns: 1; }
     .toc { padding: 20px; }
     .footer { padding: 24px 5%; font-size: 0.7rem; }
-    .nav-overlay { padding: 72px 18px 36px; }
-    .nav-overlay a { font-size: 0.92rem; padding: 10px 2px; }
     .qr-modal-box { padding: 28px 18px 22px; }
     .qr-modal-box .qr-img-wrap { width: 180px; height: 180px; }
     .qr-modal-box .qr-img-wrap img { width: 160px; height: 160px; }
@@ -810,31 +904,9 @@
     .sh-bar .sh-stat .num { font-size: 1.5rem; }
   }
 
-  /* Auto dark mode for nav */
-  @media (prefers-color-scheme: dark) {
-    .sidenav:not(.nav-light) {
-      background: rgba(15,20,26,0.94); backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-right-color: rgba(26,92,110,0.25);
-    }
-    .sidenav:not(.nav-light) .brand { color: var(--gold-bright); border-bottom-color: rgba(232,197,71,0.15); }
-    .sidenav:not(.nav-light) .nav-item { color: rgba(245,240,232,0.55); }
-    .sidenav:not(.nav-light) .nav-num { color: rgba(245,240,232,0.22); }
-    .sidenav:not(.nav-light) .nav-hover-red:hover { color: var(--gold-bright); background: rgba(196,30,58,0.12); }
-    .sidenav:not(.nav-light) .nav-hover-blue:hover { color: var(--gold-bright); background: rgba(26,92,110,0.12); }
-    .sidenav:not(.nav-light) .nav-item.active { color: var(--gold-bright); background: linear-gradient(90deg, rgba(196,30,58,0.18), rgba(26,92,110,0.08)); }
-    .sidenav:not(.nav-light) .nav-item.active .nav-num { color: var(--gold-bright); }
-  }
-
-  @media (max-width: 900px) {
-    .sidenav { display: none; }
-    body { margin-left: 0; }
-  }
-
   /* ===== PRINT ===== */
   @media print {
-    .sidenav { display: none; }
-    body { margin-left: 0; }
+    .topnav, .nav-drawer, .hamburger, .back-to-top, .reading-progress { display: none !important; }
     .section, .section-dark, .section-red, .section-gold { page-break-inside: avoid; padding: 24px 5%; }
     body { font-size: 12px; }
     h2 { font-size: 1.4rem; }
@@ -1250,72 +1322,208 @@
 
 
 
-<!-- ===== SIDE NAV — 红蓝分类 + 毛玻璃自适应 ===== -->
-<nav class="sidenav" id="sidenav">
-  <div class="nav-filter" id="navFilter">
-    <div class="filter-tab active-tab" onclick="setNavFilter('all')" id="ftAll">全部</div>
-    <div class="filter-tab" onclick="setNavFilter('director')" id="ftDirector">🏛️ 院长汇报</div>
-    <div class="filter-tab" onclick="setNavFilter('channel')" id="ftChannel">💼 渠道培训</div>
+<!-- ===== TOP NAV — 顶部主菜单 + 子菜单 + 移动端汉堡 ===== -->
+<header class="topnav" id="topnav">
+  <a href="#cover" class="brand">OMAY 奥迈医疗 <span class="brand-sub">· 渠道培训手册 · 张高雷</span></a>
+
+  <ul class="main-menu" id="mainMenu">
+    <li>
+      <a href="#cover" class="menu-trigger" data-group="why">WHY · 为什么<span class="chev"></span></a>
+      <div class="submenu-panel" role="menu">
+        <a href="#cover" data-section="cover"><span class="sub-label">封面概览</span><span class="sub-num">00</span></a>
+        <a href="#concept" data-section="concept"><span class="sub-label">心脏康复概念</span><span class="sub-num">01</span></a>
+        <a href="#market" data-section="market"><span class="sub-label">市场分析</span><span class="sub-num">02</span></a>
+        <a href="#future" data-section="future"><span class="sub-label">未来潜力</span><span class="sub-num">03</span></a>
+      </div>
+    </li>
+    <li>
+      <a href="#policy" class="menu-trigger" data-group="what">WHAT · 是什么<span class="chev"></span></a>
+      <div class="submenu-panel" role="menu">
+        <a href="#policy" data-section="policy"><span class="sub-label">政策东风</span><span class="sub-num">04</span></a>
+        <a href="#center-policy" data-section="center-policy"><span class="sub-label">中心建设政策</span><span class="sub-num">05</span></a>
+        <a href="#center-equip" data-section="center-equip"><span class="sub-label">设备配置标准</span><span class="sub-num">06</span></a>
+        <a href="#tech-history" data-section="tech-history"><span class="sub-label">技术发展历程</span><span class="sub-num">07</span></a>
+      </div>
+    </li>
+    <li>
+      <a href="#principle" class="menu-trigger" data-group="evidence">EVIDENCE · 循证<span class="chev"></span></a>
+      <div class="submenu-panel" role="menu">
+        <a href="#principle" data-section="principle"><span class="sub-label">工作原理</span><span class="sub-num">08</span></a>
+        <a href="#nanshui" data-section="nanshui"><span class="sub-label">南水北调血流动力学</span><span class="sub-num">08A</span></a>
+        <a href="#cycle" data-section="cycle"><span class="sub-label">全周期覆盖</span><span class="sub-num">08B</span></a>
+        <a href="#five-rx" data-section="five-rx"><span class="sub-label">5+1 处方体系</span><span class="sub-num">09</span></a>
+        <a href="#five-eecp" data-section="five-eecp"><span class="sub-label">处方 × EECP 协同</span><span class="sub-num">10</span></a>
+        <a href="#academic" data-section="academic"><span class="sub-label">学术制高点</span><span class="sub-num">11</span></a>
+        <a href="#efficacy" data-section="efficacy"><span class="sub-label">疗效数据</span><span class="sub-num">12</span></a>
+        <a href="#five-values" data-section="five-values"><span class="sub-label">五大核心价值</span><span class="sub-num">13</span></a>
+      </div>
+    </li>
+    <li>
+      <a href="#indications" class="menu-trigger" data-group="application">APPLICATION · 应用<span class="chev"></span></a>
+      <div class="submenu-panel" role="menu">
+        <a href="#indications" data-section="indications"><span class="sub-label">适应症 / 禁忌</span><span class="sub-num">14</span></a>
+        <a href="#treatment" data-section="treatment"><span class="sub-label">治疗规范</span><span class="sub-num">15</span></a>
+      </div>
+    </li>
+    <li>
+      <a href="#dept-cardiology" class="menu-trigger" data-group="departments">DEPARTMENTS · 科室<span class="chev"></span></a>
+      <div class="submenu-panel" role="menu">
+        <a href="#dept-cardiology" data-section="dept-cardiology"><span class="sub-label">心内科</span><span class="sub-num">16</span></a>
+        <a href="#dept-rehab" data-section="dept-rehab"><span class="sub-label">心康中心</span><span class="sub-num">17</span></a>
+        <a href="#dept-geriatrics" data-section="dept-geriatrics"><span class="sub-label">老年科</span><span class="sub-num">18</span></a>
+        <a href="#dept-neurology" data-section="dept-neurology"><span class="sub-label">神内科</span><span class="sub-num">19</span></a>
+        <a href="#dept-endocrine" data-section="dept-endocrine"><span class="sub-label">内分泌科</span><span class="sub-num">20</span></a>
+        <a href="#dept-andrology" data-section="dept-andrology"><span class="sub-label">男科</span><span class="sub-num">21</span></a>
+        <a href="#dept-ophthalmology" data-section="dept-ophthalmology"><span class="sub-label">眼科</span><span class="sub-num">22</span></a>
+        <a href="#dept-sports" data-section="dept-sports"><span class="sub-label">体育 / 运动医学</span><span class="sub-num">23</span></a>
+        <a href="#dept-military" data-section="dept-military"><span class="sub-label">部队 / 公安系统</span><span class="sub-num">24</span></a>
+        <a href="#dept-community" data-section="dept-community"><span class="sub-label">社区中心</span><span class="sub-num">25</span></a>
+        <a href="#dept-private" data-section="dept-private"><span class="sub-label">民营医疗</span><span class="sub-num">26</span></a>
+      </div>
+    </li>
+    <li>
+      <a href="#more-opportunities" class="menu-trigger" data-group="business">BUSINESS · 商业<span class="chev"></span></a>
+      <div class="submenu-panel" role="menu">
+        <a href="#more-opportunities" data-section="more-opportunities"><span class="sub-label">更多可能性</span><span class="sub-num">27</span></a>
+        <a href="#pricing-roi" data-section="pricing-roi"><span class="sub-label">收费标准与 ROI</span><span class="sub-num">28</span></a>
+      </div>
+    </li>
+    <li>
+      <a href="#company-cert" class="menu-trigger" data-group="omay">OMAY · 奥迈<span class="chev"></span></a>
+      <div class="submenu-panel" role="menu">
+        <a href="#company-cert" data-section="company-cert"><span class="sub-label">公司背景与认证</span><span class="sub-num">29A</span></a>
+        <a href="#product-models" data-section="product-models"><span class="sub-label">产品型号展示</span><span class="sub-num">29B</span></a>
+        <a href="#oem" data-section="oem"><span class="sub-label">奥迈优势</span><span class="sub-num">29</span></a>
+        <a href="#faq" data-section="faq"><span class="sub-label">临床 FAQ</span><span class="sub-num">30</span></a>
+        <a href="#clients" data-section="clients"><span class="sub-label">客户画像</span><span class="sub-num">31</span></a>
+        <a href="#sh-users" data-section="sh-users"><span class="sub-label">上海用户名单</span><span class="sub-num">32</span></a>
+      </div>
+    </li>
+    <li>
+      <a href="#toolkit" class="menu-trigger" data-group="sell">SELL · 销售<span class="chev"></span></a>
+      <div class="submenu-panel" role="menu">
+        <a href="#toolkit" data-section="toolkit"><span class="sub-label">话术工具箱</span><span class="sub-num">33</span></a>
+        <a href="#cta" data-section="cta"><span class="sub-label">行动号召</span><span class="sub-num">34</span></a>
+      </div>
+    </li>
+  </ul>
+
+  <div class="topnav-right">
+    <div class="topnav-filter" id="navFilter">
+      <button class="filter-tab active-tab" onclick="setNavFilter('all')" id="ftAll">全部</button>
+      <button class="filter-tab" onclick="setNavFilter('director')" id="ftDirector">🏛️ 院长汇报</button>
+      <button class="filter-tab" onclick="setNavFilter('channel')" id="ftChannel">💼 渠道培训</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="目录菜单" aria-expanded="false" aria-controls="navDrawer">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</header>
 
-  <div class="brand">OMAY 奥迈医疗 · 渠道培训手册 <span style="font-size:0.65em;opacity:0.65;font-weight:400;">上海市场 张高雷</span></div>
+<!-- 阅读进度条 -->
+<div class="reading-progress" aria-hidden="true"><div class="bar" id="readingBar"></div></div>
 
-  <div class="cat-label cat-why">WHY 为什么</div>
-  <a href="#cover" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>封面概览</span><span class="nav-num">00</span></a>
-  <a href="#concept" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>心脏康复概念</span><span class="nav-num">01</span></a>
-  <a href="#market" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>市场分析</span><span class="nav-num">02</span></a>
-  <a href="#future" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>未来潜力</span><span class="nav-num">03</span></a>
+<!-- 移动端汉堡展开的目录抽屉 -->
+<aside class="nav-drawer" id="navDrawer" aria-label="目录导航">
+  <div class="drawer-group" data-group="why">
+    <div class="drawer-header" tabindex="0" role="button" aria-expanded="false">
+      <span class="dh-title">WHY · 为什么</span><span class="dh-arrow">▶</span>
+    </div>
+    <div class="drawer-body">
+      <a href="#cover" data-section="cover"><span class="sub-label">封面概览</span><span class="sub-num">00</span></a>
+      <a href="#concept" data-section="concept"><span class="sub-label">心脏康复概念</span><span class="sub-num">01</span></a>
+      <a href="#market" data-section="market"><span class="sub-label">市场分析</span><span class="sub-num">02</span></a>
+      <a href="#future" data-section="future"><span class="sub-label">未来潜力</span><span class="sub-num">03</span></a>
+    </div>
+  </div>
+  <div class="drawer-group" data-group="what">
+    <div class="drawer-header" tabindex="0" role="button" aria-expanded="false">
+      <span class="dh-title">WHAT · 是什么</span><span class="dh-arrow">▶</span>
+    </div>
+    <div class="drawer-body">
+      <a href="#policy" data-section="policy"><span class="sub-label">政策东风</span><span class="sub-num">04</span></a>
+      <a href="#center-policy" data-section="center-policy"><span class="sub-label">中心建设政策</span><span class="sub-num">05</span></a>
+      <a href="#center-equip" data-section="center-equip"><span class="sub-label">设备配置标准</span><span class="sub-num">06</span></a>
+      <a href="#tech-history" data-section="tech-history"><span class="sub-label">技术发展历程</span><span class="sub-num">07</span></a>
+    </div>
+  </div>
+  <div class="drawer-group" data-group="evidence">
+    <div class="drawer-header" tabindex="0" role="button" aria-expanded="false">
+      <span class="dh-title">EVIDENCE · 循证</span><span class="dh-arrow">▶</span>
+    </div>
+    <div class="drawer-body">
+      <a href="#principle" data-section="principle"><span class="sub-label">工作原理</span><span class="sub-num">08</span></a>
+      <a href="#nanshui" data-section="nanshui"><span class="sub-label">南水北调血流动力学</span><span class="sub-num">08A</span></a>
+      <a href="#cycle" data-section="cycle"><span class="sub-label">全周期覆盖</span><span class="sub-num">08B</span></a>
+      <a href="#five-rx" data-section="five-rx"><span class="sub-label">5+1 处方体系</span><span class="sub-num">09</span></a>
+      <a href="#five-eecp" data-section="five-eecp"><span class="sub-label">处方 × EECP 协同</span><span class="sub-num">10</span></a>
+      <a href="#academic" data-section="academic"><span class="sub-label">学术制高点</span><span class="sub-num">11</span></a>
+      <a href="#efficacy" data-section="efficacy"><span class="sub-label">疗效数据</span><span class="sub-num">12</span></a>
+      <a href="#five-values" data-section="five-values"><span class="sub-label">五大核心价值</span><span class="sub-num">13</span></a>
+    </div>
+  </div>
+  <div class="drawer-group" data-group="application">
+    <div class="drawer-header" tabindex="0" role="button" aria-expanded="false">
+      <span class="dh-title">APPLICATION · 应用</span><span class="dh-arrow">▶</span>
+    </div>
+    <div class="drawer-body">
+      <a href="#indications" data-section="indications"><span class="sub-label">适应症 / 禁忌</span><span class="sub-num">14</span></a>
+      <a href="#treatment" data-section="treatment"><span class="sub-label">治疗规范</span><span class="sub-num">15</span></a>
+    </div>
+  </div>
+  <div class="drawer-group" data-group="departments">
+    <div class="drawer-header" tabindex="0" role="button" aria-expanded="false">
+      <span class="dh-title">DEPARTMENTS · 科室</span><span class="dh-arrow">▶</span>
+    </div>
+    <div class="drawer-body">
+      <a href="#dept-cardiology" data-section="dept-cardiology"><span class="sub-label">心内科</span><span class="sub-num">16</span></a>
+      <a href="#dept-rehab" data-section="dept-rehab"><span class="sub-label">心康中心</span><span class="sub-num">17</span></a>
+      <a href="#dept-geriatrics" data-section="dept-geriatrics"><span class="sub-label">老年科</span><span class="sub-num">18</span></a>
+      <a href="#dept-neurology" data-section="dept-neurology"><span class="sub-label">神内科</span><span class="sub-num">19</span></a>
+      <a href="#dept-endocrine" data-section="dept-endocrine"><span class="sub-label">内分泌科</span><span class="sub-num">20</span></a>
+      <a href="#dept-andrology" data-section="dept-andrology"><span class="sub-label">男科</span><span class="sub-num">21</span></a>
+      <a href="#dept-ophthalmology" data-section="dept-ophthalmology"><span class="sub-label">眼科</span><span class="sub-num">22</span></a>
+      <a href="#dept-sports" data-section="dept-sports"><span class="sub-label">体育 / 运动医学</span><span class="sub-num">23</span></a>
+      <a href="#dept-military" data-section="dept-military"><span class="sub-label">部队 / 公安系统</span><span class="sub-num">24</span></a>
+      <a href="#dept-community" data-section="dept-community"><span class="sub-label">社区中心</span><span class="sub-num">25</span></a>
+      <a href="#dept-private" data-section="dept-private"><span class="sub-label">民营医疗</span><span class="sub-num">26</span></a>
+    </div>
+  </div>
+  <div class="drawer-group" data-group="business">
+    <div class="drawer-header" tabindex="0" role="button" aria-expanded="false">
+      <span class="dh-title">BUSINESS · 商业</span><span class="dh-arrow">▶</span>
+    </div>
+    <div class="drawer-body">
+      <a href="#more-opportunities" data-section="more-opportunities"><span class="sub-label">更多可能性</span><span class="sub-num">27</span></a>
+      <a href="#pricing-roi" data-section="pricing-roi"><span class="sub-label">收费标准与 ROI</span><span class="sub-num">28</span></a>
+    </div>
+  </div>
+  <div class="drawer-group" data-group="omay">
+    <div class="drawer-header" tabindex="0" role="button" aria-expanded="false">
+      <span class="dh-title">OMAY · 奥迈</span><span class="dh-arrow">▶</span>
+    </div>
+    <div class="drawer-body">
+      <a href="#company-cert" data-section="company-cert"><span class="sub-label">公司背景与认证</span><span class="sub-num">29A</span></a>
+      <a href="#product-models" data-section="product-models"><span class="sub-label">产品型号展示</span><span class="sub-num">29B</span></a>
+      <a href="#oem" data-section="oem"><span class="sub-label">奥迈优势</span><span class="sub-num">29</span></a>
+      <a href="#faq" data-section="faq"><span class="sub-label">临床 FAQ</span><span class="sub-num">30</span></a>
+      <a href="#clients" data-section="clients"><span class="sub-label">客户画像</span><span class="sub-num">31</span></a>
+      <a href="#sh-users" data-section="sh-users"><span class="sub-label">上海用户名单</span><span class="sub-num">32</span></a>
+    </div>
+  </div>
+  <div class="drawer-group" data-group="sell">
+    <div class="drawer-header" tabindex="0" role="button" aria-expanded="false">
+      <span class="dh-title">SELL · 销售</span><span class="dh-arrow">▶</span>
+    </div>
+    <div class="drawer-body">
+      <a href="#toolkit" data-section="toolkit"><span class="sub-label">话术工具箱</span><span class="sub-num">33</span></a>
+      <a href="#cta" data-section="cta"><span class="sub-label">行动号召</span><span class="sub-num">34</span></a>
+    </div>
+  </div>
+</aside>
 
-  <div class="cat-label cat-what">WHAT 是什么</div>
-  <a href="#policy" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>政策东风</span><span class="nav-num">04</span></a>
-  <a href="#center-policy" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>中心建设政策</span><span class="nav-num">05</span></a>
-  <a href="#center-equip" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>设备配置标准</span><span class="nav-num">06</span></a>
-  <a href="#tech-history" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>技术发展历程</span><span class="nav-num">07</span></a>
-
-  <div class="cat-label cat-evidence">EVIDENCE 循证</div>
-  <a href="#principle" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>工作原理</span><span class="nav-num">08</span></a>
-  <a href="#nanshui" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>南水北调血流动力学</span><span class="nav-num">08A</span></a>
-  <a href="#cycle" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>全周期覆盖</span><span class="nav-num">08B</span></a>
-  <a href="#five-rx" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>5+1处方体系</span><span class="nav-num">09</span></a>
-  <a href="#five-eecp" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>处方×EECP协同</span><span class="nav-num">10</span></a>
-  <a href="#academic" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>学术制高点</span><span class="nav-num">11</span></a>
-  <a href="#efficacy" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>疗效数据</span><span class="nav-num">12</span></a>
-  <a href="#five-values" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>五大核心价值</span><span class="nav-num">13</span></a>
-
-  <div class="cat-label cat-application">APPLICATION 应用</div>
-  <a href="#indications" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>适应症/禁忌</span><span class="nav-num">14</span></a>
-  <a href="#treatment" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>治疗规范</span><span class="nav-num">15</span></a>
-
-  <div class="cat-label cat-departments">DEPARTMENTS 科室</div>
-  <a href="#dept-cardiology" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>心内科</span><span class="nav-num">16</span></a>
-  <a href="#dept-rehab" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>心康中心</span><span class="nav-num">17</span></a>
-  <a href="#dept-geriatrics" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>老年科</span><span class="nav-num">18</span></a>
-  <a href="#dept-neurology" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>神内科</span><span class="nav-num">19</span></a>
-  <a href="#dept-endocrine" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>内分泌科</span><span class="nav-num">20</span></a>
-  <a href="#dept-andrology" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>男科</span><span class="nav-num">21</span></a>
-  <a href="#dept-ophthalmology" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>眼科</span><span class="nav-num">22</span></a>
-  <a href="#dept-sports" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>体育/运动医学</span><span class="nav-num">23</span></a>
-  <a href="#dept-military" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>部队/公安系统</span><span class="nav-num">24</span></a>
-  <a href="#dept-community" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>社区中心</span><span class="nav-num">25</span></a>
-  <a href="#dept-private" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>民营医疗</span><span class="nav-num">26</span></a>
-
-  <div class="cat-label cat-business">BUSINESS 商业</div>
-  <a href="#more-opportunities" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>更多可能性</span><span class="nav-num">27</span></a>
-  <a href="#pricing-roi" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>收费标准与ROI</span><span class="nav-num">28</span></a>
-
-
-  <div class="cat-label cat-omai">OMAY 奥迈</div>
-  <a href="#company-cert" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>公司背景与认证</span><span class="nav-num">29A</span></a>
-  <a href="#product-models" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>产品型号展示</span><span class="nav-num">29B</span></a>
-    <a href="#oem" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>奥迈优势</span><span class="nav-num">29</span></a>
-  <a href="#faq" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>临床FAQ</span><span class="nav-num">30</span></a>
-  <a href="#clients" class="nav-hover-red nav-item"><span class="nav-dot dot-red"></span><span>客户画像</span><span class="nav-num">31</span></a>
-  <a href="#sh-users" class="nav-hover-red nav-item"><span class="nav-dot dot-blue"></span><span>上海用户名单</span><span class="nav-num">32</span></a>
-
-  <div class="cat-label cat-sell">SELL 销售</div>
-  <a href="#toolkit" class="nav-hover-blue nav-item"><span class="nav-dot dot-blue"></span><span>话术工具箱</span><span class="nav-num">33</span></a>
-  <a href="#cta" class="nav-hover-blue nav-item"><span class="nav-dot dot-red"></span><span>行动号召</span><span class="nav-num">34</span></a>
-</nav>
+<!-- 返回顶部按钮 -->
+<button class="back-to-top" id="backToTop" aria-label="返回顶部">↑</button>
 
 <!-- ===== COVER ===== -->
 <section class="cover" id="cover">
@@ -3360,100 +3568,6 @@
   <span class="mp-label" id="mpLabel">封面</span>
 </div>
 
-<!-- ===== MOBILE HAMBURGER ===== -->
-<button class="hamburger" id="hamburgerBtn" aria-label="目录">
-  <span></span><span></span><span></span>
-</button>
-<div class="nav-overlay" id="navOverlay">
-  <div class="nav-filter" id="navFilter">
-    <div class="filter-tab active-tab" onclick="setNavFilter('all')" id="ftAll">全部</div>
-    <div class="filter-tab" onclick="setNavFilter('director')" id="ftDirector">🏛️ 院长汇报</div>
-    <div class="filter-tab" onclick="setNavFilter('channel')" id="ftChannel">💼 渠道培训</div>
-  </div>
-
-  <div class="brand">OMAY 奥迈医疗 · 渠道培训手册 <span style="font-size:0.65em;opacity:0.65;font-weight:400;">上海市场 张高雷</span></div>
-
-  <!-- 二级导航分组 -->
-  <div class="nav-group open" data-group="why">
-    <div class="nav-group-header cat-why" onclick="toggleNavGroup(this)">
-      <span>WHY &#183; 为什么</span><span class="nav-group-arrow">&#9654;</span></div>
-    <div class="nav-group-body">
-      <a href="#cover"><span class="nav-dot dot-red"></span>封面概览<span class="nav-num">00</span></a>
-      <a href="#concept"><span class="nav-dot dot-blue"></span>心脏康复概念<span class="nav-num">01</span></a>
-      <a href="#market"><span class="nav-dot dot-red"></span>市场分析<span class="nav-num">02</span></a>
-      <a href="#future"><span class="nav-dot dot-blue"></span>未来潜力<span class="nav-num">03</span></a>
-    </div></div>
-  <div class="nav-group" data-group="what">
-    <div class="nav-group-header cat-what" onclick="toggleNavGroup(this)">
-      <span>WHAT &#183; 是什么</span><span class="nav-group-arrow">&#9654;</span></div>
-    <div class="nav-group-body">
-      <a href="#policy"><span class="nav-dot dot-blue"></span>政策东风<span class="nav-num">04</span></a>
-      <a href="#center-policy"><span class="nav-dot dot-red"></span>中心建设政策<span class="nav-num">05</span></a>
-      <a href="#center-equip"><span class="nav-dot dot-blue"></span>设备配置标准<span class="nav-num">06</span></a>
-      <a href="#tech-history"><span class="nav-dot dot-red"></span>技术发展历程<span class="nav-num">07</span></a>
-    </div></div>
-  <div class="nav-group" data-group="evidence">
-    <div class="nav-group-header cat-evidence" onclick="toggleNavGroup(this)">
-      <span>EVIDENCE &#183; 循证</span><span class="nav-group-arrow">&#9654;</span></div>
-    <div class="nav-group-body">
-      <a href="#principle"><span class="nav-dot dot-red"></span>工作原理<span class="nav-num">08</span></a>
-      <a href="#nanshui"><span class="nav-dot dot-red"></span>南水北调血流动力学<span class="nav-num">08A</span></a>
-      <a href="#cycle"><span class="nav-dot dot-blue"></span>全周期覆盖<span class="nav-num">08B</span></a>
-      <a href="#five-rx"><span class="nav-dot dot-blue"></span>5+1处方体系<span class="nav-num">09</span></a>
-      <a href="#five-eecp"><span class="nav-dot dot-red"></span>处方&#215;EECP协同<span class="nav-num">10</span></a>
-      <a href="#academic"><span class="nav-dot dot-blue"></span>学术制高点<span class="nav-num">11</span></a>
-      <a href="#efficacy"><span class="nav-dot dot-red"></span>疗效数据<span class="nav-num">12</span></a>
-      <a href="#five-values"><span class="nav-dot dot-blue"></span>五大核心价值<span class="nav-num">13</span></a>
-    </div></div>
-  <div class="nav-group" data-group="application">
-    <div class="nav-group-header cat-application" onclick="toggleNavGroup(this)">
-      <span>APPLICATION &#183; 应用</span><span class="nav-group-arrow">&#9654;</span></div>
-    <div class="nav-group-body">
-      <a href="#indications"><span class="nav-dot dot-blue"></span>适应症/禁忌<span class="nav-num">14</span></a>
-      <a href="#treatment"><span class="nav-dot dot-red"></span>治疗规范<span class="nav-num">15</span></a>
-    </div></div>
-  <div class="nav-group" data-group="departments">
-    <div class="nav-group-header cat-departments" onclick="toggleNavGroup(this)">
-      <span>DEPARTMENTS &#183; 科室</span><span class="nav-group-arrow">&#9654;</span></div>
-    <div class="nav-group-body">
-      <a href="#dept-cardiology"><span class="nav-dot dot-red"></span>心内科<span class="nav-num">16</span></a>
-      <a href="#dept-rehab"><span class="nav-dot dot-blue"></span>心康中心<span class="nav-num">17</span></a>
-      <a href="#dept-geriatrics"><span class="nav-dot dot-red"></span>老年科<span class="nav-num">18</span></a>
-      <a href="#dept-neurology"><span class="nav-dot dot-blue"></span>神内科<span class="nav-num">19</span></a>
-      <a href="#dept-endocrine"><span class="nav-dot dot-red"></span>内分泌科<span class="nav-num">20</span></a>
-      <a href="#dept-andrology"><span class="nav-dot dot-blue"></span>男科<span class="nav-num">21</span></a>
-      <a href="#dept-ophthalmology"><span class="nav-dot dot-red"></span>眼科<span class="nav-num">22</span></a>
-      <a href="#dept-sports"><span class="nav-dot dot-blue"></span>体育/运动医学<span class="nav-num">23</span></a>
-      <a href="#dept-military"><span class="nav-dot dot-red"></span>部队/公安系统<span class="nav-num">24</span></a>
-      <a href="#dept-community"><span class="nav-dot dot-blue"></span>社区中心<span class="nav-num">25</span></a>
-      <a href="#dept-private"><span class="nav-dot dot-red"></span>民营医疗<span class="nav-num">26</span></a>
-    </div></div>
-  <div class="nav-group" data-group="business">
-    <div class="nav-group-header cat-business" onclick="toggleNavGroup(this)">
-      <span>BUSINESS &#183; 商业</span><span class="nav-group-arrow">&#9654;</span></div>
-    <div class="nav-group-body">
-      <a href="#more-opportunities"><span class="nav-dot dot-blue"></span>更多可能性<span class="nav-num">27</span></a>
-      <a href="#pricing-roi"><span class="nav-dot dot-red"></span>收费标准与ROI<span class="nav-num">28</span></a>
-    </div></div>
-  <div class="nav-group" data-group="omay">
-    <div class="nav-group-header cat-omai" onclick="toggleNavGroup(this)">
-      <span>OMAY &#183; 奥迈</span><span class="nav-group-arrow">&#9654;</span></div>
-    <div class="nav-group-body">
-      <a href="#company-cert"><span class="nav-dot dot-blue"></span>公司背景与认证<span class="nav-num">29A</span></a>
-      <a href="#product-models"><span class="nav-dot dot-red"></span>产品型号展示<span class="nav-num">29B</span></a>
-            <a href="#oem"><span class="nav-dot dot-red"></span>奥迈优势<span class="nav-num">29</span></a>
-      <a href="#faq"><span class="nav-dot dot-blue"></span>临床FAQ<span class="nav-num">30</span></a>
-      <a href="#clients"><span class="nav-dot dot-red"></span>客户画像<span class="nav-num">31</span></a>
-      <a href="#sh-users"><span class="nav-dot dot-blue"></span>上海用户名单<span class="nav-num">32</span></a>
-    </div></div>
-  <div class="nav-group" data-group="sell">
-    <div class="nav-group-header cat-sell" onclick="toggleNavGroup(this)">
-      <span>SELL &#183; 销售</span><span class="nav-group-arrow">&#9654;</span></div>
-    <div class="nav-group-body">
-      <a href="#toolkit"><span class="nav-dot dot-blue"></span>话术工具箱<span class="nav-num">33</span></a>
-      <a href="#cta"><span class="nav-dot dot-red"></span>行动号召<span class="nav-num">34</span></a>
-    </div></div>
-</div>
 <script>
 // ===== 章节ID与标题映射 =====
 var pages = [
@@ -3522,26 +3636,47 @@ function setNavFilterM(type) {
   var tab = document.getElementById(tid);
   if (tab) tab.classList.add('active-tab');
 }
-// ===== 滚动监听 — 侧边栏高亮 =====
-var navItems = document.querySelectorAll('.sidenav .nav-item');
-var sectionIds = [];
-navItems.forEach(function(item){
-  var href = item.getAttribute('href');
-  if (href && href.startsWith('#')) sectionIds.push(href.substring(1));
-});
+
+// ===== 滚动监听 — 顶部主菜单 + 子菜单高亮（IntersectionObserver 替代） =====
+var sectionIds = pages.map(function(p){ return p.id; });
+var navItemsDesktop = document.querySelectorAll('.topnav .submenu-panel a');
+var navItemsDrawer = document.querySelectorAll('.nav-drawer .drawer-body a');
+var navTriggers = document.querySelectorAll('.topnav .main-menu > li');
+
+function setActiveSection(id) {
+  // 子菜单桌面高亮
+  navItemsDesktop.forEach(function(item){
+    var sec = item.getAttribute('data-section');
+    item.classList.toggle('active', sec === id);
+  });
+  // 抽屉子项高亮
+  navItemsDrawer.forEach(function(item){
+    var sec = item.getAttribute('data-section');
+    item.classList.toggle('active', sec === id);
+  });
+  // 顶部主菜单 trigger 染色（按当前章节所在 group）
+  var li = document.querySelector('.topnav .main-menu > li a.menu-trigger[href="#'+id+'"]');
+  navTriggers.forEach(function(t){ t.classList.remove('active'); });
+  if (li) li.classList.add('active');
+  // 抽屉分组自动展开
+  if (li) {
+    var group = li.getAttribute('data-group');
+    document.querySelectorAll('.nav-drawer .drawer-group').forEach(function(g){
+      g.classList.toggle('open', g.getAttribute('data-group') === group);
+    });
+  }
+}
 function updateActiveNav() {
-  var scrollPos = window.scrollY + 100;
-  var current = '';
+  var scrollPos = window.scrollY + 120;
+  var current = sectionIds[0] || 'cover';
   for (var i = sectionIds.length - 1; i >= 0; i--) {
     var el = document.getElementById(sectionIds[i]);
-    if (el && el.offsetTop <= scrollPos + 200) { current = sectionIds[i]; break; }
+    if (el && el.offsetTop <= scrollPos) { current = sectionIds[i]; break; }
   }
-  navItems.forEach(function(item){
-    item.classList.remove('active');
-    if (item.getAttribute('href') === '#' + current) item.classList.add('active');
-  });
+  setActiveSection(current);
+  return current;
 }
-window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('scroll', updateActiveNav, { passive: true });
 
 var isMobile = window.innerWidth <= 900;
 var currentPage = 'cover';
@@ -3551,6 +3686,8 @@ function initMobileMode() {
   if (isMobile) {
     document.body.classList.add('mobile-page');
     showPage('cover', true);
+  } else {
+    updateActiveNav();
   }
 }
 
@@ -3572,38 +3709,52 @@ function showPage(id, silent) {
   if (id === 'cover') { bar.style.display = 'none'; }
   else { bar.style.display = 'flex'; }
   if (!silent) closeNav();
+  // 高亮
+  setActiveSection(id);
 }
 
-// ===== 返回目录（打开覆盖层） =====
+// ===== 返回目录（打开抽屉） =====
 function backToMenu() {
   toggleNav();
 }
 
-// ===== 二级导航折叠 =====
-function toggleNavGroup(header) {
-  header.parentElement.classList.toggle('open');
-}
-function autoExpandNavGroup(id) {
-  document.querySelectorAll('.nav-overlay .nav-group-body a').forEach(function(a) {
-    if (a.getAttribute('href') === '#' + id) {
-      var g = a.closest('.nav-group');
-      if (g) g.classList.add('open');
-    }
+// ===== 抽屉分组折叠 =====
+function toggleDrawerGroup(header) {
+  var g = header.parentElement;
+  var isOpen = g.classList.contains('open');
+  // 单选展开：先关掉所有再开自己
+  document.querySelectorAll('.nav-drawer .drawer-group').forEach(function(el){
+    el.classList.remove('open');
+    var h = el.querySelector('.drawer-header');
+    if (h) h.setAttribute('aria-expanded', 'false');
   });
-}
-
-// ===== 汉堡菜单切换 =====
-function toggleNav() {
-  var btn = document.getElementById('hamburgerBtn');
-  var ov = document.getElementById('navOverlay');
-  if (btn && ov) {
-    btn.classList.toggle('active');
-    ov.classList.toggle('active');
-    document.body.style.overflow = ov.classList.contains('active') ? 'hidden' : '';
+  if (!isOpen) {
+    g.classList.add('open');
+    header.setAttribute('aria-expanded', 'true');
   }
 }
+
+// ===== 汉堡菜单切换（移动端抽屉） =====
+function toggleNav() {
+  var btn = document.getElementById('hamburger');
+  var drawer = document.getElementById('navDrawer');
+  if (!btn || !drawer) return;
+  var willOpen = !btn.classList.contains('active');
+  btn.classList.toggle('active', willOpen);
+  drawer.classList.toggle('active', willOpen);
+  drawer.classList.toggle('nav-dark-drawer', document.getElementById('topnav').classList.contains('nav-dark'));
+  btn.setAttribute('aria-expanded', String(willOpen));
+  document.body.style.overflow = willOpen ? 'hidden' : '';
+}
+function closeNav() {
+  var btn = document.getElementById('hamburger');
+  var drawer = document.getElementById('navDrawer');
+  if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); }
+  if (drawer) drawer.classList.remove('active');
+  document.body.style.overflow = '';
+}
 (function(){
-  var btn = document.getElementById('hamburgerBtn');
+  var btn = document.getElementById('hamburger');
   if (!btn) return;
   var lastTouch = 0;
   btn.addEventListener('touchend', function(e){
@@ -3616,23 +3767,60 @@ function toggleNav() {
     toggleNav();
   });
 })();
-function closeNav() {
-  var btn = document.getElementById('hamburgerBtn');
-  var ov = document.getElementById('navOverlay');
-  btn.classList.remove('active');
-  ov.classList.remove('active');
-  document.body.style.overflow = '';
-}
 
-// ===== 导航覆盖层点击 → 显示目标页面 =====
-document.getElementById('navOverlay').addEventListener('click', function(e) {
-  var link = e.target.closest('a');
-  if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
-    e.preventDefault();
-    var targetId = link.getAttribute('href').substring(1);
-    showPage(targetId);
-  }
-});
+// ===== 抽屉内点击 → 显示目标页面 =====
+(function(){
+  var drawer = document.getElementById('navDrawer');
+  if (!drawer) return;
+  drawer.addEventListener('click', function(e) {
+    var link = e.target.closest('a');
+    if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
+      e.preventDefault();
+      var targetId = link.getAttribute('href').substring(1);
+      showPage(targetId);
+    }
+  });
+  // 抽屉分组 header 点击
+  drawer.querySelectorAll('.drawer-header').forEach(function(h){
+    h.addEventListener('click', function(){ toggleDrawerGroup(h); });
+    h.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDrawerGroup(h); }
+    });
+  });
+})();
+
+// ===== 桌面端 submenu 项点击 → 仅滚动定位（移动端用抽屉分页模式） =====
+(function(){
+  document.querySelectorAll('.topnav .submenu-panel a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var href = a.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      e.preventDefault();
+      var id = href.substring(1);
+      if (isMobile) { showPage(id); return; }
+      var target = document.getElementById(id);
+      if (target) {
+        var top = target.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+  // 桌面端 menu trigger 点击：滚到该组第一个章节
+  document.querySelectorAll('.topnav .menu-trigger').forEach(function(t){
+    t.addEventListener('click', function(e){
+      if (isMobile) return;
+      var href = t.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      e.preventDefault();
+      var id = href.substring(1);
+      var target = document.getElementById(id);
+      if (target) {
+        var top = target.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+})();
 
 // ===== 窗口大小变化时重新检测 =====
 window.addEventListener('resize', function() {
@@ -3647,8 +3835,51 @@ window.addEventListener('resize', function() {
       var allSecs = document.querySelectorAll('body > section');
       allSecs.forEach(function(s){ s.classList.remove('mp-active'); });
       document.getElementById('mobilePageBar').style.display = 'none';
+      closeNav();
+      updateActiveNav();
     }
   }
+});
+
+// ===== 阅读进度条 + 返回顶部 =====
+(function(){
+  var bar = document.getElementById('readingBar');
+  var btt = document.getElementById('backToTop');
+  function updateProgress() {
+    var doc = document.documentElement;
+    var scrollTop = window.scrollY || doc.scrollTop;
+    var scrollHeight = doc.scrollHeight - doc.clientHeight;
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    if (bar) bar.style.width = pct + '%';
+    if (btt) {
+      if (scrollTop > 600) btt.classList.add('visible');
+      else btt.classList.remove('visible');
+    }
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  if (btt) btt.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  updateProgress();
+})();
+
+// ===== 锚点跳转：补偿顶栏 64px 高度 =====
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    var href = a.getAttribute('href');
+    if (!href || href === '#' || href.length < 2) return;
+    if (a.classList.contains('menu-trigger')) return; // 已单独处理
+    if (a.closest('.topnav .submenu-panel')) return;  // 已单独处理
+    if (a.closest('.nav-drawer')) return;             // 由抽屉点击逻辑处理
+    var id = href.substring(1);
+    var target = document.getElementById(id);
+    if (target && !isMobile) {
+      e.preventDefault();
+      var top = target.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  });
 });
 
 // ===== QR Modal =====
@@ -3929,8 +4160,6 @@ initMobileMode();
   // 暴露函数到全局作用域（供 HTML onclick 调用）
   window.showQRModal = showQRModal;
   window.closeQRModal = closeQRModal;
-  window.toggleNavGroup = toggleNavGroup;
-  window.autoExpandNavGroup = autoExpandNavGroup;
   window.toggleNav = toggleNav;
   window.closeNav = closeNav;
 })();
