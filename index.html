@@ -2187,407 +2187,496 @@
         margin: 0 auto;
         display: block;
       }
-      .eecp-stage-label {
-        font-family: "PingFang SC","Microsoft YaHei",sans-serif;
-        font-weight: 700;
-        font-size: 1.1rem;
-        transition: all 0.5s ease;
-      }
-      .eecp-stage-desc {
-        font-family: "PingFang SC","Microsoft YaHei",sans-serif;
-        font-size: 0.85rem;
-        opacity: 0.8;
-      }
       @keyframes pulse-heart {
         0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-      }
-      @keyframes inflate-calf {
-        0% { transform: scale(1); opacity: 0.6; }
-        100% { transform: scale(1.3); opacity: 1; }
-      }
-      @keyframes inflate-thigh {
-        0% { transform: scale(1); opacity: 0.6; }
-        100% { transform: scale(1.25); opacity: 1; }
-      }
-      @keyframes inflate-hip {
-        0% { transform: scale(1); opacity: 0.6; }
-        100% { transform: scale(1.2); opacity: 1; }
-      }
-      @keyframes deflate-all {
-        0% { transform: scale(1.2); opacity: 1; }
-        100% { transform: scale(1); opacity: 0.4; }
-      }
-      @keyframes flow-particle {
-        0% { offset-distance: 0%; opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { offset-distance: 100%; opacity: 0; }
-      }
-      @keyframes flow-up {
-        0% { transform: translateY(0); opacity: 0; }
-        20% { opacity: 1; }
-        80% { opacity: 1; }
-        100% { transform: translateY(-120px); opacity: 0; }
-      }
-      @keyframes flow-heart {
-        0% { transform: scale(0.8); opacity: 0; }
-        50% { transform: scale(1.1); opacity: 1; }
-        100% { transform: scale(1); opacity: 1; }
-      }
-      @keyframes highlight-text {
-        0%, 100% { fill: var(--c-lymph-bright); }
-        50% { fill: var(--c-artery-soft); }
+        50% { transform: scale(1.08); }
       }
       .heart-beat {
         animation: pulse-heart 1s ease-in-out infinite;
+        transform-origin: center;
       }
-      .stage-active {
-        font-weight: 800;
+      .balloon-calf {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform-origin: center;
+        transform-box: fill-box;
       }
-      .blood-particle {
-        offset-path: path('M 400 350 Q 400 250 450 200 T 500 150');
-        animation: flow-particle 2s linear infinite;
+      .balloon-thigh {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform-origin: center;
+        transform-box: fill-box;
+      }
+      .balloon-hip {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform-origin: center;
+        transform-box: fill-box;
       }
     </style>
     
-    <svg class="eecp-diagram" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+    <svg class="eecp-diagram" viewBox="0 0 1000 750" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="glow">
           <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="softShadow">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.2"/>
         </filter>
         <linearGradient id="arteryGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#C41E3A;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#E85A6E;stop-opacity:1" />
+          <stop offset="0%" style="stop-color:#E63946;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#C41E3A;stop-opacity:1" />
         </linearGradient>
         <linearGradient id="veinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#1A5C6E;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#2A7A8C;stop-opacity:1" />
+          <stop offset="0%" style="stop-color:#1D6B80;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#144552;stop-opacity:1" />
         </linearGradient>
-        <linearGradient id="lungGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style="stop-color:#4FB3C8;stop-opacity:0.3" />
-          <stop offset="100%" style="stop-color:#7CC9D9;stop-opacity:0.5" />
+        <linearGradient id="lungGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#5BC0D9;stop-opacity:0.25" />
+          <stop offset="100%" style="stop-color:#3A8DA3;stop-opacity:0.4" />
         </linearGradient>
-        <radialGradient id="heartGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#FF4D6D;stop-opacity:1" />
+        <radialGradient id="heartGrad" cx="40%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
           <stop offset="100%" style="stop-color:#C41E3A;stop-opacity:1" />
         </radialGradient>
-        <radialGradient id="calfGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#D4A843;stop-opacity:0.9" />
-          <stop offset="100%" style="stop-color:#B89430;stop-opacity:0.7" />
+        <radialGradient id="balloonCalf" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#FFE066;stop-opacity:0.95" />
+          <stop offset="100%" style="stop-color:#E8C547;stop-opacity:0.85" />
         </radialGradient>
-        <radialGradient id="thighGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#E8C547;stop-opacity:0.9" />
-          <stop offset="100%" style="stop-color:#D4A843;stop-opacity:0.7" />
+        <radialGradient id="balloonThigh" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#FFD45E;stop-opacity:0.95" />
+          <stop offset="100%" style="stop-color:#E0B83E;stop-opacity:0.85" />
         </radialGradient>
-        <radialGradient id="hipGrad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" style="stop-color:#FFD45E;stop-opacity:0.9" />
-          <stop offset="100%" style="stop-color:#E8C547;stop-opacity:0.7" />
+        <radialGradient id="balloonHip" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#FFC94D;stop-opacity:0.95" />
+          <stop offset="100%" style="stop-color:#D9A830;stop-opacity:0.85" />
         </radialGradient>
-        <marker id="arrowHead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="#C41E3A" />
+        <marker id="arrowArtery" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto">
+          <polygon points="0 0, 12 4, 0 8" fill="#E63946" />
         </marker>
-        <marker id="arrowHeadVein" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="#1A5C6E" />
+        <marker id="arrowVein" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto">
+          <polygon points="0 0, 12 4, 0 8" fill="#1D6B80" />
         </marker>
       </defs>
 
       <!-- 背景 -->
-      <rect x="0" y="0" width="1000" height="700" fill="var(--paper)" />
+      <rect x="0" y="0" width="1000" height="750" fill="var(--paper)" />
       
       <!-- 标题 -->
-      <text x="500" y="40" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="800" fill="var(--ink)">
+      <text x="500" y="38" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="22" font-weight="800" fill="var(--ink)">
         EECP 体外反搏血流动力学机制
       </text>
-      <text x="500" y="65" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="var(--ink3)">
+      <text x="500" y="62" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="var(--ink3)">
         南水北调 · 顺水推舟
       </text>
 
-      <!-- 控制按钮 -->
-      <g transform="translate(500, 650)">
-        <rect x="-120" y="0" width="240" height="40" rx="20" fill="var(--paper-elevated)" stroke="var(--border)" />
-        <rect x="-100" y="5" width="60" height="30" rx="15" fill="var(--c-artery)" class="eecp-btn" id="btn-diastole" onclick="startDiastole()">
-          <animate attributeName="fill" values="#C41E3A;#E85A6E;#C41E3A" dur="2s" repeatCount="indefinite" />
+      <!-- 状态指示条 -->
+      <g transform="translate(500, 85)">
+        <rect x="-280" y="0" width="560" height="48" rx="24" fill="var(--paper-elevated)" stroke="var(--border)" />
+        <text x="-250" y="30" font-family="PingFang SC, sans-serif" font-size="13" fill="var(--ink3)">心脏周期：</text>
+        <rect x="-170" y="8" width="80" height="32" rx="16" fill="#2E8B57" id="phase-badge">
+          <animate attributeName="fill" values="#2E8B57;#C41E3A;#2E8B57" dur="3s" repeatCount="indefinite" />
         </rect>
-        <text x="-70" y="23" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" font-weight="700" fill="white">舒张期</text>
-        <rect x="40" y="5" width="60" height="30" rx="15" fill="var(--c-vein)" class="eecp-btn" id="btn-systole" onclick="startSystole()">
-          <animate attributeName="fill" values="#1A5C6E;#2A7A8C;#1A5C6E" dur="2s" repeatCount="indefinite" />
-        </rect>
-        <text x="70" y="23" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" font-weight="700" fill="white">收缩期</text>
+        <text x="-130" y="30" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="13" font-weight="700" fill="white" id="phase-text">舒张期</text>
+        <text x="-70" y="30" font-family="PingFang SC, sans-serif" font-size="13" fill="var(--ink3)">气囊：</text>
+        <text x="-10" y="30" font-family="PingFang SC, sans-serif" font-size="13" font-weight="700" fill="var(--c-lymph)" id="balloon-text">序贯充气 ↑</text>
+        <text x="100" y="30" font-family="PingFang SC, sans-serif" font-size="13" fill="var(--ink3)">回心血量：</text>
+        <text x="190" y="30" font-family="PingFang SC, sans-serif" font-size="13" font-weight="700" fill="var(--c-artery)" id="return-text">↑ 增加 30-50%</text>
       </g>
 
-      <!-- 状态指示器 -->
-      <g transform="translate(500, 80)">
-        <rect x="-200" y="0" width="400" height="50" rx="10" fill="var(--paper-elevated)" stroke="var(--border)" />
-        <text x="-150" y="32" font-family="PingFang SC, sans-serif" font-size="14" fill="var(--ink3)">心脏状态:</text>
-        <circle cx="-80" cy="25" r="15" fill="#2E8B57" id="heart-status" />
-        <text x="-50" y="32" font-family="PingFang SC, sans-serif" font-size="14" font-weight="700" fill="var(--ink)" id="heart-status-text">舒张期</text>
-        <text x="50" y="32" font-family="PingFang SC, sans-serif" font-size="14" fill="var(--ink3)">气囊状态:</text>
-        <text x="120" y="32" font-family="PingFang SC, sans-serif" font-size="14" font-weight="700" fill="var(--c-lymph)" id="balloon-status">序贯充气中</text>
+      <!-- 图例 -->
+      <g transform="translate(40, 155)">
+        <text x="0" y="0" font-family="PingFang SC, sans-serif" font-size="12" font-weight="700" fill="var(--ink2)">图例</text>
+        <line x1="0" y1="18" x2="40" y2="18" stroke="url(#arteryGrad)" stroke-width="4" />
+        <text x="48" y="22" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">动脉（含氧血）</text>
+        <line x1="0" y1="40" x2="40" y2="40" stroke="url(#veinGrad)" stroke-width="4" />
+        <text x="48" y="44" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">静脉（脱氧血）</text>
+        <rect x="0" y="56" width="20" height="14" rx="3" fill="url(#balloonCalf)" />
+        <text x="28" y="67" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">气囊（加压套）</text>
       </g>
 
-      <!-- 人体轮廓 -->
-      <path d="M 500 100 C 480 100 460 120 460 150 C 460 200 480 250 500 250 C 520 250 540 200 540 150 C 540 120 520 100 500 100" 
-            fill="rgba(245,240,232,0.1)" stroke="var(--ink4)" stroke-width="2" />
-      <path d="M 500 150 L 500 350" stroke="var(--ink4)" stroke-width="4" />
-      <path d="M 500 200 C 450 180 430 220 440 280" stroke="var(--ink4)" stroke-width="4" />
-      <path d="M 500 200 C 550 180 570 220 560 280" stroke="var(--ink4)" stroke-width="4" />
-      <path d="M 500 350 C 460 340 450 380 450 440 C 450 550 460 620 470 620" stroke="var(--ink4)" stroke-width="6" />
-      <path d="M 500 350 C 540 340 550 380 550 440 C 550 550 540 620 530 620" stroke="var(--ink4)" stroke-width="6" />
+      <!-- 肺循环标注 -->
+      <g transform="translate(430, 115)">
+        <rect x="0" y="0" width="140" height="26" rx="13" fill="rgba(79,179,200,0.15)" stroke="#4FB3C8" stroke-width="1" />
+        <text x="70" y="17" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="#3A8DA3">肺循环（小循环）</text>
+      </g>
 
-      <!-- 肺循环区域 -->
+      <!-- 体循环标注 -->
+      <g transform="translate(430, 350)">
+        <rect x="0" y="0" width="140" height="26" rx="13" fill="rgba(196,30,58,0.12)" stroke="#C41E3A" stroke-width="1" />
+        <text x="70" y="17" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="#C41E3A">体循环（大循环）</text>
+      </g>
+
+      <!-- 左右肺 -->
       <g id="lungs">
-        <ellipse cx="440" cy="180" rx="45" ry="35" fill="url(#lungGrad)" stroke="#4FB3C8" stroke-width="2" />
-        <ellipse cx="560" cy="180" rx="45" ry="35" fill="url(#lungGrad)" stroke="#4FB3C8" stroke-width="2" />
-        <text x="440" y="205" text-anchor="middle" font-size="10" fill="#4FB3C8" font-weight="600">肺</text>
-        <text x="560" y="205" text-anchor="middle" font-size="10" fill="#4FB3C8" font-weight="600">肺</text>
+        <ellipse cx="380" cy="200" rx="50" ry="40" fill="url(#lungGrad)" stroke="#4FB3C8" stroke-width="2" />
+        <text x="380" y="205" text-anchor="middle" font-size="12" fill="#2E8B57" font-weight="700">右肺</text>
+        <ellipse cx="620" cy="200" rx="50" ry="40" fill="url(#lungGrad)" stroke="#4FB3C8" stroke-width="2" />
+        <text x="620" y="205" text-anchor="middle" font-size="12" fill="#2E8B57" font-weight="700">左肺</text>
+        <!-- 肺泡示意 -->
+        <text x="380" y="165" text-anchor="middle" font-size="10" fill="var(--ink4)">肺泡 O₂/CO₂</text>
+        <text x="620" y="165" text-anchor="middle" font-size="10" fill="var(--ink4)">肺泡 O₂/CO₂</text>
       </g>
 
-      <!-- 心脏 -->
-      <g id="heart" class="heart-beat" transform="translate(500, 250)">
-        <path d="M 0 -30 C -25 -45 -35 -25 -20 -10 C -25 0 -20 10 -15 5 C -10 0 -5 -10 0 -5 C 5 -10 10 0 15 5 C 20 10 25 0 20 -10 C 35 -25 25 -45 0 -30 Z" 
-              fill="url(#heartGrad)" stroke="#C41E3A" stroke-width="2" filter="url(#glow)" />
-        <path d="M -5 -5 L 5 -5 L 5 5 L -5 5 Z" fill="#FFE083" />
+      <!-- 心脏（四腔心示意） -->
+      <g id="heart" class="heart-beat" transform="translate(500, 290)">
+        <path d="M -35 -25 C -55 -35 -60 -15 -40 0 C -45 15 -30 30 -10 25 C -5 35 5 35 10 25 C 30 30 45 15 40 0 C 60 -15 55 -35 35 -25 C 30 -35 15 -40 0 -30 C -15 -40 -30 -35 -35 -25 Z" 
+              fill="url(#heartGrad)" stroke="#A01828" stroke-width="2" filter="url(#glow)" />
+        <line x1="0" y1="-25" x2="0" y2="25" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="3,2" />
+        <line x1="-35" y1="0" x2="35" y2="0" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-dasharray="3,2" />
+        <text x="-17" y="-8" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.85)" font-weight="700">右心房</text>
+        <text x="17" y="-8" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.85)" font-weight="700">左心房</text>
+        <text x="-17" y="18" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.85)" font-weight="700">右心室</text>
+        <text x="17" y="18" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.85)" font-weight="700">左心室</text>
       </g>
-      <text x="500" y="290" text-anchor="middle" font-size="10" fill="var(--ink3)" font-weight="600">心脏</text>
+      <text x="500" y="355" text-anchor="middle" font-size="11" fill="var(--ink3)" font-weight="600">心脏</text>
 
-      <!-- 冠脉血管 -->
-      <path d="M 500 220 C 485 210 470 215 465 230" stroke="url(#arteryGrad)" stroke-width="3" fill="none" marker-end="url(#arrowHead)" />
-      <path d="M 500 220 C 515 210 530 215 535 230" stroke="url(#arteryGrad)" stroke-width="3" fill="none" marker-end="url(#arrowHead)" />
-      <path d="M 500 215 C 495 200 490 190 495 180" stroke="url(#arteryGrad)" stroke-width="2" fill="none" />
-      <path d="M 500 215 C 505 200 510 190 505 180" stroke="url(#arteryGrad)" stroke-width="2" fill="none" />
+      <!-- ===== 肺循环血管 ===== -->
+      <!-- 肺动脉（右心室→肺，静脉血，蓝色） -->
+      <path d="M 490 305 C 460 280 430 250 400 225 C 390 215 385 210 380 200" 
+            stroke="url(#veinGrad)" stroke-width="6" fill="none" stroke-linecap="round" marker-end="url(#arrowVein)" />
+      <path d="M 510 305 C 540 280 570 250 600 225 C 610 215 615 210 620 200" 
+            stroke="url(#veinGrad)" stroke-width="6" fill="none" stroke-linecap="round" marker-end="url(#arrowVein)" />
+      <text x="410" y="240" font-size="10" fill="#1D6B80" font-weight="600" transform="rotate(-30, 410, 240)">肺动脉</text>
+      
+      <!-- 肺静脉（肺→左心房，动脉血，红色） -->
+      <path d="M 380 210 C 400 220 420 240 460 265 C 475 275 485 280 490 280" 
+            stroke="url(#arteryGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
+      <path d="M 620 210 C 600 220 580 240 540 265 C 525 275 515 280 510 280" 
+            stroke="url(#arteryGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
+      <text x="580" y="240" font-size="10" fill="#C41E3A" font-weight="600" transform="rotate(30, 580, 240)">肺静脉</text>
 
-      <!-- 主动脉 -->
-      <path d="M 500 220 L 500 180 L 480 160" stroke="url(#arteryGrad)" stroke-width="6" fill="none" />
-      <path d="M 500 180 L 520 160" stroke="url(#arteryGrad)" stroke-width="6" fill="none" />
+      <!-- 上腔静脉（头部→右心房，静脉血，蓝色） -->
+      <path d="M 490 260 C 480 250 475 230 470 200 L 470 150 L 470 120" 
+            stroke="url(#veinGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowVein)" />
+      <text x="448" y="155" font-size="10" fill="#1D6B80" font-weight="600">上腔静脉</text>
 
-      <!-- 颈动脉 -->
-      <path d="M 480 160 L 470 100" stroke="url(#arteryGrad)" stroke-width="3" fill="none" />
-      <path d="M 520 160 L 530 100" stroke="url(#arteryGrad)" stroke-width="3" fill="none" />
+      <!-- 主动脉弓（左心室→全身，动脉血，红色） -->
+      <path d="M 510 275 C 520 265 530 245 535 220 L 535 180 C 535 155 520 135 500 125 C 480 115 460 120 445 135" 
+            stroke="url(#arteryGrad)" stroke-width="7" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
+      <text x="545" y="190" font-size="10" fill="#C41E3A" font-weight="600">主动脉</text>
 
-      <!-- 上腔静脉 -->
-      <path d="M 470 100 L 480 160 L 500 180" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
-      <path d="M 530 100 L 520 160" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
+      <!-- 颈动脉（主动脉→头部，动脉血） -->
+      <path d="M 470 125 L 465 100" stroke="url(#arteryGrad)" stroke-width="3.5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
+      <path d="M 530 125 L 535 100" stroke="url(#arteryGrad)" stroke-width="3.5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
+      <text x="550" y="105" font-size="10" fill="#C41E3A" font-weight="600">颈动脉→脑</text>
 
-      <!-- 肺动脉 -->
-      <path d="M 500 230 L 470 200 L 440 180" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
-      <path d="M 500 230 L 530 200 L 560 180" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
+      <!-- 头部/脑 -->
+      <ellipse cx="500" cy="85" rx="45" ry="30" fill="rgba(245,240,232,0.15)" stroke="var(--ink4)" stroke-width="1.5" />
+      <text x="500" y="89" text-anchor="middle" font-size="11" fill="var(--ink3)" font-weight="600">脑/头部</text>
 
-      <!-- 肺静脉 -->
-      <path d="M 440 180 L 470 200 L 500 225" stroke="url(#arteryGrad)" stroke-width="3" fill="none" />
-      <path d="M 560 180 L 530 200" stroke="url(#arteryGrad)" stroke-width="3" fill="none" />
+      <!-- ===== 体循环下行血管 ===== -->
+      <!-- 降主动脉（红色，动脉血向下） -->
+      <path d="M 500 160 L 500 200 L 500 350 L 500 420" 
+            stroke="url(#arteryGrad)" stroke-width="8" fill="none" stroke-linecap="round" />
+      
+      <!-- 腹主动脉分叉到双腿 -->
+      <path d="M 500 420 C 475 425 455 445 440 470 L 430 520 L 425 570 L 425 620" 
+            stroke="url(#arteryGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
+      <path d="M 500 420 C 525 425 545 445 560 470 L 570 520 L 575 570 L 575 620" 
+            stroke="url(#arteryGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
 
-      <!-- 下腔静脉 -->
-      <path d="M 500 270 L 500 350 L 500 500 L 500 600" stroke="url(#veinGrad)" stroke-width="5" fill="none" />
+      <!-- 下腔静脉（蓝色，静脉血向上） -->
+      <path d="M 425 620 L 425 570 L 430 520 C 440 470 460 440 485 430 C 495 427 500 425 500 420 L 500 350 L 500 305" 
+            stroke="url(#veinGrad)" stroke-width="7" fill="none" stroke-linecap="round" marker-end="url(#arrowVein)" />
+      <path d="M 575 620 L 575 570 L 570 520 C 560 470 540 440 515 430 C 505 427 500 425 500 420" 
+            stroke="url(#veinGrad)" stroke-width="5" fill="none" stroke-linecap="round" />
+      <text x="395" y="500" font-size="10" fill="#1D6B80" font-weight="600">下腔静脉</text>
+      <text x="510" y="500" font-size="10" fill="#C41E3A" font-weight="600">主动脉</text>
 
-      <!-- 腹主动脉 -->
-      <path d="M 500 270 L 500 350 L 500 450" stroke="url(#arteryGrad)" stroke-width="5" fill="none" />
+      <!-- 器官标注：肝、肾 -->
+      <g transform="translate(550, 420)">
+        <circle cx="0" cy="0" r="15" fill="rgba(46,139,87,0.2)" stroke="#2E8B57" stroke-width="1.5" />
+        <text x="0" y="4" text-anchor="middle" font-size="10" fill="#2E8B57" font-weight="600">肝</text>
+      </g>
+      <g transform="translate(420, 420)">
+        <ellipse cx="0" cy="0" rx="14" ry="10" fill="rgba(46,139,87,0.15)" stroke="#2E8B57" stroke-width="1.5" />
+        <text x="0" y="4" text-anchor="middle" font-size="10" fill="#2E8B57" font-weight="600">肾</text>
+      </g>
 
-      <!-- 腿部动脉 -->
-      <path d="M 500 450 C 480 450 465 480 455 500 L 452 550 L 452 600" stroke="url(#arteryGrad)" stroke-width="4" fill="none" />
-      <path d="M 500 450 C 520 450 535 480 545 500 L 548 550 L 548 600" stroke="url(#arteryGrad)" stroke-width="4" fill="none" />
-
-      <!-- 腿部静脉 -->
-      <path d="M 452 600 L 452 550 L 455 500 C 465 480 480 450 500 450" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
-      <path d="M 548 600 L 548 550 L 548 500 C 535 480 520 450 500 450" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
-
-      <!-- 气囊 -->
+      <!-- ===== 下肢气囊 ===== -->
       <g id="balloons">
         <!-- 小腿气囊 -->
-        <g id="calf-balloon" transform="translate(452, 570)">
-          <ellipse cx="0" cy="0" rx="25" ry="15" fill="url(#calfGrad)" opacity="0.5" />
-          <text x="0" y="30" text-anchor="middle" font-size="10" fill="var(--ink3)">小腿</text>
+        <g id="calf-l" class="balloon-calf" transform="translate(425, 600)">
+          <ellipse cx="0" cy="0" rx="35" ry="22" fill="url(#balloonCalf)" stroke="#D4A843" stroke-width="2" filter="url(#softShadow)" />
+          <text x="0" y="4" text-anchor="middle" font-size="11" fill="#8B6914" font-weight="700">小腿</text>
         </g>
-        <g id="calf-balloon-r" transform="translate(548, 570)">
-          <ellipse cx="0" cy="0" rx="25" ry="15" fill="url(#calfGrad)" opacity="0.5" />
+        <g id="calf-r" class="balloon-calf" transform="translate(575, 600)">
+          <ellipse cx="0" cy="0" rx="35" ry="22" fill="url(#balloonCalf)" stroke="#D4A843" stroke-width="2" filter="url(#softShadow)" />
+          <text x="0" y="4" text-anchor="middle" font-size="11" fill="#8B6914" font-weight="700">小腿</text>
         </g>
-        
+
         <!-- 大腿气囊 -->
-        <g id="thigh-balloon" transform="translate(455, 490)">
-          <ellipse cx="0" cy="0" rx="30" ry="20" fill="url(#thighGrad)" opacity="0.5" />
-          <text x="0" y="35" text-anchor="middle" font-size="10" fill="var(--ink3)">大腿</text>
+        <g id="thigh-l" class="balloon-thigh" transform="translate(430, 510)">
+          <ellipse cx="0" cy="0" rx="42" ry="28" fill="url(#balloonThigh)" stroke="#D4A843" stroke-width="2" filter="url(#softShadow)" />
+          <text x="0" y="4" text-anchor="middle" font-size="11" fill="#8B6914" font-weight="700">大腿</text>
         </g>
-        <g id="thigh-balloon-r" transform="translate(545, 490)">
-          <ellipse cx="0" cy="0" rx="30" ry="20" fill="url(#thighGrad)" opacity="0.5" />
+        <g id="thigh-r" class="balloon-thigh" transform="translate(570, 510)">
+          <ellipse cx="0" cy="0" rx="42" ry="28" fill="url(#balloonThigh)" stroke="#D4A843" stroke-width="2" filter="url(#softShadow)" />
+          <text x="0" y="4" text-anchor="middle" font-size="11" fill="#8B6914" font-weight="700">大腿</text>
         </g>
-        
+
         <!-- 臀部气囊 -->
-        <g id="hip-balloon" transform="translate(500, 380)">
-          <ellipse cx="-25" cy="0" rx="25" ry="18" fill="url(#hipGrad)" opacity="0.5" />
-          <ellipse cx="25" cy="0" rx="25" ry="18" fill="url(#hipGrad)" opacity="0.5" />
-          <text x="0" y="32" text-anchor="middle" font-size="10" fill="var(--ink3)">臀部</text>
+        <g id="hip" class="balloon-hip" transform="translate(500, 420)">
+          <ellipse cx="-45" cy="8" rx="38" ry="24" fill="url(#balloonHip)" stroke="#D4A843" stroke-width="2" filter="url(#softShadow)" />
+          <ellipse cx="45" cy="8" rx="38" ry="24" fill="url(#balloonHip)" stroke="#D4A843" stroke-width="2" filter="url(#softShadow)" />
+          <text x="0" y="12" text-anchor="middle" font-size="11" fill="#8B6914" font-weight="700">臀部</text>
         </g>
       </g>
 
-      <!-- 血流粒子 -->
-      <g id="blood-particles">
-        <!-- 腿部向上血流 -->
-        <circle cx="452" cy="600" r="4" fill="#C41E3A">
-          <animate attributeName="cy" values="600;500;400;300;250" dur="1.5s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;1;1;0" dur="1.5s" repeatCount="indefinite" />
+      <!-- 序贯加压指示箭头（舒张期） -->
+      <g id="sequence-arrows">
+        <g transform="translate(350, 610)">
+          <text x="0" y="0" font-size="13" fill="#E8C547" font-weight="800">①</text>
+          <text x="16" y="0" font-size="11" fill="var(--c-artery)" font-weight="700">先充</text>
+        </g>
+        <g transform="translate(350, 515)">
+          <text x="0" y="0" font-size="13" fill="#E8C547" font-weight="800">②</text>
+          <text x="16" y="0" font-size="11" fill="var(--c-artery)" font-weight="700">再充</text>
+        </g>
+        <g transform="translate(350, 425)">
+          <text x="0" y="0" font-size="13" fill="#E8C547" font-weight="800">③</text>
+          <text x="16" y="0" font-size="11" fill="var(--c-artery)" font-weight="700">后充</text>
+        </g>
+      </g>
+
+      <!-- ===== 血流粒子 ===== -->
+      <g id="particle-layer">
+        <!-- 舒张期：静脉血向上回流（南水北调） - 下腔静脉 -->
+        <circle r="4" fill="#1D6B80" opacity="0.9">
+          <animate attributeName="cx" values="425;428;435;455;485;495;500" dur="1.8s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="615;570;520;470;430;400;350" dur="1.8s" repeatCount="indefinite" />
+          <animate attributeName="r" values="3;4;4.5;4;3.5;3" dur="1.8s" repeatCount="indefinite" />
         </circle>
-        <circle cx="548" cy="600" r="4" fill="#C41E3A">
-          <animate attributeName="cy" values="600;500;400;300;250" dur="1.5s" repeatCount="indefinite" begin="0.3s" />
-          <animate attributeName="opacity" values="0;1;1;1;0" dur="1.5s" repeatCount="indefinite" begin="0.3s" />
+        <circle r="3.5" fill="#277B90" opacity="0.8">
+          <animate attributeName="cx" values="425;428;435;455;485;495;500" dur="1.8s" repeatCount="indefinite" begin="0.45s" />
+          <animate attributeName="cy" values="615;570;520;470;430;400;350" dur="1.8s" repeatCount="indefinite" begin="0.45s" />
+          <animate attributeName="r" values="2.5;3.5;4;3.5;3;2.5" dur="1.8s" repeatCount="indefinite" begin="0.45s" />
         </circle>
-        <circle cx="452" cy="600" r="3" fill="#E85A6E">
-          <animate attributeName="cy" values="600;520;420;320;250" dur="2s" repeatCount="indefinite" begin="0.6s" />
-          <animate attributeName="opacity" values="0;0.8;0.8;0.8;0" dur="2s" repeatCount="indefinite" begin="0.6s" />
+        <circle r="4" fill="#1D6B80" opacity="0.9">
+          <animate attributeName="cx" values="575;572;565;545;515;505;500" dur="1.8s" repeatCount="indefinite" begin="0.2s" />
+          <animate attributeName="cy" values="615;570;520;470;430;400;350" dur="1.8s" repeatCount="indefinite" begin="0.2s" />
+          <animate attributeName="r" values="3;4;4.5;4;3.5;3" dur="1.8s" repeatCount="indefinite" begin="0.2s" />
         </circle>
-        
-        <!-- 主动脉血流 -->
-        <circle cx="500" cy="450" r="3" fill="#C41E3A">
-          <animate attributeName="cy" values="450;350;270;220;180" dur="1.2s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;1;1;0" dur="1.2s" repeatCount="indefinite" />
+
+        <!-- 舒张期：静脉血从头部回流（上腔静脉） -->
+        <circle r="3" fill="#1D6B80" opacity="0.8">
+          <animate attributeName="cx" values="470;472;480;488;492" dur="1.2s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="90;130;180;230;260" dur="1.2s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.6;0.9;0.9;0.8;0.6" dur="1.2s" repeatCount="indefinite" />
         </circle>
-        
-        <!-- 冠脉灌注 -->
-        <circle cx="500" cy="220" r="3" fill="#FF4D6D">
-          <animate attributeName="cx" values="500;485;470;465" dur="0.8s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="220;210;215;230" dur="0.8s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;1;0" dur="0.8s" repeatCount="indefinite" />
+
+        <!-- 舒张期：冠脉灌注增加（红色粒子从主动脉进入心脏） -->
+        <circle r="3" fill="#FF4D4D" opacity="0.9">
+          <animate attributeName="cx" values="500;492;485;480;478" dur="0.9s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="170;190;220;250;270" dur="0.9s" repeatCount="indefinite" />
+          <animate attributeName="r" values="2.5;3.5;4;3.5;2.5" dur="0.9s" repeatCount="indefinite" />
         </circle>
-        <circle cx="500" cy="220" r="3" fill="#FF4D6D">
-          <animate attributeName="cx" values="500;515;530;535" dur="0.8s" repeatCount="indefinite" begin="0.2s" />
-          <animate attributeName="cy" values="220;210;215;230" dur="0.8s" repeatCount="indefinite" begin="0.2s" />
-          <animate attributeName="opacity" values="0;1;1;0" dur="0.8s" repeatCount="indefinite" begin="0.2s" />
+        <circle r="3" fill="#FF6B6B" opacity="0.8">
+          <animate attributeName="cx" values="500;508;515;520;522" dur="0.9s" repeatCount="indefinite" begin="0.3s" />
+          <animate attributeName="cy" values="170;190;220;250;270" dur="0.9s" repeatCount="indefinite" begin="0.3s" />
+          <animate attributeName="r" values="2.5;3.5;4;3.5;2.5" dur="0.9s" repeatCount="indefinite" begin="0.3s" />
         </circle>
-        
-        <!-- 颈动脉血流 -->
-        <circle cx="480" cy="160" r="2" fill="#E85A6E">
-          <animate attributeName="cy" values="160;130;100" dur="0.6s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;0" dur="0.6s" repeatCount="indefinite" />
+
+        <!-- 舒张期：颈动脉→脑 灌注增加 -->
+        <circle r="2.5" fill="#E63946" opacity="0.85">
+          <animate attributeName="cx" values="470;467;465" dur="0.8s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="125;105;90" dur="0.8s" repeatCount="indefinite" />
         </circle>
-        
-        <!-- 肺循环血流 -->
-        <circle cx="500" cy="230" r="2" fill="#1A5C6E">
-          <animate attributeName="cx" values="500;470;440" dur="0.7s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="230;200;180" dur="0.7s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;0" dur="0.7s" repeatCount="indefinite" />
+        <circle r="2.5" fill="#E63946" opacity="0.85">
+          <animate attributeName="cx" values="530;533;535" dur="0.8s" repeatCount="indefinite" begin="0.2s" />
+          <animate attributeName="cy" values="125;105;90" dur="0.8s" repeatCount="indefinite" begin="0.2s" />
         </circle>
-        <circle cx="440" cy="180" r="2" fill="#C41E3A">
-          <animate attributeName="cx" values="440;470;500" dur="0.7s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="180;200;225" dur="0.7s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0;1;0" dur="0.7s" repeatCount="indefinite" />
+
+        <!-- 收缩期：动脉血从心脏泵出到全身（主动脉下行） -->
+        <circle r="4" fill="#E63946" opacity="0.9">
+          <animate attributeName="cx" values="500;500;500;490;470;450;435;428;425" dur="1.2s" repeatCount="indefinite" begin="0.6s" />
+          <animate attributeName="cy" values="280;320;380;420;450;490;530;570;610" dur="1.2s" repeatCount="indefinite" begin="0.6s" />
+          <animate attributeName="r" values="3;4.5;5;4.5;4;3.5;3;2.5;2" dur="1.2s" repeatCount="indefinite" begin="0.6s" />
+        </circle>
+        <circle r="4" fill="#E63946" opacity="0.9">
+          <animate attributeName="cx" values="500;500;500;510;530;550;565;572;575" dur="1.2s" repeatCount="indefinite" begin="0.9s" />
+          <animate attributeName="cy" values="280;320;380;420;450;490;530;570;610" dur="1.2s" repeatCount="indefinite" begin="0.9s" />
+          <animate attributeName="r" values="3;4.5;5;4.5;4;3.5;3;2.5;2" dur="1.2s" repeatCount="indefinite" begin="0.9s" />
+        </circle>
+
+        <!-- 肺循环：右心室→肺动脉→肺（静脉血） -->
+        <circle r="3" fill="#1D6B80" opacity="0.85">
+          <animate attributeName="cx" values="490;470;445;415;395;380" dur="1s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="305;285;260;235;215;205" dur="1s" repeatCount="indefinite" />
+        </circle>
+        <circle r="3" fill="#1D6B80" opacity="0.85">
+          <animate attributeName="cx" values="510;530;555;585;605;620" dur="1s" repeatCount="indefinite" begin="0.3s" />
+          <animate attributeName="cy" values="305;285;260;235;215;205" dur="1s" repeatCount="indefinite" begin="0.3s" />
+        </circle>
+
+        <!-- 肺循环：肺→肺静脉→左心房（动脉血） -->
+        <circle r="3" fill="#E63946" opacity="0.85">
+          <animate attributeName="cx" values="380;400;425;455;475;490" dur="1s" repeatCount="indefinite" begin="0.5s" />
+          <animate attributeName="cy" values="205;225;250;270;278;280" dur="1s" repeatCount="indefinite" begin="0.5s" />
+        </circle>
+        <circle r="3" fill="#E63946" opacity="0.85">
+          <animate attributeName="cx" values="620;600;575;545;525;510" dur="1s" repeatCount="indefinite" begin="0.8s" />
+          <animate attributeName="cy" values="205;225;250;270;278;280" dur="1s" repeatCount="indefinite" begin="0.8s" />
+        </circle>
+
+        <!-- 收缩期：主动脉向头部射血 -->
+        <circle r="3" fill="#E63946" opacity="0.9">
+          <animate attributeName="cx" values="500;490;475;468;465" dur="0.7s" repeatCount="indefinite" begin="0.6s" />
+          <animate attributeName="cy" values="140;125;110;100;90" dur="0.7s" repeatCount="indefinite" begin="0.6s" />
         </circle>
       </g>
 
-      <!-- 南水北调标注 -->
-      <g id="nanshui-label" transform="translate(700, 450)">
-        <rect x="0" y="0" width="220" height="100" rx="10" fill="rgba(26,92,110,0.1)" stroke="#1A5C6E" stroke-width="2" />
-        <text x="110" y="28" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="16" font-weight="800" fill="#1A5C6E">南水北调</text>
-        <text x="110" y="55" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink2)">舒张期序贯加压</text>
-        <text x="110" y="75" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">小腿 → 大腿 → 臀部</text>
-        <text x="110" y="95" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">血液回流至心脑</text>
+      <!-- 标注框：南水北调（右侧） -->
+      <g transform="translate(750, 400)">
+        <rect x="0" y="0" width="200" height="110" rx="12" fill="rgba(26,92,110,0.08)" stroke="#1D6B80" stroke-width="2" />
+        <text x="100" y="28" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="17" font-weight="800" fill="#1D6B80">南水北调</text>
+        <text x="100" y="52" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink2)" font-weight="600">舒张期 · 序贯加压</text>
+        <line x1="20" y1="62" x2="180" y2="62" stroke="var(--border)" stroke-width="1" />
+        <text x="100" y="80" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">小腿 → 大腿 → 臀部</text>
+        <text x="100" y="98" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">血液回流 ↑ 心脑灌注 ↑</text>
       </g>
 
-      <!-- 顺水推舟标注 -->
-      <g id="shunshui-label" transform="translate(80, 450)">
-        <rect x="0" y="0" width="220" height="100" rx="10" fill="rgba(46,139,87,0.1)" stroke="#2E8B57" stroke-width="2" />
-        <text x="110" y="28" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="16" font-weight="800" fill="#2E8B57">顺水推舟</text>
-        <text x="110" y="55" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink2)">收缩期同步排气</text>
-        <text x="110" y="75" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">后负荷降低 15-25%</text>
-        <text x="110" y="95" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">心脏射血更省力</text>
+      <!-- 标注框：顺水推舟（左侧） -->
+      <g transform="translate(50, 400)">
+        <rect x="0" y="0" width="200" height="110" rx="12" fill="rgba(46,139,87,0.08)" stroke="#2E8B57" stroke-width="2" />
+        <text x="100" y="28" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="17" font-weight="800" fill="#2E8B57">顺水推舟</text>
+        <text x="100" y="52" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink2)" font-weight="600">收缩期 · 同步排气</text>
+        <line x1="20" y1="62" x2="180" y2="62" stroke="var(--border)" stroke-width="1" />
+        <text x="100" y="80" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">后负荷 ↓ 15-25%</text>
+        <text x="100" y="98" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">心脏射血更省力</text>
       </g>
 
-      <!-- 血流动力学效应 -->
-      <g transform="translate(500, 550)">
-        <rect x="-350" y="0" width="700" height="70" rx="10" fill="var(--paper-elevated)" stroke="var(--border)" />
+      <!-- 底部效应栏 -->
+      <g transform="translate(500, 680)">
+        <rect x="-380" y="0" width="760" height="55" rx="12" fill="var(--paper-elevated)" stroke="var(--border)" />
         <g transform="translate(-280, 20)">
-          <circle cx="0" cy="0" r="12" fill="#C41E3A" />
-          <text x="20" y="5" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)">冠脉灌注↑ 25-40%</text>
+          <circle cx="0" cy="10" r="10" fill="#E63946" />
+          <text x="18" y="14" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)" font-weight="600">冠脉灌注↑25-40%</text>
         </g>
-        <g transform="translate(-80, 20)">
-          <circle cx="0" cy="0" r="12" fill="#1A5C6E" />
-          <text x="20" y="5" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)">脑血流↑ 20-30%</text>
+        <g transform="translate(-110, 20)">
+          <circle cx="0" cy="10" r="10" fill="#1D6B80" />
+          <text x="18" y="14" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)" font-weight="600">脑血流↑20-30%</text>
         </g>
-        <g transform="translate(120, 20)">
-          <circle cx="0" cy="0" r="12" fill="#2E8B57" />
-          <text x="20" y="5" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)">后负荷↓ 15-25%</text>
+        <g transform="translate(50, 20)">
+          <circle cx="0" cy="10" r="10" fill="#2E8B57" />
+          <text x="18" y="14" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)" font-weight="600">后负荷↓15-25%</text>
         </g>
-        <g transform="translate(300, 20)">
-          <circle cx="0" cy="0" r="12" fill="#D4A843" />
-          <text x="20" y="5" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)">剪切力激活NO通路</text>
+        <g transform="translate(200, 20)">
+          <circle cx="0" cy="10" r="10" fill="#E8C547" />
+          <text x="18" y="14" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)" font-weight="600">剪切力激活NO通路</text>
         </g>
       </g>
 
+      <!-- 控制按钮 -->
+      <g transform="translate(500, 725)" style="cursor:pointer;">
+        <rect x="-140" y="-20" width="280" height="32" rx="16" fill="var(--paper-elevated)" stroke="var(--border)" />
+        <rect x="-130" y="-15" width="80" height="22" rx="11" fill="#E63946" id="btn-dia" onclick="setPhase('diastole')">
+          <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite" />
+        </rect>
+        <text x="-90" y="0" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="white">▶ 舒张期</text>
+        <rect x="50" y="-15" width="80" height="22" rx="11" fill="#2E8B57" id="btn-sys" onclick="setPhase('systole')" />
+        <text x="90" y="0" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" font-weight="700" fill="white">▶ 收缩期</text>
+      </g>
     </svg>
     
     <script>
       var currentPhase = 'diastole';
-      var animationTimer = null;
-      
-      function animateBalloon(id, scale, opacity, delay) {
+      var autoTimer = null;
+      var isAuto = true;
+      var balloonScale = { calf: 1, thigh: 1, hip: 1 };
+
+      function setBalloon(id, scale, opacity) {
         var el = document.getElementById(id);
         if (!el) return;
-        el.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
         el.style.transform = 'scale(' + scale + ')';
         el.style.opacity = opacity;
       }
-      
-      function startDiastole() {
+
+      function setPhase(phase) {
+        isAuto = false;
+        if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+        if (phase === 'diastole') {
+          runDiastole();
+        } else {
+          runSystole();
+        }
+      }
+
+      function runDiastole() {
         currentPhase = 'diastole';
-        document.getElementById('heart-status').setAttribute('fill', '#2E8B57');
-        document.getElementById('heart-status-text').textContent = '舒张期';
-        document.getElementById('balloon-status').textContent = '序贯充气中';
+        var pt = document.getElementById('phase-text');
+        if (pt) pt.textContent = '舒张期';
+        var pb = document.getElementById('balloon-text');
+        if (pb) pb.textContent = '序贯充气 ↑';
+        var rt = document.getElementById('return-text');
+        if (rt) rt.textContent = '↑ 增加 30-50%';
         
+        var btnD = document.getElementById('btn-dia');
+        var btnS = document.getElementById('btn-sys');
+        if (btnD) btnD.setAttribute('fill', '#E63946');
+        if (btnS) btnS.setAttribute('fill', '#2E8B57');
+
         var heart = document.getElementById('heart');
-        heart.style.animation = 'pulse-heart 1.5s ease-in-out infinite';
-        
-        var balloons = ['calf-balloon', 'calf-balloon-r', 'thigh-balloon', 'thigh-balloon-r', 'hip-balloon'];
-        balloons.forEach(function(b) {
-          var el = document.getElementById(b);
-          if (el) { el.style.transform = 'scale(1)'; el.style.opacity = '0.5'; }
-        });
-        
+        if (heart) heart.style.animationDuration = '1.5s';
+
+        setBalloon('calf-l', 0.9, 0.5);
+        setBalloon('calf-r', 0.9, 0.5);
+        setBalloon('thigh-l', 0.9, 0.5);
+        setBalloon('thigh-r', 0.9, 0.5);
+        setBalloon('hip', 0.9, 0.5);
+
         setTimeout(function() {
-          animateBalloon('calf-balloon', 1.3, 0.9, 0);
-          animateBalloon('calf-balloon-r', 1.3, 0.9, 0);
-        }, 100);
-        
+          setBalloon('calf-l', 1.25, 1);
+          setBalloon('calf-r', 1.25, 1);
+        }, 150);
         setTimeout(function() {
-          animateBalloon('thigh-balloon', 1.25, 0.9, 0);
-          animateBalloon('thigh-balloon-r', 1.25, 0.9, 0);
-        }, 300);
-        
+          setBalloon('thigh-l', 1.2, 0.95);
+          setBalloon('thigh-r', 1.2, 0.95);
+        }, 350);
         setTimeout(function() {
-          animateBalloon('hip-balloon', 1.2, 0.9, 0);
-        }, 500);
-        
-        setTimeout(function() {
-          if (currentPhase === 'diastole') startSystole();
-        }, 2000);
+          setBalloon('hip', 1.15, 0.9);
+        }, 550);
       }
-      
-      function startSystole() {
+
+      function runSystole() {
         currentPhase = 'systole';
-        document.getElementById('heart-status').setAttribute('fill', '#C41E3A');
-        document.getElementById('heart-status-text').textContent = '收缩期';
-        document.getElementById('balloon-status').textContent = '同步排气';
-        
+        var pt = document.getElementById('phase-text');
+        if (pt) pt.textContent = '收缩期';
+        var pb = document.getElementById('balloon-text');
+        if (pb) pb.textContent = '同步排气 ↓';
+        var rt = document.getElementById('return-text');
+        if (rt) {
+          rt.textContent = '射血量↑ 后负荷↓';
+          rt.setAttribute('fill', '#2E8B57');
+        }
+
+        var btnD = document.getElementById('btn-dia');
+        var btnS = document.getElementById('btn-sys');
+        if (btnD) btnD.setAttribute('fill', '#999');
+        if (btnS) btnS.setAttribute('fill', '#E63946');
+
         var heart = document.getElementById('heart');
-        heart.style.animation = 'pulse-heart 0.5s ease-in-out infinite';
-        
-        var balloons = ['calf-balloon', 'calf-balloon-r', 'thigh-balloon', 'thigh-balloon-r', 'hip-balloon'];
-        balloons.forEach(function(b) {
-          var el = document.getElementById(b);
-          if (el) {
-            el.style.transition = 'transform 0.15s ease, opacity 0.15s ease';
-            el.style.transform = 'scale(1)';
-            el.style.opacity = '0.4';
-          }
-        });
-        
-        setTimeout(function() {
-          if (currentPhase === 'systole') startDiastole();
-        }, 1000);
+        if (heart) heart.style.animationDuration = '0.6s';
+
+        setBalloon('calf-l', 0.85, 0.35);
+        setBalloon('calf-r', 0.85, 0.35);
+        setBalloon('thigh-l', 0.85, 0.35);
+        setBalloon('thigh-r', 0.85, 0.35);
+        setBalloon('hip', 0.85, 0.35);
       }
-      
-      startDiastole();
+
+      function autoLoop() {
+        if (!isAuto) return;
+        runDiastole();
+        autoTimer = setTimeout(function() {
+          if (!isAuto) return;
+          runSystole();
+          autoTimer = setTimeout(function() {
+            if (isAuto) autoLoop();
+          }, 1000);
+        }, 1800);
+      }
+
+      autoLoop();
     </script>
   </div>
 
