@@ -53,34 +53,34 @@
     --yellow:          var(--c-lymph-bright);
   }
 
-  /* ===== 深色模式：四色提亮 + 表面深化 ===== */
+  /* ===== 深色模式：四色提亮 + 表面优化 ===== */
   body.dark-mode {
-    --c-artery:        #FF4D6D;
-    --c-artery-soft:   #FF7A8E;
-    --c-artery-dark:   #C9304D;
-    --c-artery-bg:     rgba(255,77,109,0.14);
-    --c-vein:          #4FB3C8;
-    --c-vein-soft:     #7CC9D9;
-    --c-vein-dark:     #2A7A8C;
-    --c-vein-bg:       rgba(79,179,200,0.14);
-    --c-nerve:         #5DDB96;
-    --c-nerve-soft:    #85E6B0;
-    --c-nerve-dark:    #3DA76A;
-    --c-nerve-bg:      rgba(93,219,150,0.14);
-    --c-lymph:         #FFD45E;
-    --c-lymph-bright:  #FFE083;
-    --c-lymph-soft:    #FFE9A8;
-    --c-lymph-bg:      rgba(255,212,94,0.16);
+    --c-artery:        #FF6B85;
+    --c-artery-soft:   #FF94A6;
+    --c-artery-dark:   #E03D57;
+    --c-artery-bg:     rgba(255,107,133,0.12);
+    --c-vein:          #5FC8DC;
+    --c-vein-soft:     #8DD7E9;
+    --c-vein-dark:     #3A9BB0;
+    --c-vein-bg:       rgba(95,200,220,0.12);
+    --c-nerve:         #6BE6A0;
+    --c-nerve-soft:    #95F0BD;
+    --c-nerve-dark:    #4BC486;
+    --c-nerve-bg:      rgba(107,230,160,0.12);
+    --c-lymph:         #FFE066;
+    --c-lymph-bright:  #FFF099;
+    --c-lymph-soft:    #FFF5BB;
+    --c-lymph-bg:      rgba(255,224,102,0.14);
 
-    --paper:           #0F141A;
-    --paper-elevated:  #1A2026;
-    --paper-sunken:    #0A0E12;
-    --ink:             #F5F0E8;
-    --ink2:            rgba(245,240,232,0.85);
-    --ink3:            rgba(245,240,232,0.65);
-    --ink4:            rgba(245,240,232,0.40);
-    --border:          rgba(232,197,71,0.16);
-    --border-strong:   rgba(232,197,71,0.28);
+    --paper:           #1A2230;
+    --paper-elevated:  #242E3D;
+    --paper-sunken:    #151B25;
+    --ink:             #FAFAFA;
+    --ink2:            rgba(250,250,250,0.92);
+    --ink3:            rgba(250,250,250,0.80);
+    --ink4:            rgba(250,250,250,0.60);
+    --border:          rgba(255,224,102,0.18);
+    --border-strong:   rgba(255,224,102,0.30);
   }
   body.dark-mode { background: var(--paper); color: var(--ink); }
 
@@ -136,6 +136,90 @@
   body.dark-mode .data-source { color: var(--ink4); }
   body.dark-mode a { color: var(--c-vein); }
   body.dark-mode a:hover { color: var(--c-vein-soft); }
+
+  body.dark-mode .tl-content { background: var(--paper-elevated); color: var(--ink); }
+  body.dark-mode .tl-content p { color: var(--ink3); }
+  body.dark-mode .timeline::before { background: linear-gradient(to bottom, transparent, var(--c-lymph-bright) 10%, var(--c-artery) 85%, transparent); }
+  body.dark-mode .tl-year { color: var(--ink3); }
+  body.dark-mode .tl-year::after { box-shadow: 0 0 0 3px rgba(15,20,26,0.8); }
+
+  body.dark-mode .policy-card { background: var(--paper-elevated); }
+  body.dark-mode .policy-card h4 { color: var(--ink); }
+  body.dark-mode .policy-card p { color: var(--ink3); }
+  body.dark-mode .policy-card .quote { background: var(--paper); color: var(--ink2); border-left-color: var(--c-lymph-bright); }
+
+  body.dark-mode .oem-feature { background: var(--paper-elevated); }
+  body.dark-mode .oem-feature h4 { color: var(--c-artery-soft); }
+  body.dark-mode .oem-feature .sub { color: var(--ink3); }
+
+  body.dark-mode .obj-item { background: var(--paper-elevated); }
+  body.dark-mode .obj-item .obj-q { color: var(--c-artery-soft); }
+  body.dark-mode .obj-item .obj-a { color: var(--ink2); }
+
+  body.dark-mode .toolkit-card { background: var(--paper-elevated); }
+  body.dark-mode .toolkit-card h4 { color: var(--ink); }
+  body.dark-mode .toolkit-card .script { background: var(--paper); color: var(--ink2); }
+
+  body.dark-mode .mech-step { background: var(--paper-elevated); }
+  body.dark-mode .mech-step h4 { color: var(--ink); }
+  body.dark-mode .mech-step p { color: var(--ink3); }
+
+  body.dark-mode .toc { background: var(--paper-elevated); }
+  body.dark-mode .toc li { color: var(--ink2); }
+  body.dark-mode .toc li a { color: var(--ink2); }
+
+  body.dark-mode .roadmap-phase { background: var(--paper-elevated); }
+  body.dark-mode .roadmap-phase h4 { color: var(--ink); }
+  body.dark-mode .roadmap-step { color: var(--ink2); }
+
+  body.dark-mode .frontier-card { background: var(--paper-elevated); }
+  body.dark-mode .frontier-card h4 { color: var(--ink); }
+  body.dark-mode .frontier-card p { color: var(--ink3); }
+
+  body.dark-mode .section-lead { color: var(--ink2) !important; }
+  body.dark-mode .card p { color: var(--ink3); }
+  body.dark-mode .card .detail { color: var(--ink4); }
+
+  body.dark-mode .stat-card .label { color: var(--ink2); }
+  body.dark-mode .stat-card .detail { color: var(--ink4); }
+
+  body.dark-mode .hl-box { background: var(--paper-elevated); border-left-color: var(--c-artery); }
+  body.dark-mode .hl-box p, body.dark-mode .hl-box strong { color: var(--ink2); }
+  body.dark-mode .hl-box .big-num { color: var(--c-artery-soft); }
+
+  body.dark-mode .data-table td { background: var(--paper-elevated); color: var(--ink2); }
+  body.dark-mode .data-table tr:nth-child(even) td { background: var(--paper); }
+
+  body.dark-mode .section h3 { color: var(--ink); }
+  body.dark-mode .section h4 { color: var(--ink); }
+
+  body.dark-mode .section-dark .section-lead,
+  body.dark-mode .section-red .section-lead,
+  body.dark-mode .section-gold .section-lead { color: var(--ink2); }
+
+  body.dark-mode .dept-section-dark .section-lead,
+  body.dark-mode .dept-section-purple .section-lead { color: var(--ink2); }
+
+  body.dark-mode .section-dark h3,
+  body.dark-mode .section-red h3,
+  body.dark-mode .section-gold h3 { color: var(--c-lymph-bright); }
+
+  body.dark-mode .dept-section-dark h3,
+  body.dark-mode .dept-section-purple h3 { color: var(--c-lymph-bright); }
+
+  body.dark-mode .product-card { background: var(--paper-elevated); border-color: var(--border); }
+  body.dark-mode .product-card h4 { color: var(--c-vein); }
+  body.dark-mode .product-card p { color: var(--ink3); }
+
+  body.dark-mode .org-chart { background: linear-gradient(135deg, var(--paper-elevated), var(--paper)); }
+
+  body.dark-mode .cycle-wrapper .flow-node { box-shadow: 0 6px 24px rgba(0,0,0,0.4); }
+
+  body.dark-mode #cycle .cycle-nodes div { background: var(--paper-elevated) !important; }
+  body.dark-mode #cycle .cycle-nodes div:not(:hover) { opacity: 0.9; }
+
+  body.dark-mode .scroll-progress { background: rgba(0,0,0,0.3); }
+
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -1544,11 +1628,6 @@
   </ul>
 
   <div class="topnav-right">
-    <div class="topnav-filter" id="navFilter">
-      <button class="filter-tab active-tab" onclick="setNavFilter('all')" id="ftAll">全部</button>
-      <button class="filter-tab" onclick="setNavFilter('director')" id="ftDirector">🏛️ 院长汇报</button>
-      <button class="filter-tab" onclick="setNavFilter('channel')" id="ftChannel">💼 渠道培训</button>
-    </div>
     <button class="hamburger" id="hamburger" aria-label="目录菜单" aria-expanded="false" aria-controls="navDrawer">
       <span></span><span></span><span></span>
     </button>
@@ -2100,9 +2179,416 @@
     </p>
   </div>
 
-  <!-- v4 动画嵌入 -->
-  <div style="width:100%; margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid rgba(26,92,110,0.12);">
-    <iframe src="nanshui-dynamic-diagram-v4-embed.html" style="width:100%; height:920px; border:none; border-radius:12px; box-shadow:0 1px 6px rgba(0,0,0,0.06);"></iframe>
+  <div style="width:100%; margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid rgba(26,92,110,0.12); background:var(--paper);">
+    <style>
+      .eecp-diagram {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        display: block;
+      }
+      .eecp-stage-label {
+        font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.5s ease;
+      }
+      .eecp-stage-desc {
+        font-family: "PingFang SC","Microsoft YaHei",sans-serif;
+        font-size: 0.85rem;
+        opacity: 0.8;
+      }
+      @keyframes pulse-heart {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      @keyframes inflate-calf {
+        0% { transform: scale(1); opacity: 0.6; }
+        100% { transform: scale(1.3); opacity: 1; }
+      }
+      @keyframes inflate-thigh {
+        0% { transform: scale(1); opacity: 0.6; }
+        100% { transform: scale(1.25); opacity: 1; }
+      }
+      @keyframes inflate-hip {
+        0% { transform: scale(1); opacity: 0.6; }
+        100% { transform: scale(1.2); opacity: 1; }
+      }
+      @keyframes deflate-all {
+        0% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(1); opacity: 0.4; }
+      }
+      @keyframes flow-particle {
+        0% { offset-distance: 0%; opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { offset-distance: 100%; opacity: 0; }
+      }
+      @keyframes flow-up {
+        0% { transform: translateY(0); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translateY(-120px); opacity: 0; }
+      }
+      @keyframes flow-heart {
+        0% { transform: scale(0.8); opacity: 0; }
+        50% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      @keyframes highlight-text {
+        0%, 100% { fill: var(--c-lymph-bright); }
+        50% { fill: var(--c-artery-soft); }
+      }
+      .heart-beat {
+        animation: pulse-heart 1s ease-in-out infinite;
+      }
+      .stage-active {
+        font-weight: 800;
+      }
+      .blood-particle {
+        offset-path: path('M 400 350 Q 400 250 450 200 T 500 150');
+        animation: flow-particle 2s linear infinite;
+      }
+    </style>
+    
+    <svg class="eecp-diagram" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <linearGradient id="arteryGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#C41E3A;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#E85A6E;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="veinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#1A5C6E;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#2A7A8C;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="lungGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#4FB3C8;stop-opacity:0.3" />
+          <stop offset="100%" style="stop-color:#7CC9D9;stop-opacity:0.5" />
+        </linearGradient>
+        <radialGradient id="heartGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#FF4D6D;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#C41E3A;stop-opacity:1" />
+        </radialGradient>
+        <radialGradient id="calfGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#D4A843;stop-opacity:0.9" />
+          <stop offset="100%" style="stop-color:#B89430;stop-opacity:0.7" />
+        </radialGradient>
+        <radialGradient id="thighGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#E8C547;stop-opacity:0.9" />
+          <stop offset="100%" style="stop-color:#D4A843;stop-opacity:0.7" />
+        </radialGradient>
+        <radialGradient id="hipGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#FFD45E;stop-opacity:0.9" />
+          <stop offset="100%" style="stop-color:#E8C547;stop-opacity:0.7" />
+        </radialGradient>
+        <marker id="arrowHead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#C41E3A" />
+        </marker>
+        <marker id="arrowHeadVein" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#1A5C6E" />
+        </marker>
+      </defs>
+
+      <!-- 背景 -->
+      <rect x="0" y="0" width="1000" height="700" fill="var(--paper)" />
+      
+      <!-- 标题 -->
+      <text x="500" y="40" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="800" fill="var(--ink)">
+        EECP 体外反搏血流动力学机制
+      </text>
+      <text x="500" y="65" text-anchor="middle" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="var(--ink3)">
+        南水北调 · 顺水推舟
+      </text>
+
+      <!-- 控制按钮 -->
+      <g transform="translate(500, 650)">
+        <rect x="-120" y="0" width="240" height="40" rx="20" fill="var(--paper-elevated)" stroke="var(--border)" />
+        <rect x="-100" y="5" width="60" height="30" rx="15" fill="var(--c-artery)" class="eecp-btn" id="btn-diastole" onclick="startDiastole()">
+          <animate attributeName="fill" values="#C41E3A;#E85A6E;#C41E3A" dur="2s" repeatCount="indefinite" />
+        </rect>
+        <text x="-70" y="23" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" font-weight="700" fill="white">舒张期</text>
+        <rect x="40" y="5" width="60" height="30" rx="15" fill="var(--c-vein)" class="eecp-btn" id="btn-systole" onclick="startSystole()">
+          <animate attributeName="fill" values="#1A5C6E;#2A7A8C;#1A5C6E" dur="2s" repeatCount="indefinite" />
+        </rect>
+        <text x="70" y="23" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" font-weight="700" fill="white">收缩期</text>
+      </g>
+
+      <!-- 状态指示器 -->
+      <g transform="translate(500, 80)">
+        <rect x="-200" y="0" width="400" height="50" rx="10" fill="var(--paper-elevated)" stroke="var(--border)" />
+        <text x="-150" y="32" font-family="PingFang SC, sans-serif" font-size="14" fill="var(--ink3)">心脏状态:</text>
+        <circle cx="-80" cy="25" r="15" fill="#2E8B57" id="heart-status" />
+        <text x="-50" y="32" font-family="PingFang SC, sans-serif" font-size="14" font-weight="700" fill="var(--ink)" id="heart-status-text">舒张期</text>
+        <text x="50" y="32" font-family="PingFang SC, sans-serif" font-size="14" fill="var(--ink3)">气囊状态:</text>
+        <text x="120" y="32" font-family="PingFang SC, sans-serif" font-size="14" font-weight="700" fill="var(--c-lymph)" id="balloon-status">序贯充气中</text>
+      </g>
+
+      <!-- 人体轮廓 -->
+      <path d="M 500 100 C 480 100 460 120 460 150 C 460 200 480 250 500 250 C 520 250 540 200 540 150 C 540 120 520 100 500 100" 
+            fill="rgba(245,240,232,0.1)" stroke="var(--ink4)" stroke-width="2" />
+      <path d="M 500 150 L 500 350" stroke="var(--ink4)" stroke-width="4" />
+      <path d="M 500 200 C 450 180 430 220 440 280" stroke="var(--ink4)" stroke-width="4" />
+      <path d="M 500 200 C 550 180 570 220 560 280" stroke="var(--ink4)" stroke-width="4" />
+      <path d="M 500 350 C 460 340 450 380 450 440 C 450 550 460 620 470 620" stroke="var(--ink4)" stroke-width="6" />
+      <path d="M 500 350 C 540 340 550 380 550 440 C 550 550 540 620 530 620" stroke="var(--ink4)" stroke-width="6" />
+
+      <!-- 肺循环区域 -->
+      <g id="lungs">
+        <ellipse cx="440" cy="180" rx="45" ry="35" fill="url(#lungGrad)" stroke="#4FB3C8" stroke-width="2" />
+        <ellipse cx="560" cy="180" rx="45" ry="35" fill="url(#lungGrad)" stroke="#4FB3C8" stroke-width="2" />
+        <text x="440" y="205" text-anchor="middle" font-size="10" fill="#4FB3C8" font-weight="600">肺</text>
+        <text x="560" y="205" text-anchor="middle" font-size="10" fill="#4FB3C8" font-weight="600">肺</text>
+      </g>
+
+      <!-- 心脏 -->
+      <g id="heart" class="heart-beat" transform="translate(500, 250)">
+        <path d="M 0 -30 C -25 -45 -35 -25 -20 -10 C -25 0 -20 10 -15 5 C -10 0 -5 -10 0 -5 C 5 -10 10 0 15 5 C 20 10 25 0 20 -10 C 35 -25 25 -45 0 -30 Z" 
+              fill="url(#heartGrad)" stroke="#C41E3A" stroke-width="2" filter="url(#glow)" />
+        <path d="M -5 -5 L 5 -5 L 5 5 L -5 5 Z" fill="#FFE083" />
+      </g>
+      <text x="500" y="290" text-anchor="middle" font-size="10" fill="var(--ink3)" font-weight="600">心脏</text>
+
+      <!-- 冠脉血管 -->
+      <path d="M 500 220 C 485 210 470 215 465 230" stroke="url(#arteryGrad)" stroke-width="3" fill="none" marker-end="url(#arrowHead)" />
+      <path d="M 500 220 C 515 210 530 215 535 230" stroke="url(#arteryGrad)" stroke-width="3" fill="none" marker-end="url(#arrowHead)" />
+      <path d="M 500 215 C 495 200 490 190 495 180" stroke="url(#arteryGrad)" stroke-width="2" fill="none" />
+      <path d="M 500 215 C 505 200 510 190 505 180" stroke="url(#arteryGrad)" stroke-width="2" fill="none" />
+
+      <!-- 主动脉 -->
+      <path d="M 500 220 L 500 180 L 480 160" stroke="url(#arteryGrad)" stroke-width="6" fill="none" />
+      <path d="M 500 180 L 520 160" stroke="url(#arteryGrad)" stroke-width="6" fill="none" />
+
+      <!-- 颈动脉 -->
+      <path d="M 480 160 L 470 100" stroke="url(#arteryGrad)" stroke-width="3" fill="none" />
+      <path d="M 520 160 L 530 100" stroke="url(#arteryGrad)" stroke-width="3" fill="none" />
+
+      <!-- 上腔静脉 -->
+      <path d="M 470 100 L 480 160 L 500 180" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
+      <path d="M 530 100 L 520 160" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
+
+      <!-- 肺动脉 -->
+      <path d="M 500 230 L 470 200 L 440 180" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
+      <path d="M 500 230 L 530 200 L 560 180" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
+
+      <!-- 肺静脉 -->
+      <path d="M 440 180 L 470 200 L 500 225" stroke="url(#arteryGrad)" stroke-width="3" fill="none" />
+      <path d="M 560 180 L 530 200" stroke="url(#arteryGrad)" stroke-width="3" fill="none" />
+
+      <!-- 下腔静脉 -->
+      <path d="M 500 270 L 500 350 L 500 500 L 500 600" stroke="url(#veinGrad)" stroke-width="5" fill="none" />
+
+      <!-- 腹主动脉 -->
+      <path d="M 500 270 L 500 350 L 500 450" stroke="url(#arteryGrad)" stroke-width="5" fill="none" />
+
+      <!-- 腿部动脉 -->
+      <path d="M 500 450 C 480 450 465 480 455 500 L 452 550 L 452 600" stroke="url(#arteryGrad)" stroke-width="4" fill="none" />
+      <path d="M 500 450 C 520 450 535 480 545 500 L 548 550 L 548 600" stroke="url(#arteryGrad)" stroke-width="4" fill="none" />
+
+      <!-- 腿部静脉 -->
+      <path d="M 452 600 L 452 550 L 455 500 C 465 480 480 450 500 450" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
+      <path d="M 548 600 L 548 550 L 548 500 C 535 480 520 450 500 450" stroke="url(#veinGrad)" stroke-width="4" fill="none" />
+
+      <!-- 气囊 -->
+      <g id="balloons">
+        <!-- 小腿气囊 -->
+        <g id="calf-balloon" transform="translate(452, 570)">
+          <ellipse cx="0" cy="0" rx="25" ry="15" fill="url(#calfGrad)" opacity="0.5" />
+          <text x="0" y="30" text-anchor="middle" font-size="10" fill="var(--ink3)">小腿</text>
+        </g>
+        <g id="calf-balloon-r" transform="translate(548, 570)">
+          <ellipse cx="0" cy="0" rx="25" ry="15" fill="url(#calfGrad)" opacity="0.5" />
+        </g>
+        
+        <!-- 大腿气囊 -->
+        <g id="thigh-balloon" transform="translate(455, 490)">
+          <ellipse cx="0" cy="0" rx="30" ry="20" fill="url(#thighGrad)" opacity="0.5" />
+          <text x="0" y="35" text-anchor="middle" font-size="10" fill="var(--ink3)">大腿</text>
+        </g>
+        <g id="thigh-balloon-r" transform="translate(545, 490)">
+          <ellipse cx="0" cy="0" rx="30" ry="20" fill="url(#thighGrad)" opacity="0.5" />
+        </g>
+        
+        <!-- 臀部气囊 -->
+        <g id="hip-balloon" transform="translate(500, 380)">
+          <ellipse cx="-25" cy="0" rx="25" ry="18" fill="url(#hipGrad)" opacity="0.5" />
+          <ellipse cx="25" cy="0" rx="25" ry="18" fill="url(#hipGrad)" opacity="0.5" />
+          <text x="0" y="32" text-anchor="middle" font-size="10" fill="var(--ink3)">臀部</text>
+        </g>
+      </g>
+
+      <!-- 血流粒子 -->
+      <g id="blood-particles">
+        <!-- 腿部向上血流 -->
+        <circle cx="452" cy="600" r="4" fill="#C41E3A">
+          <animate attributeName="cy" values="600;500;400;300;250" dur="1.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;1;1;0" dur="1.5s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="548" cy="600" r="4" fill="#C41E3A">
+          <animate attributeName="cy" values="600;500;400;300;250" dur="1.5s" repeatCount="indefinite" begin="0.3s" />
+          <animate attributeName="opacity" values="0;1;1;1;0" dur="1.5s" repeatCount="indefinite" begin="0.3s" />
+        </circle>
+        <circle cx="452" cy="600" r="3" fill="#E85A6E">
+          <animate attributeName="cy" values="600;520;420;320;250" dur="2s" repeatCount="indefinite" begin="0.6s" />
+          <animate attributeName="opacity" values="0;0.8;0.8;0.8;0" dur="2s" repeatCount="indefinite" begin="0.6s" />
+        </circle>
+        
+        <!-- 主动脉血流 -->
+        <circle cx="500" cy="450" r="3" fill="#C41E3A">
+          <animate attributeName="cy" values="450;350;270;220;180" dur="1.2s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;1;1;0" dur="1.2s" repeatCount="indefinite" />
+        </circle>
+        
+        <!-- 冠脉灌注 -->
+        <circle cx="500" cy="220" r="3" fill="#FF4D6D">
+          <animate attributeName="cx" values="500;485;470;465" dur="0.8s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="220;210;215;230" dur="0.8s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;1;0" dur="0.8s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="220" r="3" fill="#FF4D6D">
+          <animate attributeName="cx" values="500;515;530;535" dur="0.8s" repeatCount="indefinite" begin="0.2s" />
+          <animate attributeName="cy" values="220;210;215;230" dur="0.8s" repeatCount="indefinite" begin="0.2s" />
+          <animate attributeName="opacity" values="0;1;1;0" dur="0.8s" repeatCount="indefinite" begin="0.2s" />
+        </circle>
+        
+        <!-- 颈动脉血流 -->
+        <circle cx="480" cy="160" r="2" fill="#E85A6E">
+          <animate attributeName="cy" values="160;130;100" dur="0.6s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;0" dur="0.6s" repeatCount="indefinite" />
+        </circle>
+        
+        <!-- 肺循环血流 -->
+        <circle cx="500" cy="230" r="2" fill="#1A5C6E">
+          <animate attributeName="cx" values="500;470;440" dur="0.7s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="230;200;180" dur="0.7s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;0" dur="0.7s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="440" cy="180" r="2" fill="#C41E3A">
+          <animate attributeName="cx" values="440;470;500" dur="0.7s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="180;200;225" dur="0.7s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;0" dur="0.7s" repeatCount="indefinite" />
+        </circle>
+      </g>
+
+      <!-- 南水北调标注 -->
+      <g id="nanshui-label" transform="translate(700, 450)">
+        <rect x="0" y="0" width="220" height="100" rx="10" fill="rgba(26,92,110,0.1)" stroke="#1A5C6E" stroke-width="2" />
+        <text x="110" y="28" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="16" font-weight="800" fill="#1A5C6E">南水北调</text>
+        <text x="110" y="55" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink2)">舒张期序贯加压</text>
+        <text x="110" y="75" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">小腿 → 大腿 → 臀部</text>
+        <text x="110" y="95" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">血液回流至心脑</text>
+      </g>
+
+      <!-- 顺水推舟标注 -->
+      <g id="shunshui-label" transform="translate(80, 450)">
+        <rect x="0" y="0" width="220" height="100" rx="10" fill="rgba(46,139,87,0.1)" stroke="#2E8B57" stroke-width="2" />
+        <text x="110" y="28" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="16" font-weight="800" fill="#2E8B57">顺水推舟</text>
+        <text x="110" y="55" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink2)">收缩期同步排气</text>
+        <text x="110" y="75" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">后负荷降低 15-25%</text>
+        <text x="110" y="95" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="var(--ink3)">心脏射血更省力</text>
+      </g>
+
+      <!-- 血流动力学效应 -->
+      <g transform="translate(500, 550)">
+        <rect x="-350" y="0" width="700" height="70" rx="10" fill="var(--paper-elevated)" stroke="var(--border)" />
+        <g transform="translate(-280, 20)">
+          <circle cx="0" cy="0" r="12" fill="#C41E3A" />
+          <text x="20" y="5" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)">冠脉灌注↑ 25-40%</text>
+        </g>
+        <g transform="translate(-80, 20)">
+          <circle cx="0" cy="0" r="12" fill="#1A5C6E" />
+          <text x="20" y="5" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)">脑血流↑ 20-30%</text>
+        </g>
+        <g transform="translate(120, 20)">
+          <circle cx="0" cy="0" r="12" fill="#2E8B57" />
+          <text x="20" y="5" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)">后负荷↓ 15-25%</text>
+        </g>
+        <g transform="translate(300, 20)">
+          <circle cx="0" cy="0" r="12" fill="#D4A843" />
+          <text x="20" y="5" font-family="PingFang SC, sans-serif" font-size="12" fill="var(--ink)">剪切力激活NO通路</text>
+        </g>
+      </g>
+
+    </svg>
+    
+    <script>
+      var currentPhase = 'diastole';
+      var animationTimer = null;
+      
+      function animateBalloon(id, scale, opacity, delay) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+        el.style.transform = 'scale(' + scale + ')';
+        el.style.opacity = opacity;
+      }
+      
+      function startDiastole() {
+        currentPhase = 'diastole';
+        document.getElementById('heart-status').setAttribute('fill', '#2E8B57');
+        document.getElementById('heart-status-text').textContent = '舒张期';
+        document.getElementById('balloon-status').textContent = '序贯充气中';
+        
+        var heart = document.getElementById('heart');
+        heart.style.animation = 'pulse-heart 1.5s ease-in-out infinite';
+        
+        var balloons = ['calf-balloon', 'calf-balloon-r', 'thigh-balloon', 'thigh-balloon-r', 'hip-balloon'];
+        balloons.forEach(function(b) {
+          var el = document.getElementById(b);
+          if (el) { el.style.transform = 'scale(1)'; el.style.opacity = '0.5'; }
+        });
+        
+        setTimeout(function() {
+          animateBalloon('calf-balloon', 1.3, 0.9, 0);
+          animateBalloon('calf-balloon-r', 1.3, 0.9, 0);
+        }, 100);
+        
+        setTimeout(function() {
+          animateBalloon('thigh-balloon', 1.25, 0.9, 0);
+          animateBalloon('thigh-balloon-r', 1.25, 0.9, 0);
+        }, 300);
+        
+        setTimeout(function() {
+          animateBalloon('hip-balloon', 1.2, 0.9, 0);
+        }, 500);
+        
+        setTimeout(function() {
+          if (currentPhase === 'diastole') startSystole();
+        }, 2000);
+      }
+      
+      function startSystole() {
+        currentPhase = 'systole';
+        document.getElementById('heart-status').setAttribute('fill', '#C41E3A');
+        document.getElementById('heart-status-text').textContent = '收缩期';
+        document.getElementById('balloon-status').textContent = '同步排气';
+        
+        var heart = document.getElementById('heart');
+        heart.style.animation = 'pulse-heart 0.5s ease-in-out infinite';
+        
+        var balloons = ['calf-balloon', 'calf-balloon-r', 'thigh-balloon', 'thigh-balloon-r', 'hip-balloon'];
+        balloons.forEach(function(b) {
+          var el = document.getElementById(b);
+          if (el) {
+            el.style.transition = 'transform 0.15s ease, opacity 0.15s ease';
+            el.style.transform = 'scale(1)';
+            el.style.opacity = '0.4';
+          }
+        });
+        
+        setTimeout(function() {
+          if (currentPhase === 'systole') startDiastole();
+        }, 1000);
+      }
+      
+      startDiastole();
+    </script>
   </div>
 
   <div style="background:var(--white); border:1px solid rgba(26,92,110,0.08); border-radius:12px; padding:28px; margin-bottom:20px;">
@@ -3236,81 +3722,187 @@
   </div>
 </section>
 <!-- ===== 29B ===== -->
-<section class="section-dark" id="product-models">
+<style>
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .product-grid-wide {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .product-card-modern {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(26,92,110,0.12);
+      text-align: center;
+      transition: all 0.3s cubic-bezier(.22,1,.36,1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .product-card-modern:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+    .product-card-modern .img-container {
+      background: var(--paper);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      min-height: 280px;
+    }
+    .product-card-modern .img-container img {
+      max-width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+      transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+    }
+    .product-card-modern:hover .img-container img {
+      transform: scale(1.06);
+    }
+    .product-card-modern .info {
+      padding: 18px 16px;
+      background: var(--white);
+    }
+    .product-card-modern .info h4 {
+      color: var(--blue);
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .product-card-modern .info p {
+      color: var(--ink3);
+      font-size: 0.85rem;
+      margin: 6px 0 0;
+    }
+    .product-card-modern.flagship {
+      border-width: 2px;
+      border-color: var(--purple);
+      position: relative;
+    }
+    .product-card-modern .flag-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg,var(--purple),#6a2070);
+      color: white;
+      font-size: 0.7rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(139,38,150,0.3);
+    }
+    @media (max-width: 768px) {
+      .product-grid, .product-grid-wide {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .product-card-modern .img-container {
+        min-height: 220px;
+        padding: 16px;
+      }
+      .product-card-modern .img-container img {
+        max-height: 200px;
+      }
+      .product-card-modern .info {
+        padding: 14px 12px;
+      }
+    }
+    body.dark-mode .product-card-modern {
+      background: var(--paper-elevated);
+      border-color: var(--border);
+    }
+    body.dark-mode .product-card-modern .info {
+      background: var(--paper-elevated);
+    }
+    body.dark-mode .product-card-modern .info h4 {
+      color: var(--c-vein);
+    }
+    body.dark-mode .product-card-modern .info p {
+      color: var(--ink3);
+    }
+    body.dark-mode .product-card-modern .img-container {
+      background: var(--paper);
+    }
+  </style>
+
+  <section class="section-dark" id="product-models">
   <div class="section-num blue">Section 29B</div>
   <div class="sec-badge channel">📦 渠道培训</div>
 
   <h2>奥迈 EECP 产品矩阵 —— 两证5型全覆盖</h2>
   <p class="section-lead">奥迈拥有 NMPA <strong>两类</strong>注册证、共<strong>5个型号</strong>，覆盖从基层医疗机构到顶级三甲的全场景需求。</p>
 
-  <!-- 注册证一：气囊式体外反搏系统（国械注准 20163090402） -->
-  <h3 style="color:var(--gold); font-size:1.05rem; margin:24px 0 14px; border-left:4px solid var(--gold); padding-left:10px;">
+  <h3 style="color:var(--gold); font-size:1.05rem; margin:28px 0 16px; border-left:4px solid var(--gold); padding-left:12px;">
     📋 注册证一 · 国械注准 20163090402（气囊式体外反搏系统）
   </h3>
 
-  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:32px;">
-    <!-- OM-A -->
-    <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:1px solid rgba(26,92,110,0.12); text-align:center; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
-      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:300px;">
-        <img src="OM-A.png" alt="OM-A" onclick="event.stopPropagation();openLB('OM-A.png','OM-A 标准型 — 基层医疗首选')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
+  <div class="product-grid">
+    <div class="product-card-modern">
+      <div class="img-container">
+        <img src="OM-A.png" alt="OM-A" onclick="event.stopPropagation();openLB('OM-A.png','OM-A 标准型 — 基层医疗首选')">
       </div>
-      <div style="padding:16px 12px;">
-        <h4 style="color:var(--blue); margin:0; font-size:1.05rem;">OM-A</h4>
-        <p style="color:var(--ink3); font-size:0.82rem; margin-top:4px;">标准型 · 基层医疗首选</p>
-      </div>
-    </div>
-
-    <!-- OM-A-I -->
-    <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:1px solid rgba(26,92,110,0.12); text-align:center; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
-      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:300px;">
-        <img src="OM-A-I.png" alt="OM-A-I" onclick="event.stopPropagation();openLB('OM-A-I.png','OM-A-I 增强型 — 房颤模式标配')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
-      </div>
-      <div style="padding:16px 12px;">
-        <h4 style="color:var(--blue); margin:0; font-size:1.05rem;">OM-A-I</h4>
-        <p style="color:var(--ink3); font-size:0.82rem; margin-top:4px;">增强型 · 房颤模式标配</p>
+      <div class="info">
+        <h4>OM-A</h4>
+        <p>标准型 · 基层医疗首选</p>
       </div>
     </div>
 
-    <!-- OM-A-II -->
-    <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:1px solid rgba(26,92,110,0.12); text-align:center; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
-      <div style="background:var(--paper); padding:18px 16px; display:flex; align-items:center; justify-content:center; min-height:300px;">
-        <img src="OM-A-II.png" alt="OM-A-II" onclick="event.stopPropagation();openLB('OM-A-II.png','OM-A-II 高端型 — 三甲定制配置')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
+    <div class="product-card-modern">
+      <div class="img-container">
+        <img src="OM-A-I.png" alt="OM-A-I" onclick="event.stopPropagation();openLB('OM-A-I.png','OM-A-I 增强型 — 房颤模式标配')">
       </div>
-      <div style="padding:16px 12px;">
-        <h4 style="color:var(--blue); margin:0; font-size:1.05rem;">OM-A-II</h4>
-        <p style="color:var(--ink3); font-size:0.82rem; margin-top:4px;">高端型 · 三甲定制配置</p>
+      <div class="info">
+        <h4>OM-A-I</h4>
+        <p>增强型 · 房颤模式标配</p>
+      </div>
+    </div>
+
+    <div class="product-card-modern">
+      <div class="img-container">
+        <img src="OM-A-II.png" alt="OM-A-II" onclick="event.stopPropagation();openLB('OM-A-II.png','OM-A-II 高端型 — 三甲定制配置')">
+      </div>
+      <div class="info">
+        <h4>OM-A-II</h4>
+        <p>高端型 · 三甲定制配置</p>
       </div>
     </div>
   </div>
 
-  <!-- 注册证二：气囊式体外反搏设备（国械注准 202x） -->
-  <h3 style="color:var(--gold); font-size:1.05rem; margin:24px 0 14px; border-left:4px solid var(--purple); padding-left:10px;">
+  <h3 style="color:var(--gold); font-size:1.05rem; margin:28px 0 16px; border-left:4px solid var(--purple); padding-left:12px;">
     📋 注册证二 · 国械注准 20232160444（气囊式体外反搏设备）
   </h3>
 
-  <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:22px; margin-bottom:28px; max-width:600px;">
-    <!-- OM-A-ECP1 -->
-    <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:2px solid var(--purple); text-align:center; position:relative; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
-      <!-- 旗舰标识 -->
-      <div style="position:absolute; top:10px; right:10px; background:linear-gradient(135deg,var(--purple),#6a2070); color:white; font-size:.68rem; padding:4px 10px; border-radius:10px; font-weight:700; z-index:2;">👑 旗舰款</div>
-      <div style="background:var(--paper); padding:22px 20px; display:flex; align-items:center; justify-content:center; min-height:300px;">
-        <img src="OM-A-ECP1.png" alt="OM-A-ECP1" onclick="event.stopPropagation();openLB('OM-A-ECP1.png','OM-A-ECP1 旗舰型 — 顶级三甲配置')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
+  <div class="product-grid-wide">
+    <div class="product-card-modern flagship">
+      <div class="flag-badge">👑 旗舰款</div>
+      <div class="img-container">
+        <img src="OM-A-ECP1.png" alt="OM-A-ECP1" onclick="event.stopPropagation();openLB('OM-A-ECP1.png','OM-A-ECP1 旗舰型 — 顶级三甲配置')">
       </div>
-      <div style="padding:16px 12px;">
-        <h4 style="color:var(--purple); margin:0; font-size:1.05rem;">OM-A-ECP1</h4>
-        <p style="color:var(--ink3); font-size:0.82rem; margin-top:4px;">旗舰型 · 顶级三甲配置</p>
+      <div class="info">
+        <h4>OM-A-ECP1</h4>
+        <p>旗舰型 · 顶级三甲配置</p>
       </div>
     </div>
 
-    <!-- OM-A-ECP2 -->
-    <div class="card product-card" style="background:var(--white); border-radius:14px; overflow:hidden; border:2px solid var(--purple); text-align:center; position:relative; transition:transform 0.25s, box-shadow 0.25s; cursor:pointer;">
-      <div style="position:absolute; top:10px; right:10px; background:linear-gradient(135deg,var(--purple),#6a2070); color:white; font-size:.68rem; padding:4px 10px; border-radius:10px; font-weight:700; z-index:2;">👑 旗舰款</div>
-      <div style="background:var(--paper); padding:22px 20px; display:flex; align-items:center; justify-content:center; min-height:300px;">
-        <img src="OM-A-ECP2.png" alt="OM-A-ECP2" onclick="event.stopPropagation();openLB('OM-A-ECP2.png','OM-A-ECP2 旗舰型 — 科研级配置')" style="max-width:100%; max-height:260px; object-fit:contain; transition:transform 0.35s ease;">
+    <div class="product-card-modern flagship">
+      <div class="flag-badge">👑 旗舰款</div>
+      <div class="img-container">
+        <img src="OM-A-ECP2.png" alt="OM-A-ECP2" onclick="event.stopPropagation();openLB('OM-A-ECP2.png','OM-A-ECP2 旗舰型 — 科研级配置')">
       </div>
-      <div style="padding:16px 12px;">
-        <h4 style="color:var(--purple); margin:0; font-size:1.05rem;">OM-A-ECP2</h4>
-        <p style="color:var(--ink3); font-size:0.82rem; margin-top:4px;">旗舰型 · 科研级配置</p>
+      <div class="info">
+        <h4>OM-A-ECP2</h4>
+        <p>旗舰型 · 科研级配置</p>
       </div>
     </div>
   </div>
