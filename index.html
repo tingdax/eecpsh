@@ -2189,11 +2189,16 @@
       }
       @keyframes pulse-heart {
         0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.08); }
+        15% { transform: scale(0.92); }
+        30% { transform: scale(1.05); }
+        45% { transform: scale(0.97); }
+        60% { transform: scale(1.02); }
+        80% { transform: scale(1); }
       }
       .heart-beat {
-        animation: pulse-heart 1s ease-in-out infinite;
+        animation: pulse-heart 1.2s ease-in-out infinite;
         transform-origin: center;
+        transform-box: fill-box;
       }
       .balloon-calf {
         transition: transform 0.3s ease, opacity 0.3s ease;
@@ -2209,6 +2214,9 @@
         transition: transform 0.3s ease, opacity 0.3s ease;
         transform-origin: center;
         transform-box: fill-box;
+      }
+      #particle-layer > g {
+        transition: opacity 0.5s ease;
       }
     </style>
     
@@ -2249,11 +2257,11 @@
           <stop offset="0%" style="stop-color:#FFC94D;stop-opacity:0.95" />
           <stop offset="100%" style="stop-color:#D9A830;stop-opacity:0.85" />
         </radialGradient>
-        <marker id="arrowArtery" markerWidth="14" markerHeight="10" refX="11" refY="5" orient="auto">
-          <polygon points="0 0, 14 5, 0 10" fill="#E63946" />
+        <marker id="arrowArtery" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#E63946" />
         </marker>
-        <marker id="arrowVein" markerWidth="14" markerHeight="10" refX="11" refY="5" orient="auto">
-          <polygon points="0 0, 14 5, 0 10" fill="#1D6B80" />
+        <marker id="arrowVein" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#1D6B80" />
         </marker>
       </defs>
 
@@ -2301,10 +2309,10 @@
       </g>
 
       <!-- 头部/脑 -->
-      <g transform="translate(600, 175)">
-        <ellipse cx="0" cy="0" rx="55" ry="40" fill="rgba(245,240,232,0.15)" stroke="var(--ink4)" stroke-width="2" />
-        <text x="0" y="6" text-anchor="middle" font-size="14" fill="var(--ink2)" font-weight="700">脑/头部</text>
-        <text x="0" y="25" text-anchor="middle" font-size="10" fill="var(--ink4)">颈动脉供血</text>
+      <g transform="translate(600, 120)">
+        <ellipse cx="0" cy="0" rx="42" ry="26" fill="rgba(245,240,232,0.15)" stroke="var(--ink4)" stroke-width="2" />
+        <text x="0" y="4" text-anchor="middle" font-size="12" fill="var(--ink2)" font-weight="700">脑/头部</text>
+        <text x="0" y="20" text-anchor="middle" font-size="10" fill="var(--ink4)">颈内动脉供血</text>
       </g>
 
       <!-- 左肺 -->
@@ -2358,20 +2366,20 @@
       <path d="M 870 300 C 840 320 800 350 750 390 C 700 420 660 440 625 440" 
             stroke="url(#arteryGrad)" stroke-width="7" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
 
-      <!-- 上腔静脉（头部→右心房，静脉血，蓝色） -->
-      <path d="M 580 420 C 575 400 570 370 565 330 L 560 250 L 555 210" 
+      <!-- 上腔静脉（头部→右心房，静脉血，蓝色） - 偏左侧下行 -->
+      <path d="M 558 146 C 552 210 550 280 560 350 C 567 380 572 400 575 410" 
             stroke="url(#veinGrad)" stroke-width="6" fill="none" stroke-linecap="round" marker-end="url(#arrowVein)" />
-      <text x="510" y="290" font-size="12" fill="#1D6B80" font-weight="700">上腔静脉</text>
+      <text x="500" y="280" font-size="12" fill="#1D6B80" font-weight="700">上腔静脉</text>
 
-      <!-- 主动脉弓（左心室→全身，动脉血，红色） -->
-      <path d="M 620 420 C 640 400 655 370 660 340 L 660 290 C 660 260 640 230 615 210 C 590 195 555 200 535 220" 
+      <!-- 主动脉弓（左心室→全身，动脉血，红色） - 先向上再向左弯，最高点在头部下方 -->
+      <path d="M 625 410 C 660 380 680 330 680 280 L 680 240 C 680 205 655 182 620 175 C 590 170 565 176 545 190" 
             stroke="url(#arteryGrad)" stroke-width="9" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
-      <text x="685" y="320" font-size="13" fill="#C41E3A" font-weight="700">主动脉弓</text>
+      <text x="700" y="285" font-size="12" fill="#C41E3A" font-weight="700">主动脉弓</text>
 
-      <!-- 颈动脉（主动脉→头部） -->
-      <path d="M 570 215 L 590 180" stroke="url(#arteryGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
-      <path d="M 620 210 L 625 180" stroke="url(#arteryGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
-      <text x="600" y="165" font-size="11" fill="#C41E3A" font-weight="600" text-anchor="middle">颈动脉</text>
+      <!-- 颈动脉（主动脉弓→头部） -->
+      <path d="M 595 173 C 593 163 592 156 590 148" stroke="url(#arteryGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
+      <path d="M 625 170 C 625 162 625 155 625 148" stroke="url(#arteryGrad)" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#arrowArtery)" />
+      <text x="610" y="135" font-size="10" fill="#C41E3A" font-weight="600" text-anchor="middle">颈总动脉</text>
 
       <!-- ===== 体循环下行血管 ===== -->
       <!-- 降主动脉（红色，动脉血向下） -->
@@ -2474,82 +2482,110 @@
 
       <!-- ===== 血流粒子 ===== -->
       <g id="particle-layer">
-        <!-- 舒张期：静脉血向上回流（南水北调） -->
-        <circle r="5" fill="#1D6B80" opacity="0.9">
-          <animate attributeName="cx" values="470;475;485;515;555;580;595;600" dur="2s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="705;670;630;610;595;585;575;565" dur="2s" repeatCount="indefinite" />
-          <animate attributeName="r" values="3;4;5;5;4.5;4;3.5;3" dur="2s" repeatCount="indefinite" />
-        </circle>
-        <circle r="4" fill="#277B90" opacity="0.8">
-          <animate attributeName="cx" values="730;725;715;685;645;620;605;600" dur="2s" repeatCount="indefinite" begin="0.5s" />
-          <animate attributeName="cy" values="705;670;630;610;595;585;575;565" dur="2s" repeatCount="indefinite" begin="0.5s" />
-        </circle>
+        <!-- 舒张期：静脉血向上回流（南水北调） - 从下肢向上到心脏 -->
+        <g class="particle-diastole vein-return-left">
+          <circle r="5" fill="#1D6B80" opacity="0.9">
+            <animate attributeName="cx" values="470;475;485;515;555;580;595;600" dur="2s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="705;670;630;610;595;585;575;565" dur="2s" repeatCount="indefinite" />
+            <animate attributeName="r" values="3;4;5;5;4.5;4;3.5;3" dur="2s" repeatCount="indefinite" />
+          </circle>
+        </g>
+        <g class="particle-diastole vein-return-right">
+          <circle r="4" fill="#277B90" opacity="0.8">
+            <animate attributeName="cx" values="730;725;715;685;645;620;605;600" dur="2s" repeatCount="indefinite" begin="0.5s" />
+            <animate attributeName="cy" values="705;670;630;610;595;585;575;565" dur="2s" repeatCount="indefinite" begin="0.5s" />
+          </circle>
+        </g>
 
-        <!-- 上腔静脉回流 -->
-        <circle r="4" fill="#1D6B80" opacity="0.85">
-          <animate attributeName="cx" values="555;558;565;572;578" dur="1.5s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="210;260;320;370;420" dur="1.5s" repeatCount="indefinite" />
-        </circle>
+        <!-- 上腔静脉回流（头部→右心房，向下） - 持续存在，舒张期更明显 -->
+        <g class="particle-continuous svc-return">
+          <circle r="4" fill="#1D6B80" opacity="0.85">
+            <animate attributeName="cx" values="558;556;554;555;558;562;567;572;575" dur="1.8s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="146;180;220;260;300;340;375;395;408" dur="1.8s" repeatCount="indefinite" />
+          </circle>
+        </g>
 
-        <!-- 冠脉灌注（舒张期增加） -->
-        <circle r="4" fill="#FF4D4D" opacity="0.9">
-          <animate attributeName="cx" values="600;585;570;555;548" dur="1.2s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="280;330;380;410;425" dur="1.2s" repeatCount="indefinite" />
-          <animate attributeName="r" values="3;4;5;4;3" dur="1.2s" repeatCount="indefinite" />
-        </circle>
-        <circle r="4" fill="#FF6B6B" opacity="0.85">
-          <animate attributeName="cx" values="600;615;630;645;652" dur="1.2s" repeatCount="indefinite" begin="0.3s" />
-          <animate attributeName="cy" values="280;330;380;410;425" dur="1.2s" repeatCount="indefinite" begin="0.3s" />
-          <animate attributeName="r" values="3;4;5;4;3" dur="1.2s" repeatCount="indefinite" begin="0.3s" />
-        </circle>
+        <!-- 冠脉灌注（舒张期增加） - 从主动脉根部流向心脏 -->
+        <g class="particle-diastole coronary-left">
+          <circle r="4" fill="#FF4D4D" opacity="0.9">
+            <animate attributeName="cx" values="625;610;595;580;570" dur="1.2s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="395;400;405;410;415" dur="1.2s" repeatCount="indefinite" />
+            <animate attributeName="r" values="3;4;5;4;3" dur="1.2s" repeatCount="indefinite" />
+          </circle>
+        </g>
+        <g class="particle-diastole coronary-right">
+          <circle r="4" fill="#FF6B6B" opacity="0.85">
+            <animate attributeName="cx" values="625;640;655;670;680" dur="1.2s" repeatCount="indefinite" begin="0.3s" />
+            <animate attributeName="cy" values="395;400;405;410;415" dur="1.2s" repeatCount="indefinite" begin="0.3s" />
+            <animate attributeName="r" values="3;4;5;4;3" dur="1.2s" repeatCount="indefinite" begin="0.3s" />
+          </circle>
+        </g>
 
-        <!-- 颈动脉→脑 -->
-        <circle r="3.5" fill="#E63946" opacity="0.9">
-          <animate attributeName="cx" values="595;580;575" dur="0.9s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="210;190;175" dur="0.9s" repeatCount="indefinite" />
-        </circle>
-        <circle r="3.5" fill="#E63946" opacity="0.9">
-          <animate attributeName="cx" values="620;625;625" dur="0.9s" repeatCount="indefinite" begin="0.2s" />
-          <animate attributeName="cy" values="210;190;175" dur="0.9s" repeatCount="indefinite" begin="0.2s" />
-        </circle>
+        <!-- 颈动脉→脑（向上，动脉血） - 持续存在，收缩期更明显 -->
+        <g class="particle-continuous carotid-left">
+          <circle r="3.5" fill="#E63946" opacity="0.9">
+            <animate attributeName="cx" values="595;594;593;592;590" dur="1s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="173;165;158;152;146" dur="1s" repeatCount="indefinite" />
+          </circle>
+        </g>
+        <g class="particle-continuous carotid-right">
+          <circle r="3.5" fill="#E63946" opacity="0.9">
+            <animate attributeName="cx" values="625;625;625;625;625" dur="1s" repeatCount="indefinite" begin="0.25s" />
+            <animate attributeName="cy" values="170;163;156;150;146" dur="1s" repeatCount="indefinite" begin="0.25s" />
+          </circle>
+        </g>
 
-        <!-- 收缩期：动脉血泵出到全身 -->
-        <circle r="5" fill="#E63946" opacity="0.9">
-          <animate attributeName="cx" values="600;600;595;575;540;500;480;475;470" dur="1.4s" repeatCount="indefinite" begin="0.8s" />
-          <animate attributeName="cy" values="500;540;580;620;660;690;720;735;745" dur="1.4s" repeatCount="indefinite" begin="0.8s" />
-          <animate attributeName="r" values="3;5;5.5;5;4.5;4;3.5;3;2.5" dur="1.4s" repeatCount="indefinite" begin="0.8s" />
-        </circle>
-        <circle r="5" fill="#E63946" opacity="0.9">
-          <animate attributeName="cx" values="600;600;605;625;660;700;720;725;730" dur="1.4s" repeatCount="indefinite" begin="1.1s" />
-          <animate attributeName="cy" values="500;540;580;620;660;690;720;735;745" dur="1.4s" repeatCount="indefinite" begin="1.1s" />
-          <animate attributeName="r" values="3;5;5.5;5;4.5;4;3.5;3;2.5" dur="1.4s" repeatCount="indefinite" begin="1.1s" />
-        </circle>
+        <!-- 收缩期：动脉血泵出到全身（向下到下肢） -->
+        <g class="particle-systole artery-down-left">
+          <circle r="5" fill="#E63946" opacity="0.9">
+            <animate attributeName="cx" values="600;600;595;575;540;500;480;475;470" dur="1.4s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="485;525;565;605;645;675;705;720;730" dur="1.4s" repeatCount="indefinite" />
+            <animate attributeName="r" values="3;5;5.5;5;4.5;4;3.5;3;2.5" dur="1.4s" repeatCount="indefinite" />
+          </circle>
+        </g>
+        <g class="particle-systole artery-down-right">
+          <circle r="5" fill="#E63946" opacity="0.9">
+            <animate attributeName="cx" values="600;600;605;625;660;700;720;725;730" dur="1.4s" repeatCount="indefinite" begin="0.3s" />
+            <animate attributeName="cy" values="485;525;565;605;645;675;705;720;730" dur="1.4s" repeatCount="indefinite" begin="0.3s" />
+            <animate attributeName="r" values="3;5;5.5;5;4.5;4;3.5;3;2.5" dur="1.4s" repeatCount="indefinite" begin="0.3s" />
+          </circle>
+        </g>
 
-        <!-- 收缩期：动脉血向头部射血 -->
-        <circle r="4" fill="#E63946" opacity="0.9">
-          <animate attributeName="cx" values="600;580;555;548" dur="0.9s" repeatCount="indefinite" begin="0.8s" />
-          <animate attributeName="cy" values="230;205;185;175" dur="0.9s" repeatCount="indefinite" begin="0.8s" />
-        </circle>
+        <!-- 收缩期：动脉血向头部射血（向上沿主动脉弓） -->
+        <g class="particle-systole artery-up-head">
+          <circle r="4" fill="#E63946" opacity="0.9">
+            <animate attributeName="cx" values="640;660;675;680;678;670;655;635;615" dur="1.1s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="360;320;270;230;200;185;175;170;172" dur="1.1s" repeatCount="indefinite" />
+          </circle>
+        </g>
 
-        <!-- 肺循环持续：右心室→肺动脉→肺（蓝色） -->
-        <circle r="4" fill="#1D6B80" opacity="0.85">
-          <animate attributeName="cx" values="580;530;480;420;380;340;330" dur="1.2s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="450;410;370;330;305;295;290" dur="1.2s" repeatCount="indefinite" />
-        </circle>
-        <circle r="4" fill="#1D6B80" opacity="0.85">
-          <animate attributeName="cx" values="620;670;720;780;820;860;870" dur="1.2s" repeatCount="indefinite" begin="0.4s" />
-          <animate attributeName="cy" values="450;410;370;330;305;295;290" dur="1.2s" repeatCount="indefinite" begin="0.4s" />
-        </circle>
+        <!-- 肺循环持续：右心室→肺动脉→肺（蓝色，静脉血） -->
+        <g class="particle-continuous pulmonary-artery-left">
+          <circle r="4" fill="#1D6B80" opacity="0.85">
+            <animate attributeName="cx" values="580;530;480;420;380;340;330" dur="1.2s" repeatCount="indefinite" />
+            <animate attributeName="cy" values="450;410;370;330;305;295;290" dur="1.2s" repeatCount="indefinite" />
+          </circle>
+        </g>
+        <g class="particle-continuous pulmonary-artery-right">
+          <circle r="4" fill="#1D6B80" opacity="0.85">
+            <animate attributeName="cx" values="620;670;720;780;820;860;870" dur="1.2s" repeatCount="indefinite" begin="0.4s" />
+            <animate attributeName="cy" values="450;410;370;330;305;295;290" dur="1.2s" repeatCount="indefinite" begin="0.4s" />
+          </circle>
+        </g>
 
-        <!-- 肺循环：肺→肺静脉→左心房（红色） -->
-        <circle r="4" fill="#E63946" opacity="0.85">
-          <animate attributeName="cx" values="330;370;420;480;540;575" dur="1.2s" repeatCount="indefinite" begin="0.6s" />
-          <animate attributeName="cy" values="300;330;370;420;445;445" dur="1.2s" repeatCount="indefinite" begin="0.6s" />
-        </circle>
-        <circle r="4" fill="#E63946" opacity="0.85">
-          <animate attributeName="cx" values="870;830;780;720;660;625" dur="1.2s" repeatCount="indefinite" begin="0.9s" />
-          <animate attributeName="cy" values="300;330;370;420;445;445" dur="1.2s" repeatCount="indefinite" begin="0.9s" />
-        </circle>
+        <!-- 肺循环：肺→肺静脉→左心房（红色，动脉血） -->
+        <g class="particle-continuous pulmonary-vein-left">
+          <circle r="4" fill="#E63946" opacity="0.85">
+            <animate attributeName="cx" values="330;370;420;480;540;575" dur="1.2s" repeatCount="indefinite" begin="0.6s" />
+            <animate attributeName="cy" values="300;330;370;420;445;445" dur="1.2s" repeatCount="indefinite" begin="0.6s" />
+          </circle>
+        </g>
+        <g class="particle-continuous pulmonary-vein-right">
+          <circle r="4" fill="#E63946" opacity="0.85">
+            <animate attributeName="cx" values="870;830;780;720;660;625" dur="1.2s" repeatCount="indefinite" begin="0.9s" />
+            <animate attributeName="cy" values="300;330;370;420;445;445" dur="1.2s" repeatCount="indefinite" begin="0.9s" />
+          </circle>
+        </g>
       </g>
 
       <!-- 标注框：南水北调（右下） -->
@@ -2613,6 +2649,13 @@
         else runSystole();
       }
 
+      function setParticleGroup(className, opacity) {
+        var elements = document.querySelectorAll('.' + className);
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].style.opacity = opacity;
+        }
+      }
+
       function runDiastole() {
         currentPhase = 'diastole';
         var pt = document.getElementById('phase-text');
@@ -2622,14 +2665,24 @@
         var rt = document.getElementById('return-text');
         if (rt) { rt.textContent = '↑ 增加 30-50%'; rt.setAttribute('fill', '#E63946'); }
 
+        var phaseBadge = document.getElementById('phase-badge');
+        if (phaseBadge) phaseBadge.setAttribute('fill', '#2E8B57');
+
         var heart = document.getElementById('heart');
         if (heart) heart.style.animationDuration = '1.5s';
 
-        setBalloon('calf-l', 0.9, 0.5);
-        setBalloon('calf-r', 0.9, 0.5);
-        setBalloon('thigh-l', 0.9, 0.5);
-        setBalloon('thigh-r', 0.9, 0.5);
-        setBalloon('hip', 0.9, 0.5);
+        // 舒张期：静脉回流明显（南水北调）
+        setParticleGroup('particle-diastole', '1');
+        // 舒张期：动脉射血减弱
+        setParticleGroup('particle-systole', '0.2');
+        // 持续流动的粒子
+        setParticleGroup('particle-continuous', '0.75');
+
+        setBalloon('calf-l', 0.85, 0.4);
+        setBalloon('calf-r', 0.85, 0.4);
+        setBalloon('thigh-l', 0.85, 0.4);
+        setBalloon('thigh-r', 0.85, 0.4);
+        setBalloon('hip', 0.85, 0.4);
 
         setTimeout(function() {
           setBalloon('calf-l', 1.25, 1);
@@ -2653,14 +2706,24 @@
         var rt = document.getElementById('return-text');
         if (rt) { rt.textContent = '射血量↑ 后负荷↓'; rt.setAttribute('fill', '#2E8B57'); }
 
-        var heart = document.getElementById('heart');
-        if (heart) heart.style.animationDuration = '0.6s';
+        var phaseBadge = document.getElementById('phase-badge');
+        if (phaseBadge) phaseBadge.setAttribute('fill', '#C41E3A');
 
-        setBalloon('calf-l', 0.85, 0.35);
-        setBalloon('calf-r', 0.85, 0.35);
-        setBalloon('thigh-l', 0.85, 0.35);
-        setBalloon('thigh-r', 0.85, 0.35);
-        setBalloon('hip', 0.85, 0.35);
+        var heart = document.getElementById('heart');
+        if (heart) heart.style.animationDuration = '0.7s';
+
+        // 收缩期：动脉射血明显（顺水推舟）
+        setParticleGroup('particle-systole', '1');
+        // 收缩期：静脉回流减弱
+        setParticleGroup('particle-diastole', '0.2');
+        // 持续流动的粒子
+        setParticleGroup('particle-continuous', '0.85');
+
+        setBalloon('calf-l', 0.8, 0.3);
+        setBalloon('calf-r', 0.8, 0.3);
+        setBalloon('thigh-l', 0.8, 0.3);
+        setBalloon('thigh-r', 0.8, 0.3);
+        setBalloon('hip', 0.8, 0.3);
       }
 
       function autoLoop() {
