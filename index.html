@@ -207,6 +207,46 @@
   body.dark-mode .dept-section-dark h3,
   body.dark-mode .dept-section-purple h3 { color: var(--c-lymph-bright); }
 
+  body.dark-mode .section-dark h4, body.dark-mode .section-dark p, body.dark-mode .section-dark td,
+  body.dark-mode .section-dark .label, body.dark-mode .section-dark .detail,
+  body.dark-mode .section-dark .stat-card, body.dark-mode .section-dark .card,
+  body.dark-mode .section-dark th,
+  body.dark-mode .section-red h4, body.dark-mode .section-red p, body.dark-mode .section-red td,
+  body.dark-mode .section-red .label, body.dark-mode .section-red .detail,
+  body.dark-mode .section-red .stat-card, body.dark-mode .section-red .card,
+  body.dark-mode .section-red th,
+  body.dark-mode .section-gold h4, body.dark-mode .section-gold p, body.dark-mode .section-gold td,
+  body.dark-mode .section-gold .label, body.dark-mode .section-gold .detail,
+  body.dark-mode .section-gold .stat-card, body.dark-mode .section-gold .card,
+  body.dark-mode .section-gold th,
+  body.dark-mode .dept-section-dark h4, body.dark-mode .dept-section-dark p,
+  body.dark-mode .dept-section-purple h4, body.dark-mode .dept-section-purple p {
+    color: var(--ink) !important;
+  }
+  body.dark-mode .section-dark .num,
+  body.dark-mode .section-red .num,
+  body.dark-mode .section-gold .num,
+  body.dark-mode .dept-section-dark .num,
+  body.dark-mode .dept-section-purple .num {
+    color: var(--c-lymph-bright) !important;
+  }
+  body.dark-mode .section-dark .num.red,
+  body.dark-mode .section-red .num.red,
+  body.dark-mode .section-gold .num.red,
+  body.dark-mode .dept-section-dark .num.red {
+    color: var(--c-artery-soft) !important;
+  }
+  body.dark-mode .section-dark .num.gold,
+  body.dark-mode .section-red .num.gold,
+  body.dark-mode .section-gold .num.gold {
+    color: var(--c-lymph-bright) !important;
+  }
+  body.dark-mode .section-dark .data-table .highlight,
+  body.dark-mode .section-red .data-table .highlight,
+  body.dark-mode .section-gold .data-table .highlight {
+    color: var(--c-lymph-bright) !important;
+  }
+
   body.dark-mode .product-card { background: var(--paper-elevated); border-color: var(--border); }
   body.dark-mode .product-card h4 { color: var(--c-vein); }
   body.dark-mode .product-card p { color: var(--ink3); }
@@ -2184,7 +2224,7 @@
       <p>设备通过心电电极实时捕捉R波信号，精确判定心脏的收缩期和舒张期，做到毫秒级同步。</p>
     </div>
     <div class="mech-step">
-      <div class="step-num" style="background:var(--gold-bright);">2</div>
+      <div class="step-num" style="background:var(--gold-bright); color:#5A4500;">2</div>
       <h4>舒张期序贯加压</h4>
       <p>心脏舒张时，气囊从小腿→大腿→臀部依次快速充气（序贯加压），将下半身的动脉血向上"推送"——优先灌注冠脉和脑血管。</p>
     </div>
@@ -3895,27 +3935,27 @@
   </h3>
 
   <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-bottom:28px;">
-    <div class="card" style="background:var(--white); border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--red);">
+    <div class="card" style="border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--red);">
       <h4 style="color:var(--red); margin:0 0 8px;">🏅 国家高新技术企业</h4>
       <p style="font-size:0.85rem; color:var(--ink3); margin:0;">由科技部、财政部、国家税务总局联合认定，代表企业核心技术实力与创新能力获国家级认可。</p>
     </div>
-    <div class="card" style="background:var(--white); border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--gold);">
+    <div class="card" style="border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--gold);">
       <h4 style="color:var(--gold-bright); margin:0 0 8px;">📋 NMPA 三类医疗器械注册证</h4>
       <p style="font-size:0.85rem; color:var(--ink3); margin:0;">体外反搏装置属国家三类医疗器械（最高管理类别），奥迈产品获得 NMPA 三类注册，代表安全性和有效性通过最高级别审评。</p>
     </div>
-    <div class="card" style="background:var(--white); border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--blue);">
+    <div class="card" style="border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--blue);">
       <h4 style="color:var(--blue); margin:0 0 8px;">🌍 ISO 13485 质量管理体系</h4>
       <p style="font-size:0.85rem; color:var(--ink3); margin:0;">国际通用的医疗器械质量管理体系标准，覆盖设计开发、生产制造、销售服务的全流程——奥迈通过体系认证，确保产品全程受控。</p>
     </div>
-    <div class="card" style="background:var(--white); border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--purple);">
+    <div class="card" style="border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--purple);">
       <h4 style="color:var(--purple); margin:0 0 8px;">🇪🇺 CE-Mark 欧盟准入</h4>
       <p style="font-size:0.85rem; color:var(--ink3); margin:0;">通过欧盟 CE 认证（医疗器械指令 MDD 93/42/EEC），产品已在欧盟多国注册销售，代表产品符合国际安全标准。</p>
     </div>
-    <div class="card" style="background:var(--white); border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--green);">
+    <div class="card" style="border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--green);">
       <h4 style="color:var(--green); margin:0 0 8px;">🔬 体外反搏分会会员</h4>
       <p style="font-size:0.85rem; color:var(--ink3); margin:0;">中国生物医学工程学会体外反搏分会认证会员，参与行业标准制定与学术推广，是领域内最具权威性的学术组织成员。</p>
     </div>
-    <div class="card" style="background:var(--white); border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--orange);">
+    <div class="card" style="border:1px solid rgba(26,92,110,0.08); padding:18px; border-top:4px solid var(--orange);">
       <h4 style="color:var(--orange); margin:0 0 8px;">🔧 多项技术专利</h4>
       <p style="font-size:0.85rem; color:var(--ink3); margin:0;">多项实用新型及外观设计专利，覆盖气囊结构、气路优化、人体工程学外观、降噪模块等核心技术细节，形成技术壁垒。</p>
     </div>
